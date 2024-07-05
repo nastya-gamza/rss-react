@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "ESLINT_USE_FLAT_CONFIG=true npx eslint . --report-unused-disable-directives --max-warnings 0 && stylelint '**/*.css' --max-warnings 0",
+    "lint:fix": "ESLINT_USE_FLAT_CONFIG=true npx eslint . --fix",
     "format": "prettier --write ./src",
     "preview": "vite preview",
     "prepare": "husky"
@@ -16,7 +17,6 @@
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.24.7",
     "@eslint/js": "^9.6.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
