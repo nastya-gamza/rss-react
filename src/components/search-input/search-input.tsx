@@ -1,14 +1,20 @@
+import React from 'react';
 import styles from './search-input.module.css';
 
 interface SearchProps {
-  searchValue: string;
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickClear: () => void;
+  searchQuery: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch: () => void;
 }
 
-export const SearchInput = ({ searchValue, handleSearch, onClickClear }: SearchProps) => {
+export const SearchInput = ({ searchQuery, handleInputChange, handleSearch }: SearchProps) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    handleSearch();
+  };
+
   return (
-    <label className={styles.search}>
+    <form className={styles.search} onSubmit={handleSubmit}>
       <button className={styles.btn}>
         <svg
           xmlns='http://www.w3.org/2000/svg'
@@ -24,28 +30,11 @@ export const SearchInput = ({ searchValue, handleSearch, onClickClear }: SearchP
         </svg>
       </button>
       <input
-        value={searchValue}
-        onChange={(e) => handleSearch(e)}
+        value={searchQuery}
+        onChange={handleInputChange}
         placeholder='Search for...'
         className={styles.input}
-      ></input>
-      {searchValue && (
-        <button onClick={onClickClear}>
-          <svg
-            className={styles.clear}
-            xmlns='http://www.w3.org/2000/svg'
-            fill='var(--svg-color)'
-            width='16'
-            height='16'
-            viewBox='0 0 32 32'
-          >
-            <path
-              fillRule='evenodd'
-              d='M16 30a14 14 0 1 1 0-28 14 14 0 0 1 0 28Zm0-30a16 16 0 1 0 0 32 16 16 0 0 0 0-32Zm5.72 10.28a1.01 1.01 0 0 0-1.43 0l-4.3 4.3-4.23-4.24a1 1 0 1 0-1.42 1.42l4.24 4.23-4.27 4.27c-.39.39-.39 1.03 0 1.43.4.39 1.04.39 1.43 0l4.27-4.27 4.23 4.24a1 1 0 1 0 1.42-1.42l-4.24-4.23 4.3-4.3c.39-.4.39-1.03 0-1.43Z'
-            />
-          </svg>
-        </button>
-      )}
-    </label>
+      />
+    </form>
   );
 };

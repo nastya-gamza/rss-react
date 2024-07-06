@@ -1,0 +1,33 @@
+.card {
+  list-style: none;
+  border-radius: 8px;
+  box-shadow: 0 5px 10px 2px rgba(0, 0, 0, 0.2);
+
+  h3 {
+    margin-bottom: 15px;
+  }
+}
+
+.info {
+  padding: 15px 10px 20px;
+
+  p {
+    font-size: 14px;
+  }
+
+  p:not(:last-child) {
+    margin-bottom: 5px;
+  }
+}
+
+.img {
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}

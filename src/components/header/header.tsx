@@ -2,21 +2,19 @@ import { SearchInput } from '../search-input';
 import style from './header.module.css';
 
 interface HeaderProps {
-  searchValue: string;
-  handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onClickClear: () => void;
+  searchQuery: string;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch: () => void;
 }
 
-export const Header = ({ searchValue, handleSearch, onClickClear }: HeaderProps) => {
-  return (
-    <header className={style.header}>
-      <div className={style.container}>
-        <SearchInput
-          searchValue={searchValue}
-          handleSearch={handleSearch}
-          onClickClear={onClickClear}
-        />
-      </div>
-    </header>
-  );
-};
+export const Header = ({ searchQuery, handleInputChange, handleSearch }: HeaderProps) => (
+  <header className={style.header}>
+    <div className={style.container}>
+      <SearchInput
+        searchQuery={searchQuery}
+        handleInputChange={handleInputChange}
+        handleSearch={handleSearch}
+      />
+    </div>
+  </header>
+);

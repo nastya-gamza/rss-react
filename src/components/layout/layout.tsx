@@ -1,35 +1,65 @@
-import styles from './layout.module.css';
-import { Header } from '../header/header.tsx';
 import { ChangeEvent, Component } from 'react';
+import { Header } from '../header';
+import { Main } from '../main';
+import { fetchData } from '../../services/api.ts';
+import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
+import { Data } from '../../types';
 
 interface LayoutState {
-  searchValue: string;
+  searchQuery: string;
+  data: Data | { info: Record<string, unknown>; results: [] };
 }
 
 export class Layout extends Component<Record<string, never>, LayoutState> {
   state = {
-    searchValue: '',
+    searchQuery: '',
+    data: { info: {}, results: [] },
   };
 
-  handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchValue: e.target.value });
+  setData = (data) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      data,
+    }));
   };
 
-  onClickClear = () => {
-    this.setState({ searchValue: '' });
+  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      searchQuery: e.target.value,
+    }));
   };
+
+  handleSearch = () => {
+    const { searchQuery } = this.state;
+    this.fetchByQuery(searchQuery);
+  };
+
+  fetchByQuery = async (searchQuery: string) => {
+    try {
+      const data = await fetchData<Data>(`${BASE_URL}/?${SEARCH_PARAM}=${searchQuery}`);
+      this.setData(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  componentDidMount() {
+    this.handleSearch();
+  }
 
   render() {
-    const { searchValue } = this.state;
+    const { searchQuery, data } = this.state;
+    const { results = [] } = data;
 
     return (
       <>
         <Header
+          handleInputChange={this.handleInputChange}
           handleSearch={this.handleSearch}
-          onClickClear={this.onClickClear}
-          searchValue={searchValue}
+          searchQuery={searchQuery}
         />
-        <main className={styles.container}></main>
+        <Main results={results} />
       </>
     );
   }
