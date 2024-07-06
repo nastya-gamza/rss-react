@@ -4,16 +4,16 @@ import style from './header.module.css';
 interface HeaderProps {
   searchQuery: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: () => void;
+  handleClick: () => void;
 }
 
-export const Header = ({ searchQuery, handleInputChange, handleSearch }: HeaderProps) => (
+export const Header = ({ searchQuery, handleInputChange, handleClick }: HeaderProps) => (
   <header className={style.header}>
     <div className={style.container}>
       <SearchInput
         searchQuery={searchQuery}
         handleInputChange={handleInputChange}
-        handleSearch={handleSearch}
+        handleClick={handleClick}
       />
     </div>
   </header>

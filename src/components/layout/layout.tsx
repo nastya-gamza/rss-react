@@ -3,6 +3,7 @@ import { Header } from '../header';
 import { Main } from '../main';
 import { fetchData } from '../../services/api.ts';
 import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
+import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils/utils.ts';
 import { Data } from '../../types';
 
 interface LayoutState {
@@ -12,11 +13,15 @@ interface LayoutState {
 
 export class Layout extends Component<Record<string, never>, LayoutState> {
   state = {
-    searchQuery: '',
+    searchQuery: getItemFromLocalStorage('searchQuery'),
     data: { info: {}, results: [] },
   };
 
-  setData = (data) => {
+  componentDidMount() {
+    this.handleSearch();
+  }
+
+  setData = (data: Data) => {
     this.setState((prevState) => ({
       ...prevState,
       data,
@@ -32,6 +37,19 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
 
   handleSearch = () => {
     const { searchQuery } = this.state;
+    const savedSearchQuery = getItemFromLocalStorage('searchQuery');
+
+    if (savedSearchQuery) {
+      this.fetchByQuery(savedSearchQuery);
+      return;
+    }
+
+    this.fetchByQuery(searchQuery);
+  };
+
+  handleClick = () => {
+    const { searchQuery } = this.state;
+    setItemToLocalStorage('searchQuery', searchQuery);
     this.fetchByQuery(searchQuery);
   };
 
@@ -44,10 +62,6 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
     }
   };
 
-  componentDidMount() {
-    this.handleSearch();
-  }
-
   render() {
     const { searchQuery, data } = this.state;
     const { results = [] } = data;
@@ -55,9 +69,9 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
     return (
       <>
         <Header
-          handleInputChange={this.handleInputChange}
-          handleSearch={this.handleSearch}
           searchQuery={searchQuery}
+          handleClick={this.handleClick}
+          handleInputChange={this.handleInputChange}
         />
         <Main results={results} />
       </>

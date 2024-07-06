@@ -3,14 +3,14 @@ import styles from './search-input.module.css';
 
 interface SearchProps {
   searchQuery: string;
+  handleClick: () => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSearch: () => void;
 }
 
-export const SearchInput = ({ searchQuery, handleInputChange, handleSearch }: SearchProps) => {
+export const SearchInput = ({ searchQuery, handleInputChange, handleClick }: SearchProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSearch();
+    handleClick();
   };
 
   return (
