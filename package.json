@@ -1,7 +1,7 @@
 {
   "name": "rss-class-components",
   "type": "module",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
