@@ -16,7 +16,7 @@ export class TestError extends Component<Record<string, never>, TestErrorState> 
 
   render() {
     if (this.state.throwError) {
-      console.error('Testing error boundary');
+      throw new Error('Testing error boundary');
     }
 
     return <PrimaryButton onClick={this.handleClick}>Throw Error</PrimaryButton>;
