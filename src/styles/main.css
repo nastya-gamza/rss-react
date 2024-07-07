@@ -4,7 +4,7 @@
 html,
 body {
   min-height: 100vh;
-  max-width: 1200px;
+  /*max-width: 1200px;*/
   margin: 0 auto;
   font-family: 'DM Sans', sans-serif;
   color: #323232;
@@ -15,4 +15,12 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.error {
+  background-image: url('public/img/bg.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #FFF;
 }

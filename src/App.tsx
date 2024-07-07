@@ -8,7 +8,7 @@ function App() {
     <ErrorBoundary
       fallback={
         <Error
-          message={'Oops! Something went wrong... ☹️'}
+          message={'Oops! Something went wrong...'}
           handleRefresh={() => window.location.reload()}
         />
       }
