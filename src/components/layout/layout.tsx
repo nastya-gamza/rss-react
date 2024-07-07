@@ -5,14 +5,20 @@ import { fetchData } from '../../services/api.ts';
 import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
 import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils/utils.ts';
 import { Data } from '../../types';
+import { Loader } from '../loader';
+import { Error } from '../error';
 
 interface LayoutState {
+  loading: boolean;
+  error: boolean;
   searchQuery: string;
   data: Data | { info: Record<string, unknown>; results: [] };
 }
 
 export class Layout extends Component<Record<string, never>, LayoutState> {
   state = {
+    loading: false,
+    error: false,
     searchQuery: getItemFromLocalStorage('searchQuery'),
     data: { info: {}, results: [] },
   };
@@ -53,18 +59,45 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
     this.fetchByQuery(searchQuery);
   };
 
+  handleRefresh = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      searchQuery: '',
+      error: false,
+    }));
+    setItemToLocalStorage('searchQuery', '');
+    this.fetchByQuery('');
+  };
+
   fetchByQuery = async (searchQuery: string) => {
     try {
+      this.setState((prevState) => ({
+        ...prevState,
+        loading: true,
+        error: false,
+      }));
       const data = await fetchData<Data>(`${BASE_URL}/?${SEARCH_PARAM}=${searchQuery}`);
       this.setData(data);
     } catch (error) {
-      console.log(error);
+      this.setState((prevState) => ({
+        ...prevState,
+        error: true,
+      }));
+    } finally {
+      this.setState((prevState) => ({
+        ...prevState,
+        loading: false,
+      }));
     }
   };
 
   render() {
-    const { searchQuery, data } = this.state;
+    const { searchQuery, data, loading, error } = this.state;
     const { results = [] } = data;
+
+    if (error) {
+      return <Error handleRefresh={this.handleRefresh} />;
+    }
 
     return (
       <>
@@ -73,7 +106,7 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
           handleClick={this.handleClick}
           handleInputChange={this.handleInputChange}
         />
-        <Main results={results} />
+        {loading ? <Loader /> : <Main results={results} />}
       </>
     );
   }

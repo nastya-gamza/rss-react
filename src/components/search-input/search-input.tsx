@@ -32,7 +32,7 @@ export const SearchInput = ({ searchQuery, handleInputChange, handleClick }: Sea
       <input
         value={searchQuery}
         onChange={handleInputChange}
-        placeholder='Search for...'
+        placeholder='Search by name...'
         className={styles.input}
       />
     </form>
