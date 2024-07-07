@@ -8,6 +8,8 @@ import { Data } from '../../types';
 import { Loader } from '../loader';
 import { Error } from '../error';
 
+interface LayoutProps {}
+
 interface LayoutState {
   data: Data | { info: Record<string, unknown>; results: [] };
   loading: boolean;
@@ -15,7 +17,7 @@ interface LayoutState {
   searchQuery: string;
 }
 
-export class Layout extends Component<null, LayoutState> {
+export class Layout extends Component<LayoutProps, LayoutState> {
   state = {
     data: {
       info: {
