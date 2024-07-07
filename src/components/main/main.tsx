@@ -1,4 +1,4 @@
-import { CardItem } from '../card-item/card-item.tsx';
+import { CardItem } from '../card-item';
 import { TestError } from '../test-error';
 import { Character } from '../../types';
 import styles from './main.module.css';
