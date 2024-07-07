@@ -9,5 +9,6 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 270px));
   align-items: stretch;
   justify-content: center;
+  margin-top: 12px;
   gap: 30px;
 }

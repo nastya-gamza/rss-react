@@ -95,10 +95,6 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
     const { searchQuery, data, loading, error } = this.state;
     const { results = [] } = data;
 
-    if (error) {
-      return <Error handleRefresh={this.handleRefresh} />;
-    }
-
     return (
       <>
         <Header
@@ -106,7 +102,11 @@ export class Layout extends Component<Record<string, never>, LayoutState> {
           handleClick={this.handleClick}
           handleInputChange={this.handleInputChange}
         />
-        {loading ? <Loader /> : <Main results={results} />}
+        {loading && <Loader />}
+        {error && (
+          <Error message={'Oops! Nothing was found ☹️'} handleRefresh={this.handleRefresh} />
+        )}
+        {!loading && !error && <Main results={results} />}
       </>
     );
   }
