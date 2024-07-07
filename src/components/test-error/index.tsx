@@ -5,7 +5,7 @@ interface TestErrorState {
   throwError: boolean;
 }
 
-export class TestError extends Component<null, TestErrorState> {
+export class TestError extends Component<Record<string, never>, TestErrorState> {
   state: TestErrorState = {
     throwError: false,
   };
