@@ -1,0 +1,35 @@
+.search {
+  position: relative;
+  border-radius: 8px;
+}
+
+.input {
+  width: 300px;
+  padding: 14px 90px 14px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.input::placeholder {
+  color: #c5c3c3;
+}
+
+.btn {
+  position: absolute;
+  right: 0;
+  height: 100%;
+  width: 45px;
+  background: #6495edff;
+  border-radius: 0 8px 8px 0;
+}
+
+.loupe {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  fill: #fff;
+  transform: translateY(-50%);
+}

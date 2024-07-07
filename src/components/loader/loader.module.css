@@ -1,0 +1,21 @@
+.wrapper {
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.loader {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  fill: cornflowerblue;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
