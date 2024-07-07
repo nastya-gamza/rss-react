@@ -15,9 +15,17 @@ interface LayoutState {
   searchQuery: string;
 }
 
-export class Layout extends Component<Record<string, never>, LayoutState> {
+export class Layout extends Component<null, LayoutState> {
   state = {
-    data: { info: {}, results: [] },
+    data: {
+      info: {
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+      },
+      results: [],
+    },
     loading: false,
     error: false,
     searchQuery: getItemFromLocalStorage('searchQuery'),

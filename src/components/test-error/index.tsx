@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { PrimaryButton } from '../primary-button';
 
 interface TestErrorState {
