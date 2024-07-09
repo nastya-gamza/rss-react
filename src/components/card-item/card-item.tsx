@@ -18,10 +18,6 @@ export const CardItem = ({ character }: CardItemProps) => {
           {character?.species}
         </p>
         <p>
-          <b>Gender: </b>
-          {character?.gender}
-        </p>
-        <p>
           <b>Location: </b>
           {character?.location.name}
         </p>

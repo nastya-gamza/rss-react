@@ -1,4 +1,4 @@
-import { ChangeEvent, Component } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Header } from '../header';
 import { Main } from '../main';
 import { fetchData } from '../../services/api.ts';
@@ -7,93 +7,85 @@ import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils';
 import { Data } from '../../types';
 import { Loader } from '../loader';
 import { Error } from '../error';
+import { Outlet } from 'react-router-dom';
+import styles from './layout.module.css';
 
-interface LayoutProps {}
-
-interface LayoutState {
-  data: Data | { info: Record<string, unknown>; results: [] };
-  loading: boolean;
-  error: boolean;
-  searchQuery: string;
-}
-
-export class Layout extends Component<LayoutProps, LayoutState> {
-  state = {
-    data: {
-      info: {
-        count: 0,
-        pages: 0,
-        next: null,
-        prev: null,
-      },
-      results: [],
+export const Layout = () => {
+  const [data, setData] = useState<Data>({
+    info: {
+      count: 0,
+      pages: 0,
+      next: null,
+      prev: null,
     },
-    loading: false,
-    error: false,
-    searchQuery: getItemFromLocalStorage('searchQuery'),
+    results: [],
+  });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const { results = [] } = data;
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
-  componentDidMount() {
-    this.handleSearch();
-  }
-
-  updateState = (newState: Partial<LayoutState>) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      ...newState,
-    }));
+  const handleSearch = () => {
+    const savedSearchQuery = getItemFromLocalStorage('searchQuery') || searchQuery;
+    fetchByQuery(savedSearchQuery);
   };
 
-  handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    this.updateState({ searchQuery: e.target.value });
-  };
-
-  handleSearch = () => {
-    const searchQuery = getItemFromLocalStorage('searchQuery') || this.state.searchQuery;
-    this.fetchByQuery(searchQuery);
-  };
-
-  handleClick = () => {
-    const { searchQuery } = this.state;
+  const handleClick = () => {
     setItemToLocalStorage('searchQuery', searchQuery);
-    this.fetchByQuery(searchQuery);
+    fetchByQuery(searchQuery);
   };
 
-  handleRefresh = () => {
-    this.updateState({ searchQuery: '', error: false });
+  const handleRefresh = () => {
+    setSearchQuery('');
+    setError(false);
+    setSearchQuery('');
     setItemToLocalStorage('searchQuery', '');
-    this.fetchByQuery('');
+    fetchByQuery('');
   };
 
-  fetchByQuery = async (searchQuery: string) => {
+  const fetchByQuery = async (searchQuery: string) => {
     try {
-      this.updateState({ loading: true, error: false });
+      setLoading(true);
+      setError(false);
       const data = await fetchData<Data>(`${BASE_URL}/?${SEARCH_PARAM}=${searchQuery}`);
-      this.updateState({ data });
+      setData(data);
     } catch (error) {
-      this.updateState({ error: true });
+      setError(true);
     } finally {
-      this.updateState({ loading: false });
+      setLoading(false);
     }
   };
 
-  render() {
-    const { searchQuery, data, loading, error } = this.state;
-    const { results = [] } = data;
+  useEffect(() => {
+    handleSearch();
+  }, []);
 
-    return (
-      <>
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.main}>
         <Header
           searchQuery={searchQuery}
-          handleClick={this.handleClick}
-          handleInputChange={this.handleInputChange}
+          handleClick={handleClick}
+          handleInputChange={handleInputChange}
         />
         {loading && <Loader />}
         {error && (
-          <Error message={'Oops! Nothing was found ☹️'} handleRefresh={this.handleRefresh} />
+          <Error
+            message={'Oops! Nothing was found ☹️'}
+            btnText={'Try again'}
+            handleRefresh={handleRefresh}
+          />
         )}
         {!loading && !error && <Main results={results} />}
-      </>
-    );
-  }
-}
+      </div>
+      <div className={styles.outlet}>
+        <Outlet />
+      </div>
+    </div>
+  );
+};

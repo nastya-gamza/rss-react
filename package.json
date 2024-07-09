@@ -8,13 +8,14 @@
     "build": "tsc -b && vite build",
     "lint": "ESLINT_USE_FLAT_CONFIG=true npx eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "ESLINT_USE_FLAT_CONFIG=true npx eslint . --fix",
-    "format:fix": "prettier --write ./src",
+    "format:fix": "prettier --write -l ./src",
     "preview": "vite preview",
     "prepare": "husky"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.24.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.6.0",

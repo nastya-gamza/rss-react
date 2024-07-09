@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 12px 40px;
+  position: sticky;
+  top: 20%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.closeBtn {
+  font-size: 28px;
+  margin-bottom: 5px;
+}

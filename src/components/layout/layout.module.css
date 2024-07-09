@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+}
+
+.main {
+  flex: 1 1 auto;
+}
+
+.outlet {
+  border-left: 1px solid #c5c3c3;
+}

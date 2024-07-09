@@ -9,6 +9,7 @@ function App() {
       fallback={
         <Error
           message={'Oops! Something went wrong...'}
+          btnText={'Try again'}
           handleRefresh={() => window.location.reload()}
         />
       }
