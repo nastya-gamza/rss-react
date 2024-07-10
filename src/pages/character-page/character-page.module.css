@@ -1,9 +1,15 @@
 .container {
-  width: 100%;
+  min-width: 100%;
   margin: 0;
   padding: 12px 40px;
   position: sticky;
   top: 20%;
+}
+
+.loader {
+  min-width: 380px;
+  position: sticky;
+  top: 10%;
 }
 
 .header {
@@ -11,6 +17,18 @@
   align-items: center;
   justify-content: space-between;
   font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.name {
+  max-width: 280px;
+}
+
+.info {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .closeBtn {

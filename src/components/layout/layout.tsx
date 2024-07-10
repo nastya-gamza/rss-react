@@ -20,9 +20,9 @@ export const Layout = () => {
     },
     results: [],
   });
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState(getItemFromLocalStorage('searchQuery') || '');
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const { results = [] } = data;
 
@@ -31,8 +31,7 @@ export const Layout = () => {
   };
 
   const handleSearch = () => {
-    const savedSearchQuery = getItemFromLocalStorage('searchQuery') || searchQuery;
-    fetchByQuery(savedSearchQuery);
+    fetchByQuery(searchQuery);
   };
 
   const handleClick = () => {
