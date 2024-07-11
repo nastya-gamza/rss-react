@@ -3,7 +3,7 @@
   margin: 0;
   padding: 12px 40px;
   position: sticky;
-  top: 20%;
+  top: 16%;
 }
 
 .header {
@@ -16,6 +16,10 @@
 
 .name {
   max-width: 280px;
+}
+
+.img {
+  width: 100%;
 }
 
 .info {

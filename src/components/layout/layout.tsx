@@ -3,12 +3,13 @@ import { Header } from '../header';
 import { Main } from '../main';
 import { fetchData } from '../../services/api.ts';
 import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
-import { getItemFromLocalStorage, setItemToLocalStorage } from '../../utils';
 import { Data } from '../../types';
 import { Loader } from '../loader';
 import { Error } from '../error';
 import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import styles from './layout.module.css';
+import { useSearchQuery } from '../../hooks/useSearchQuery.ts';
+import { setItemToLocalStorage } from '../../utils';
 
 export const Layout = () => {
   const [data, setData] = useState<Data>({
@@ -20,7 +21,7 @@ export const Layout = () => {
     },
     results: [],
   });
-  const [searchQuery, setSearchQuery] = useState(getItemFromLocalStorage('searchQuery') || '');
+  const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
@@ -33,11 +34,8 @@ export const Layout = () => {
   const [currentPage, setCurrentPage] = useState(parseInt(page ?? 1));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
     setSearchQuery(e.target.value);
-  };
-
-  const handleSearch = () => {
-    fetchByQuery(searchQuery, currentPage);
   };
 
   const handleClick = () => {
@@ -78,7 +76,7 @@ export const Layout = () => {
   };
 
   useEffect(() => {
-    handleSearch();
+    fetchByQuery(searchQuery, currentPage);
   }, [currentPage]);
 
   return (

@@ -7,5 +7,6 @@
 }
 
 .outlet {
-  border-left: 1px solid #c5c3c3;
+  border-left: 1px solid #e3e3e3;
+  background-color: #f7f7f7;
 }

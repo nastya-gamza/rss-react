@@ -10,7 +10,7 @@ export const CardDetails = ({ character, handleClose }) => {
         </button>
       </header>
       <div>
-        <img src={character?.image} alt={`${character.name}'s image`} />
+        <img src={character?.image} className={styles.img} alt={`${character.name}'s image`} />
       </div>
       <div className={styles.info}>
         <p>
