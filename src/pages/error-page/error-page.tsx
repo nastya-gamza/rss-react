@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export const ErrorPage = () => {
   const navigate = useNavigate();
 
-  const handleNavigate = () => navigate('/rss-react');
+  const handleNavigate = () => navigate('/');
 
   return (
     <div className={'error'}>

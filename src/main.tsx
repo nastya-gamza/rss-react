@@ -7,12 +7,12 @@ import { CharacterPage } from './pages/character-page/character-page.tsx';
 
 const router = createBrowserRouter([
   {
-    path: '/rss-react/',
+    path: '/',
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: 'character/:id',
+        path: '/character',
         element: <CharacterPage />,
       },
     ],

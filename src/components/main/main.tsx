@@ -1,31 +1,42 @@
 import { CardItem } from '../card-item';
 import { Character } from '../../types';
-import styles from './main.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Pagination } from '../pagination';
+import styles from './main.module.css';
 
 interface MainProps {
   results: Character[];
+  currentPage: number;
+  setCurrentPage: (a: number) => void;
 }
 
-export const Main = ({ results }: MainProps) => {
+export const Main = ({ results, totalPages, currentPage, setCurrentPage }: MainProps) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const handleNavigate = () => {
-    if (pathname !== '/rss-react/') {
-      navigate('/rss-react/');
+  const handleCurrentPage = (page: number) => {
+    if (pathname === '/') {
+      setCurrentPage(page);
+      navigate(`?page=${page}`);
     }
   };
 
   return (
-    <main className={styles.container} onClick={handleNavigate}>
+    <main className={styles.container}>
       <ul className={styles.list}>
         {results.map((character) => (
-          <Link to={`/rss-react/character/${character.id}`} key={character.id}>
+          <Link to={`/character/?character=${character.id}&page=${currentPage}`} key={character.id}>
             <CardItem character={character} />
           </Link>
         ))}
       </ul>
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handleCurrentPage={handleCurrentPage}
+        />
+      )}
     </main>
   );
 };
