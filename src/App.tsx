@@ -1,6 +1,6 @@
-import { Layout } from './components/layout';
-import { Error } from './components/error';
-import { ErrorBoundary } from './components/error-boundary';
+import { Layout } from './components/Layout';
+import { Error } from './components/Error';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import './styles/main.css';
 
 function App() {

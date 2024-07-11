@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App.tsx';
-import { ErrorPage } from './pages/error-page';
-import { CharacterPage } from './pages/character-page/character-page.tsx';
+import { ErrorPage } from './pages/ErrorPage';
+import { CharacterPage } from './pages/CharacterPage';
 
 const router = createBrowserRouter([
   {
