@@ -12,7 +12,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '/character',
+        path: '/character/:id',
         element: <CharacterPage />,
       },
     ],

@@ -34,7 +34,6 @@ export const Layout = () => {
   const [currentPage, setCurrentPage] = useState(parseInt(page ?? 1));
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     setSearchQuery(e.target.value);
   };
 

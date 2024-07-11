@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../services/api.ts';
 import { BASE_URL } from '../../constants/api.ts';
@@ -13,8 +13,7 @@ export const CharacterPage = () => {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const id = searchParams.get('character');
+  const { id } = useParams();
 
   const fetchCharacter = async () => {
     try {

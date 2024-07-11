@@ -25,7 +25,7 @@ export const Main = ({ results, totalPages, currentPage, setCurrentPage }: MainP
     <main className={styles.container}>
       <ul className={styles.list}>
         {results.map((character) => (
-          <Link to={`/character/?character=${character.id}&page=${currentPage}`} key={character.id}>
+          <Link to={`/character/${character.id}/?page=${currentPage}`} key={character.id}>
             <CardItem character={character} />
           </Link>
         ))}

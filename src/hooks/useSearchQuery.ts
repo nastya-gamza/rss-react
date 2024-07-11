@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getItemFromLocalStorage, setItemToLocalStorage } from '../utils';
 
-export const useSearchQuery = (key) => {
+export const useSearchQuery = (key: string) => {
   const [searchQuery, setSearchQuery] = useState(getItemFromLocalStorage(key) || '');
 
   useEffect(() => {
