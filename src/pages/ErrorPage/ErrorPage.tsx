@@ -9,7 +9,7 @@ export const ErrorPage = () => {
   return (
     <div className={'error'}>
       <Error
-        message={'Oops! 404 | Page not found'}
+        message={'404 | Page not found'}
         btnText={'Back home'}
         handleRefresh={handleNavigate}
       />

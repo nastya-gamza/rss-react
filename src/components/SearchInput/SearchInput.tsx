@@ -1,15 +1,15 @@
-import React from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import SearchIcon from '/public/icons/search.svg?react';
 import styles from './SearchInput.module.css';
 
 interface SearchProps {
   searchQuery: string;
   handleClick: () => void;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const SearchInput = ({ searchQuery, handleInputChange, handleClick }: SearchProps) => {
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleClick();
   };

@@ -1,20 +1,12 @@
-import { SearchInput } from '../SearchInput';
+import { ReactNode } from 'react';
 import style from './Header.module.css';
 
 interface HeaderProps {
-  searchQuery: string;
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleClick: () => void;
+  children: ReactNode;
 }
 
-export const Header = ({ searchQuery, handleInputChange, handleClick }: HeaderProps) => (
+export const Header = ({ children }: HeaderProps) => (
   <header className={style.header}>
-    <div className={style.container}>
-      <SearchInput
-        searchQuery={searchQuery}
-        handleInputChange={handleInputChange}
-        handleClick={handleClick}
-      />
-    </div>
+    <div className={style.container}>{children}</div>
   </header>
 );

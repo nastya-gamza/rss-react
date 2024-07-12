@@ -29,16 +29,12 @@ export const usePagination = (
 
   const generatePageArray = (start, end) => [...Array(end - start).keys()].map((p) => p + start);
 
-  const pagesCut = getPaginationRange({ totalPages, currentPage });
-  const arrayOfPagesNumber = generatePageArray(pagesCut.start, pagesCut.end);
+  const paginationRange = getPaginationRange({ totalPages, currentPage });
+  const arrayOfPagesNumber = generatePageArray(paginationRange.start, paginationRange.end);
 
-  const handlePrevPage = () => {
-    handleCurrentPage(currentPage - 1);
-  };
+  const handlePrevPage = () => handleCurrentPage(currentPage - 1);
 
-  const handleNextPage = () => {
-    handleCurrentPage(currentPage + 1);
-  };
+  const handleNextPage = () => handleCurrentPage(currentPage + 1);
 
   return { arrayOfPagesNumber, handlePrevPage, handleNextPage };
 };

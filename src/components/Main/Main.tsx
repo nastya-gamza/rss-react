@@ -1,42 +1,18 @@
-import { CardItem } from '../CardItem';
-import { Character } from '../../types';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Pagination } from '../Pagination';
+import { ReactNode } from 'react';
+import { Loader } from '../Loader';
+import { Error } from '../Error';
 import styles from './Main.module.css';
 
 interface MainProps {
-  results: Character[];
-  currentPage: number;
-  setCurrentPage: (a: number) => void;
+  children: ReactNode;
+  loading: boolean;
+  error: boolean;
 }
 
-export const Main = ({ results, totalPages, currentPage, setCurrentPage }: MainProps) => {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-
-  const handleCurrentPage = (page: number) => {
-    if (pathname === '/') {
-      setCurrentPage(page);
-      navigate(`?page=${page}`);
-    }
-  };
-
-  return (
-    <main className={styles.container}>
-      <ul className={styles.list}>
-        {results.map((character) => (
-          <Link to={`/character/${character.id}/?page=${currentPage}`} key={character.id}>
-            <CardItem character={character} />
-          </Link>
-        ))}
-      </ul>
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handleCurrentPage={handleCurrentPage}
-        />
-      )}
-    </main>
-  );
-};
+export const Main = ({ children, loading, error }: MainProps) => (
+  <>
+    {loading && <Loader />}
+    {error && <Error message={'Nothing was found ☹️'} />}
+    {!loading && !error && <main className={styles.container}>{children}</main>}
+  </>
+);

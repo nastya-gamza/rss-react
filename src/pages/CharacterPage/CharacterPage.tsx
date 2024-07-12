@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { fetchData } from '../../services/api.ts';
 import { BASE_URL } from '../../constants/api.ts';
@@ -12,7 +12,9 @@ export const CharacterPage = () => {
   const [character, setCharacter] = useState<Character | null>(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
   const { id } = useParams();
 
   const fetchCharacter = async () => {
@@ -29,12 +31,7 @@ export const CharacterPage = () => {
   };
 
   const handleClose = () => {
-    navigate(-1);
-  };
-
-  const handleRefresh = () => {
-    setError(false);
-    handleClose();
+    navigate(`/${location.search}`);
   };
 
   useEffect(() => {
@@ -43,14 +40,10 @@ export const CharacterPage = () => {
 
   return (
     <>
-      <div className={styles.loader}>{loading && <Loader />}</div>
-      {error && (
-        <Error
-          message={'Oops! Nothing was found ☹️'}
-          btnText={'Try again'}
-          handleRefresh={handleRefresh}
-        />
-      )}
+      <div className={styles.wrapper}>
+        {loading && <Loader />}
+        {error && <Error message='Nothing was found ☹️' />}
+      </div>
       {character && !loading && <CardDetails character={character} handleClose={handleClose} />}
     </>
   );

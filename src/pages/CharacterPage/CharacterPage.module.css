@@ -1,5 +1,4 @@
-.loader {
+.wrapper {
   min-width: 380px;
   position: sticky;
-  top: 10%;
 }
