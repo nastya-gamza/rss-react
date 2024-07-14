@@ -1,0 +1,15 @@
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 15px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 270px));
+  align-items: stretch;
+  justify-content: center;
+  margin-top: 12px;
+  gap: 30px;
+}

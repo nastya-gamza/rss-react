@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+}
+
+.main {
+  flex: 1 1 auto;
+}
+
+.outlet {
+  border-left: 1px solid #e3e3e3;
+  background-color: #f7f7f7;
+}
+
+.blur {
+  filter: blur(3px) grayscale(20%);
+}

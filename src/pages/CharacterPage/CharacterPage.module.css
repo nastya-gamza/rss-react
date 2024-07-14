@@ -1,0 +1,8 @@
+.page {
+  height: 100%;
+}
+
+.wrapper {
+  min-width: 380px;
+  position: sticky;
+}

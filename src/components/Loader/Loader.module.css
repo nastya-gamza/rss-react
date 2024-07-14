@@ -1,0 +1,24 @@
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100dvh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.loader {
+  width: 45px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 6px solid cornflowerblue;
+  border-right-color: #fff;
+  animation: l2 1s infinite linear;
+}
+@keyframes l2 {
+  to {
+    transform: rotate(1turn);
+  }
+}
