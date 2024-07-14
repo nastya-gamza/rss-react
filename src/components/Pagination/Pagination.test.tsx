@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { Pagination } from './Pagination';
-import { usePagination } from '../../hooks/usePagination';
+import { usePagination } from '../../hooks';
 
-jest.mock('../../hooks/usePagination');
+jest.mock('../../hooks/usePagination/usePagination.ts');
 
 const mockNavigate = jest.fn();
 jest.mock('react-router-dom', () => ({
@@ -11,7 +11,7 @@ jest.mock('react-router-dom', () => ({
   useNavigate: () => mockNavigate,
 }));
 
-describe('Pagination component', () => {
+describe('PAGINATION TEST', () => {
   const handleCurrentPage = jest.fn();
 
   beforeEach(() => {
@@ -46,41 +46,4 @@ describe('Pagination component', () => {
     fireEvent.click(screen.getByText('4'));
     expect(handleCurrentPage).toHaveBeenCalledWith(4);
   });
-
-  // it('updates the URL query parameter when page changes', () => {
-  //   const TestComponent = () => {
-  //     const location = useLocation();
-  //     return (
-  //       <>
-  //         <Pagination currentPage={3} totalPages={10} handleCurrentPage={handleCurrentPage} />
-  //         <div data-testid='location-display'>{location.search}</div>
-  //       </>
-  //     );
-  //   };
-  //
-  //   render(
-  //     <MemoryRouter initialEntries={['/?page=3']}>
-  //       <Routes>
-  //         <Route path='/' element={<TestComponent />} />
-  //       </Routes>
-  //     </MemoryRouter>,
-  //   );
-  //
-  //   fireEvent.click(screen.getByText('4'));
-  //   expect(handleCurrentPage).toHaveBeenCalledWith(4);
-  //
-  //   fireEvent.click(screen.getByText('5'));
-  //   expect(handleCurrentPage).toHaveBeenCalledWith(5);
-  // });
-
-  // it('navigates to SecondaryPage when button is clicked', () => {
-  //   render(
-  //     <MemoryRouter initialEntries={['/']}>
-  //       <Pagination currentPage={3} totalPages={10} handleCurrentPage={handleCurrentPage} />
-  //     </MemoryRouter>,
-  //   );
-  //
-  //   userEvent.click(screen.getByText('4'));
-  //   expect(mockNavigate).toHaveBeenNthCalledWith(1, '/?page=4');
-  // });
 });

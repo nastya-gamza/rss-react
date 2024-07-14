@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Header } from './Header.tsx';
 
-describe('Header component', () => {
+describe('HEADER TEST', () => {
   test('renders children correctly', () => {
     render(<Header>Test Header</Header>);
 

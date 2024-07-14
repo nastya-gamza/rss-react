@@ -1,4 +1,4 @@
-import { generatePageArray } from '../utils/pagination.ts';
+import { generatePageArray } from '../../utils/pagination.ts';
 
 const PAGINATION_PAGE_QUANTITY = 7;
 

@@ -3,33 +3,12 @@ import axios from 'axios';
 import { CharacterPage } from '../../pages/CharacterPage';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { CardList } from '../CardList/CardList.tsx';
-import { mockCharacters } from '../CardList/CardList.test.tsx';
 import { userEvent } from '@testing-library/user-event';
 import { CardDetails } from './CardDetails.tsx';
+import { mockCharacter, mockCharacters } from '../../__mocks__/characters.ts';
 
 jest.mock('axios');
 const handleClose = jest.fn();
-
-const mockCharacter = {
-  id: 1,
-  name: 'Rick Sanchez',
-  status: 'Alive',
-  species: 'Human',
-  type: '-',
-  gender: 'Male',
-  origin: {
-    name: 'Earth',
-    url: '',
-  },
-  location: {
-    name: 'Citadel of Ricks',
-    url: '',
-  },
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-  episode: [],
-  url: '',
-  created: '',
-};
 
 describe('CARD_DETAILS TEST', () => {
   beforeEach(() => {

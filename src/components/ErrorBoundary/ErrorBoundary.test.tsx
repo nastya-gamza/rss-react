@@ -21,7 +21,7 @@ class ErrorThrowingComponent extends Component<ErrorBoundaryProps, ErrorBoundary
   }
 }
 
-describe('ErrorBoundary Component', () => {
+describe('ERROR_BOUNDARY TEST', () => {
   test('should display fallback UI when a child component throws an error', () => {
     const fallbackUI = 'Something went wrong.';
 

@@ -1,4 +1,4 @@
-export { usePagination } from './usePagination.ts';
-export { useFetch } from './useFetch.ts';
-export { useSearchQuery } from './useSearchQuery.ts';
-export { useNavigation } from './useNavigation.ts';
+export { usePagination } from './usePagination';
+export { useFetch } from './useFetch';
+export { useSearchQuery } from './useSearchQuery';
+export { useNavigation } from './useNavigation';

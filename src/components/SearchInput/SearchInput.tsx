@@ -1,9 +1,9 @@
-import { ChangeEvent, FormEvent } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, SetStateAction } from 'react';
 import styles from './SearchInput.module.css';
 
 interface SearchProps {
   searchQuery: string;
-  setSearchQuery: (e: string) => void;
+  setSearchQuery: Dispatch<SetStateAction<string>>;
   handleClick: () => void;
 }
 

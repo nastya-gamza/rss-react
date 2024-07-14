@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
 import { Main } from '../Main';
@@ -11,6 +11,7 @@ import { SearchInput } from '../SearchInput';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import styles from './Layout.module.css';
+import classNames from 'classnames';
 
 export const Layout = () => {
   const [data, setData] = useState<Data>({
@@ -37,28 +38,31 @@ export const Layout = () => {
     },
   );
 
-  const { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate } =
+  const { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate, pathname } =
     useNavigation();
 
   const handleClick = () => {
-    setItemToLocalStorage('searchQuery', searchQuery as string);
-    fetching(searchQuery as string, 1);
+    setItemToLocalStorage('searchQuery', searchQuery);
+    fetching(searchQuery, 1);
     setCurrentPage(1);
     navigate(`/?page=${1}`);
   };
 
   useEffect(() => {
-    fetching(searchQuery as string, currentPage);
+    fetching(searchQuery, currentPage);
   }, [currentPage]);
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.main} onClick={handleNavigate}>
+      <div
+        className={classNames(styles.main, { [styles.blur]: pathname.includes('character') })}
+        onClick={handleNavigate}
+      >
         <Header>
           <SearchInput
-            searchQuery={searchQuery as string}
+            searchQuery={searchQuery}
             handleClick={handleClick}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={setSearchQuery as Dispatch<SetStateAction<string>>}
           />
         </Header>
         <Main loading={isLoading} error={isError}>

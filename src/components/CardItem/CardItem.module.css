@@ -14,6 +14,11 @@
   transform: scale(1.03);
 }
 
+.card.noHover {
+  cursor: auto;
+  transform: none;
+}
+
 .info {
   padding: 15px 10px 20px;
 

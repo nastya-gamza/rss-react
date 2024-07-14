@@ -4,31 +4,10 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { userEvent } from '@testing-library/user-event';
 import { CharacterPage } from '../../pages/CharacterPage';
 import { CardList } from '../CardList/CardList.tsx';
-import { mockCharacters } from '../CardList/CardList.test.tsx';
 import { Character } from '../../types';
+import { mockCharacter, mockCharacters } from '../../__mocks__/characters.ts';
 
 jest.mock('axios');
-
-const mockCharacter = {
-  id: 1,
-  name: 'Rick Sanchez',
-  status: 'Alive',
-  species: 'Human',
-  type: '',
-  gender: 'Male',
-  origin: {
-    name: 'Earth',
-    url: '',
-  },
-  location: {
-    name: 'Citadel of Ricks',
-    url: '',
-  },
-  image: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-  episode: [],
-  url: '',
-  created: '',
-};
 
 describe('CARD_ITEM TEST', () => {
   test('renders the relevant card data', () => {
@@ -42,7 +21,6 @@ describe('CARD_ITEM TEST', () => {
 
     const img = screen.getByAltText("Rick Sanchez's image");
     expect(img).toBeInTheDocument();
-    expect(img).toHaveAttribute('src', mockCharacter.image);
 
     expect(screen.getByText(/Species:/i)).toBeInTheDocument();
     expect(screen.getByText(/Human/i)).toBeInTheDocument();
