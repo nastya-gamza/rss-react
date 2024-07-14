@@ -10,15 +10,13 @@ export interface Info {
   prev: string | null;
 }
 
-export type Gender = 'female' | 'male' | 'genderless' | 'unknown';
-
 export interface Character {
   id: number;
   name: string;
   status: string;
   species: string;
   type: string;
-  gender: Gender;
+  gender: string;
   origin: {
     name: string;
     url: string;

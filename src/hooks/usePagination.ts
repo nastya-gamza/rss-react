@@ -1,3 +1,5 @@
+import { generatePageArray } from '../utils/pagination.ts';
+
 const PAGINATION_PAGE_QUANTITY = 7;
 
 export const usePagination = (
@@ -5,7 +7,13 @@ export const usePagination = (
   totalPages: number,
   handleCurrentPage: (page: number) => void,
 ) => {
-  const getPaginationRange = ({ totalPages, currentPage }) => {
+  const getPaginationRange = ({
+    totalPages,
+    currentPage,
+  }: {
+    totalPages: number;
+    currentPage: number;
+  }) => {
     const startingHalfOfPages = Math.ceil(PAGINATION_PAGE_QUANTITY / 2);
     const endingHalfOfPages = Math.floor(PAGINATION_PAGE_QUANTITY / 2);
 
@@ -26,8 +34,6 @@ export const usePagination = (
       end: currentPage + endingHalfOfPages + 1,
     };
   };
-
-  const generatePageArray = (start, end) => [...Array(end - start).keys()].map((p) => p + start);
 
   const paginationRange = getPaginationRange({ totalPages, currentPage });
   const arrayOfPagesNumber = generatePageArray(paginationRange.start, paginationRange.end);

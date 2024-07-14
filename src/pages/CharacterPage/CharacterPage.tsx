@@ -7,44 +7,35 @@ import { Loader } from '../../components/Loader';
 import { Error } from '../../components/Error';
 import { CardDetails } from '../../components/CardDetails';
 import styles from './CharacterPage.module.css';
+import { useFetch } from '../../hooks';
 
 export const CharacterPage = () => {
   const [character, setCharacter] = useState<Character | null>(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
 
-  const fetchCharacter = async () => {
-    try {
-      setLoading(true);
-      const character = await fetchData<Character>(`${BASE_URL}/${id}`);
-      setCharacter(character);
-      setError(false);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [fetching, isLoading, isError] = useFetch(async () => {
+    const character = await fetchData<Character>(`${BASE_URL}/${id}`);
+    setCharacter(character);
+  });
 
   const handleClose = () => {
     navigate(`/${location.search}`);
   };
 
   useEffect(() => {
-    fetchCharacter();
+    fetching();
   }, []);
 
   return (
-    <>
+    <div data-testid='character-page' className={styles.page}>
       <div className={styles.wrapper}>
-        {loading && <Loader />}
-        {error && <Error message='Nothing was found ☹️' />}
+        {isLoading && <Loader />}
+        {isError && <Error message='Nothing was found ☹️' />}
       </div>
-      {character && !loading && <CardDetails character={character} handleClose={handleClose} />}
-    </>
+      {character && !isLoading && <CardDetails character={character} handleClose={handleClose} />}
+    </div>
   );
 };

@@ -1,6 +1,5 @@
 import classNames from 'classnames';
-import ArrowIcon from '/public/icons/arrow.svg?react';
-import { usePagination } from '../../hooks/usePagination.ts';
+import { usePagination } from '../../hooks';
 import styles from './Pagination.module.css';
 
 interface PaginationProps {
@@ -20,7 +19,7 @@ export const Pagination = ({ currentPage, totalPages, handleCurrentPage }: Pagin
     <div className={styles.pagination}>
       {currentPage > 1 && (
         <button className={styles.arrowBtn} onClick={handlePrevPage}>
-          <ArrowIcon />
+          {'<'}
         </button>
       )}
       {arrayOfPagesNumber.map((page) => (
@@ -35,11 +34,8 @@ export const Pagination = ({ currentPage, totalPages, handleCurrentPage }: Pagin
         </button>
       ))}
       {currentPage < totalPages && (
-        <button
-          className={classNames(styles.arrowBtn, styles.arrowBtnNext)}
-          onClick={handleNextPage}
-        >
-          <ArrowIcon />
+        <button className={styles.arrowBtn} onClick={handleNextPage}>
+          {'>'}
         </button>
       )}
     </div>

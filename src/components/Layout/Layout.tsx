@@ -1,11 +1,11 @@
-import { ChangeEvent, useEffect, useState } from 'react';
-import { Outlet, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Outlet } from 'react-router-dom';
 import { Header } from '../Header';
 import { Main } from '../Main';
 import { fetchData } from '../../services/api.ts';
 import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
 import { Data } from '../../types';
-import { useSearchQuery } from '../../hooks/useSearchQuery.ts';
+import { useSearchQuery, useFetch, useNavigation } from '../../hooks';
 import { setItemToLocalStorage } from '../../utils';
 import { SearchInput } from '../SearchInput';
 import { CardList } from '../CardList/CardList.tsx';
@@ -23,58 +23,32 @@ export const Layout = () => {
     results: [],
   });
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const { results = [] } = data;
-  const [searchParams] = useSearchParams();
-  const page = searchParams.get('page');
-  const [currentPage, setCurrentPage] = useState(parseInt(page ?? 1));
 
-  const fetchByQuery = async (searchQuery: string, currentPage: number) => {
-    try {
-      setLoading(true);
-      setError(false);
+  const { results = [] } = data;
+
+  const [fetching, isLoading, isError] = useFetch(
+    async (searchQuery: string, currentPage: number) => {
       const data = await fetchData<Data>(
         `${BASE_URL}/?${SEARCH_PARAM}=${searchQuery}&page=${currentPage}`,
       );
       setData(data);
       setTotalPages(data.info.pages);
-    } catch (error) {
-      setError(true);
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+  );
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
+  const { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate } =
+    useNavigation();
 
   const handleClick = () => {
-    setItemToLocalStorage('searchQuery', searchQuery);
-    fetchByQuery(searchQuery, 1);
+    setItemToLocalStorage('searchQuery', searchQuery as string);
+    fetching(searchQuery as string, 1);
     setCurrentPage(1);
     navigate(`/?page=${1}`);
   };
 
-  const handleNavigate = () => {
-    if (pathname !== '/') {
-      navigate(`/?page=${page}`);
-    }
-  };
-
-  const handleCurrentPage = (page: number) => {
-    if (pathname === '/') {
-      setCurrentPage(page);
-      navigate(`?page=${page}`);
-    }
-  };
-
   useEffect(() => {
-    fetchByQuery(searchQuery, currentPage);
+    fetching(searchQuery as string, currentPage);
   }, [currentPage]);
 
   return (
@@ -82,12 +56,12 @@ export const Layout = () => {
       <div className={styles.main} onClick={handleNavigate}>
         <Header>
           <SearchInput
-            searchQuery={searchQuery}
+            searchQuery={searchQuery as string}
             handleClick={handleClick}
-            handleInputChange={handleInputChange}
+            setSearchQuery={setSearchQuery}
           />
         </Header>
-        <Main loading={loading} error={error}>
+        <Main loading={isLoading} error={isError}>
           <CardList results={results} currentPage={currentPage} />
           {totalPages > 1 && (
             <Pagination

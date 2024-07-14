@@ -1,12 +1,11 @@
+import axios from 'axios';
+
 export const fetchData = async <T>(url: string): Promise<T> => {
   try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error('Fetch error');
-    }
-    return await response.json();
+    const response = await axios.get(url);
+    return response.data;
   } catch (error) {
-    console.error(error);
+    console.error('Error fetching data:', error);
     throw error;
   }
 };

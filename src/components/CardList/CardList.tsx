@@ -11,7 +11,11 @@ interface CardListProps {
 export const CardList = ({ results, currentPage }: CardListProps) => (
   <ul className={styles.list}>
     {results.map((character) => (
-      <Link to={`/character/${character.id}/?page=${currentPage}`} key={character.id}>
+      <Link
+        to={`/character/${character.id}/?page=${currentPage}`}
+        key={character.id}
+        data-testid='card-item'
+      >
         <CardItem character={character} />
       </Link>
     ))}

@@ -8,9 +8,11 @@ interface ErrorProps {
 }
 
 export const Error = ({ message, btnText, handleRefresh }: ErrorProps) => (
-  <div className={styles.wrapper}>
+  <div className={styles.wrapper} data-testid='error-page'>
     <p className={styles.message}>Oops!</p>
-    <h3 className={styles.message}>{message}</h3>
+    <h3 className={styles.message} data-testid='error-message'>
+      {message}
+    </h3>
     {Boolean(btnText) && <PrimaryButton onClick={handleRefresh}>{btnText}</PrimaryButton>}
   </div>
 );

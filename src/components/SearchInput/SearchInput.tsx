@@ -1,14 +1,17 @@
 import { ChangeEvent, FormEvent } from 'react';
-import SearchIcon from '/public/icons/search.svg?react';
 import styles from './SearchInput.module.css';
 
 interface SearchProps {
   searchQuery: string;
+  setSearchQuery: (e: string) => void;
   handleClick: () => void;
-  handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const SearchInput = ({ searchQuery, handleInputChange, handleClick }: SearchProps) => {
+export const SearchInput = ({ searchQuery, setSearchQuery, handleClick }: SearchProps) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     handleClick();
@@ -16,8 +19,8 @@ export const SearchInput = ({ searchQuery, handleInputChange, handleClick }: Sea
 
   return (
     <form className={styles.search} onSubmit={handleSubmit}>
-      <button className={styles.btn}>
-        <SearchIcon className={styles.loupe} />
+      <button className={styles.btn} data-testid='search-btn'>
+        Search
       </button>
       <input
         value={searchQuery}

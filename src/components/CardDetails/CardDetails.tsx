@@ -7,10 +7,10 @@ interface CardDetailsProps {
 }
 
 export const CardDetails = ({ character, handleClose }: CardDetailsProps) => (
-  <div className={styles.container}>
+  <div className={styles.container} data-testid='card-details'>
     <header className={styles.header}>
       <h3 className={styles.name}>{character?.name}</h3>
-      <button className={styles.closeBtn} onClick={handleClose}>
+      <button className={styles.closeBtn} onClick={handleClose} data-testid='close-btn'>
         x
       </button>
     </header>

@@ -10,16 +10,15 @@
 }
 
 .loader {
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  color: #fff;
-  fill: cornflowerblue;
-  animation: spin 1s linear infinite;
+  width: 45px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 6px solid cornflowerblue;
+  border-right-color: #fff;
+  animation: l2 1s infinite linear;
 }
-
-@keyframes spin {
+@keyframes l2 {
   to {
-    transform: rotate(360deg);
+    transform: rotate(1turn);
   }
 }
