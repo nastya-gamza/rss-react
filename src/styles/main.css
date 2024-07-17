@@ -6,8 +6,22 @@ body {
   min-height: 100vh;
   margin: 0 auto;
   font-family: 'DM Sans', sans-serif;
-  color: #323232;
-  background-color: #fff;
+  color: var(--font-color);
+  background-color: var(--bg-color);
+}
+
+:root {
+  --font-color: #323232;
+  --bg-color: #F1F5F9FF;
+  --card-color: #fff;
+  --header-color: #cbc3e3;
+}
+
+:root[data-theme='dark'] {
+  --font-color: #fff;
+  --bg-color: #1A222CFF;
+  --card-color: #24303FFF;
+  --header-color: #24303FFF;
 }
 
 #root {

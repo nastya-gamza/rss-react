@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import classNames from 'classnames';
 import { Header } from '../Header';
 import { Main } from '../Main';
 import { fetchData } from '../../services/api.ts';
@@ -10,8 +11,8 @@ import { setItemToLocalStorage } from '../../utils';
 import { SearchInput } from '../SearchInput';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
+import { ThemeToggle } from '../ThemeToggle';
 import styles from './Layout.module.css';
-import classNames from 'classnames';
 
 export const Layout = () => {
   const [data, setData] = useState<Data>({
@@ -64,6 +65,7 @@ export const Layout = () => {
             handleClick={handleClick}
             setSearchQuery={setSearchQuery as Dispatch<SetStateAction<string>>}
           />
+          <ThemeToggle />
         </Header>
         <Main loading={isLoading} error={isError}>
           <CardList results={results} currentPage={currentPage} />

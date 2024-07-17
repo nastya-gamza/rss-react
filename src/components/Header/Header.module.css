@@ -5,7 +5,7 @@
   width: 100%;
   z-index: 3;
   height: 100px;
-  background-color: #cbc3e3;
+  background-color: var(--header-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   h1 {
