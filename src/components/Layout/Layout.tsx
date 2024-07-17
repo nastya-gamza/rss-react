@@ -3,53 +3,37 @@ import { Outlet } from 'react-router-dom';
 import classNames from 'classnames';
 import { Header } from '../Header';
 import { Main } from '../Main';
-import { fetchData } from '../../services/api.ts';
-import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
-import { Data } from '../../types';
-import { useSearchQuery, useFetch, useNavigation } from '../../hooks';
+import { useSearchQuery, useNavigation } from '../../hooks';
 import { setItemToLocalStorage } from '../../utils';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import styles from './Layout.module.css';
+import { useGetAllCharactersQuery } from '../../store/api/characters-api.ts';
 
 export const Layout = () => {
-  const [data, setData] = useState<Data>({
-    info: {
-      count: 0,
-      pages: 0,
-      next: null,
-      prev: null,
-    },
-    results: [],
-  });
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [totalPages, setTotalPages] = useState(0);
-
-  const { results = [] } = data;
-
-  const [fetching, isLoading, isError] = useFetch(
-    async (searchQuery: string, currentPage: number) => {
-      const data = await fetchData<Data>(
-        `${BASE_URL}/?${SEARCH_PARAM}=${searchQuery}&page=${currentPage}`,
-      );
-      setData(data);
-      setTotalPages(data.info.pages);
-    },
-  );
 
   const { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate, pathname } =
     useNavigation();
 
-  const handleClick = () => {
+  const { data, isLoading, isError, refetch } = useGetAllCharactersQuery({
+    name: searchQuery,
+    page: currentPage,
+  });
+
+  const handleClick = async () => {
     setItemToLocalStorage('searchQuery', searchQuery);
-    fetching(searchQuery, 1);
+    await refetch(searchQuery, 1);
     setCurrentPage(1);
     navigate(`/?page=${1}`);
   };
 
   useEffect(() => {
-    fetching(searchQuery, currentPage);
-  }, [currentPage]);
+    if (data?.info?.pages) {
+      setTotalPages(data.info.pages);
+    }
+  }, [data?.info?.pages]);
 
   return (
     <div className={styles.wrapper}>
@@ -63,7 +47,7 @@ export const Layout = () => {
           setSearchQuery={setSearchQuery}
         />
         <Main loading={isLoading} error={isError}>
-          <CardList results={results} currentPage={currentPage} />
+          {data?.results && <CardList results={data?.results} currentPage={currentPage} />}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
