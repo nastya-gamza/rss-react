@@ -5,7 +5,8 @@ export const store = configureStore({
   reducer: {
     [charactersApi.reducerPath]: charactersApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(charactersApi.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(charactersApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

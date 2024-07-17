@@ -13,6 +13,8 @@ export const Error = ({ message, btnText, handleRefresh }: ErrorProps) => (
     <h3 className={styles.message} data-testid='error-message'>
       {message}
     </h3>
-    {Boolean(btnText) && <PrimaryButton onClick={handleRefresh}>{btnText}</PrimaryButton>}
+    {Boolean(btnText) && (
+      <PrimaryButton onClick={handleRefresh}>{btnText}</PrimaryButton>
+    )}
   </div>
 );

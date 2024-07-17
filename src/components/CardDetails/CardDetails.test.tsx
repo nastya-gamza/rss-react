@@ -19,7 +19,10 @@ describe('CARD_DETAILS TEST', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
         <Routes>
-          <Route path='/' element={<CardList results={mockCharacters} currentPage={1} />} />
+          <Route
+            path='/'
+            element={<CardList results={mockCharacters} currentPage={1} />}
+          />
           <Route path='/character/:id' element={<CharacterPage />} />
         </Routes>
       </MemoryRouter>,

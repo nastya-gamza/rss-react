@@ -25,7 +25,11 @@ describe('PAGINATION TEST', () => {
   it('renders pagination buttons correctly', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <Pagination currentPage={3} totalPages={10} handleCurrentPage={handleCurrentPage} />
+        <Pagination
+          currentPage={3}
+          totalPages={10}
+          handleCurrentPage={handleCurrentPage}
+        />
       </MemoryRouter>,
     );
 
@@ -39,7 +43,11 @@ describe('PAGINATION TEST', () => {
   it('calls handleCurrentPage with correct page number', () => {
     render(
       <MemoryRouter initialEntries={['/']}>
-        <Pagination currentPage={3} totalPages={10} handleCurrentPage={handleCurrentPage} />
+        <Pagination
+          currentPage={3}
+          totalPages={10}
+          handleCurrentPage={handleCurrentPage}
+        />
       </MemoryRouter>,
     );
 

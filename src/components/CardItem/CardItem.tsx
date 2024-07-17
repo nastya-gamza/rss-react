@@ -12,7 +12,9 @@ export const CardItem = ({ character }: CardItemProps) => {
 
   return (
     <li
-      className={classNames(styles.card, { [styles.noHover]: pathname.includes('character') })}
+      className={classNames(styles.card, {
+        [styles.noHover]: pathname.includes('character'),
+      })}
       data-testid='card-item'
     >
       <div className={styles.img}>

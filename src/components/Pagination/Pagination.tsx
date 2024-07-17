@@ -8,7 +8,11 @@ interface PaginationProps {
   handleCurrentPage: (page: number) => void;
 }
 
-export const Pagination = ({ currentPage, totalPages, handleCurrentPage }: PaginationProps) => {
+export const Pagination = ({
+  currentPage,
+  totalPages,
+  handleCurrentPage,
+}: PaginationProps) => {
   const { arrayOfPagesNumber, handlePrevPage, handleNextPage } = usePagination(
     currentPage,
     totalPages,

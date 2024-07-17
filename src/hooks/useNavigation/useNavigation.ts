@@ -22,5 +22,12 @@ export const useNavigation = () => {
     }
   };
 
-  return { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate, pathname };
+  return {
+    handleNavigate,
+    handleCurrentPage,
+    currentPage,
+    setCurrentPage,
+    navigate,
+    pathname,
+  };
 };

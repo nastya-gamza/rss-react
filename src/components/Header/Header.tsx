@@ -9,7 +9,11 @@ interface HeaderProps {
   handleClick: () => void;
 }
 
-export const Header = ({ searchQuery, handleClick, setSearchQuery }: HeaderProps) => (
+export const Header = ({
+  searchQuery,
+  handleClick,
+  setSearchQuery,
+}: HeaderProps) => (
   <header className={style.header}>
     <div className={style.container}>
       <SearchInput

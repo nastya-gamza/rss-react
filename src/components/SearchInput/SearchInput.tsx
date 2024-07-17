@@ -7,7 +7,11 @@ interface SearchProps {
   handleClick: () => void;
 }
 
-export const SearchInput = ({ searchQuery, setSearchQuery, handleClick }: SearchProps) => {
+export const SearchInput = ({
+  searchQuery,
+  setSearchQuery,
+  handleClick,
+}: SearchProps) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };

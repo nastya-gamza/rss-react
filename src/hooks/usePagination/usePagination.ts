@@ -26,7 +26,10 @@ export const usePagination = (
     }
 
     if (currentPage + endingHalfOfPages >= totalPages) {
-      return { start: totalPages - PAGINATION_PAGE_QUANTITY + 1, end: totalPages + 1 };
+      return {
+        start: totalPages - PAGINATION_PAGE_QUANTITY + 1,
+        end: totalPages + 1,
+      };
     }
 
     return {
@@ -36,7 +39,10 @@ export const usePagination = (
   };
 
   const paginationRange = getPaginationRange({ totalPages, currentPage });
-  const arrayOfPagesNumber = generatePageArray(paginationRange.start, paginationRange.end);
+  const arrayOfPagesNumber = generatePageArray(
+    paginationRange.start,
+    paginationRange.end,
+  );
 
   const handlePrevPage = () => handleCurrentPage(currentPage - 1);
 

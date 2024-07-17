@@ -12,16 +12,16 @@ body {
 
 :root {
   --font-color: #323232;
-  --bg-color: #F1F5F9FF;
+  --bg-color: #f1f5f9ff;
   --card-color: #fff;
   --header-color: #cbc3e3;
 }
 
 :root[data-theme='dark'] {
   --font-color: #fff;
-  --bg-color: #1A222CFF;
-  --card-color: #24303FFF;
-  --header-color: #24303FFF;
+  --bg-color: #1a222cff;
+  --card-color: #24303fff;
+  --header-color: #24303fff;
 }
 
 #root {

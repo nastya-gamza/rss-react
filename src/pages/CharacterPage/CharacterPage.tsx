@@ -35,7 +35,9 @@ export const CharacterPage = () => {
         {isLoading && <Loader />}
         {isError && <Error message='Nothing was found ☹️' />}
       </div>
-      {character && !isLoading && <CardDetails character={character} handleClose={handleClose} />}
+      {character && !isLoading && (
+        <CardDetails character={character} handleClose={handleClose} />
+      )}
     </div>
   );
 };

@@ -14,8 +14,14 @@ export const Layout = () => {
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [totalPages, setTotalPages] = useState(0);
 
-  const { handleNavigate, handleCurrentPage, currentPage, setCurrentPage, navigate, pathname } =
-    useNavigation();
+  const {
+    handleNavigate,
+    handleCurrentPage,
+    currentPage,
+    setCurrentPage,
+    navigate,
+    pathname,
+  } = useNavigation();
 
   const { data, isLoading, isError, refetch } = useGetAllCharactersQuery({
     name: searchQuery,
@@ -38,7 +44,9 @@ export const Layout = () => {
   return (
     <div className={styles.wrapper}>
       <div
-        className={classNames(styles.main, { [styles.blur]: pathname.includes('character') })}
+        className={classNames(styles.main, {
+          [styles.blur]: pathname.includes('character'),
+        })}
         onClick={handleNavigate}
       >
         <Header
@@ -47,7 +55,9 @@ export const Layout = () => {
           setSearchQuery={setSearchQuery}
         />
         <Main loading={isLoading} error={isError}>
-          {data?.results && <CardList results={data?.results} currentPage={currentPage} />}
+          {data?.results && (
+            <CardList results={data?.results} currentPage={currentPage} />
+          )}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}

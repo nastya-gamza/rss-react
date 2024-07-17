@@ -11,7 +11,10 @@ interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-class ErrorThrowingComponent extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+class ErrorThrowingComponent extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   componentDidMount() {
     throw new Error('Test error');
   }

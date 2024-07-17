@@ -11,10 +11,16 @@ describe('SEARCH_INPUT TEST', () => {
 
   test('renders search input', () => {
     render(
-      <SearchInput searchQuery={''} handleClick={handleClick} setSearchQuery={handleInputChange} />,
+      <SearchInput
+        searchQuery={''}
+        handleClick={handleClick}
+        setSearchQuery={handleInputChange}
+      />,
     );
 
-    expect(screen.getByPlaceholderText(/search by name.../i)).toBeInTheDocument();
+    expect(
+      screen.getByPlaceholderText(/search by name.../i),
+    ).toBeInTheDocument();
   });
 
   test('updates input value on change', () => {
@@ -44,7 +50,11 @@ describe('SEARCH_INPUT TEST', () => {
     });
 
     render(
-      <SearchInput searchQuery='' setSearchQuery={setSearchQuery} handleClick={handleClick} />,
+      <SearchInput
+        searchQuery=''
+        setSearchQuery={setSearchQuery}
+        handleClick={handleClick}
+      />,
     );
 
     const inputElement = screen.getByPlaceholderText(/search by name.../i);
@@ -72,7 +82,8 @@ describe('SEARCH_INPUT TEST', () => {
       />,
     );
 
-    const inputElement: HTMLInputElement = screen.getByPlaceholderText(/search by name.../i);
+    const inputElement: HTMLInputElement =
+      screen.getByPlaceholderText(/search by name.../i);
     expect(inputElement.value).toBe(storedValue);
   });
 });

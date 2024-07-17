@@ -1,22 +1,24 @@
 .toggle {
-    position: absolute;
-    right: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+  position: absolute;
+  right: 40px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
 }
 
 .light {
-    background-color: orange;
-    box-shadow: 0 0 25px 5px yellow, 0 0 15px 10px yellow inset
+  background-color: orange;
+  box-shadow:
+    0 0 25px 5px yellow,
+    0 0 15px 10px yellow inset;
 }
 
 .dark {
-    background-color: #ccc;
-    box-shadow:
-            0 0 15px 5px #999 inset,
-            0 0 15px 5px #1A222CFF inset,
-            0 0 35px 5px rgba(255, 255, 255, 0.4);
+  background-color: #ccc;
+  box-shadow:
+    0 0 15px 5px #999 inset,
+    0 0 15px 5px #1a222cff inset,
+    0 0 35px 5px rgba(255, 255, 255, 0.4);
 }
