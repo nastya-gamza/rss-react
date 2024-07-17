@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import classNames from 'classnames';
 import { Header } from '../Header';
@@ -8,10 +8,8 @@ import { BASE_URL, SEARCH_PARAM } from '../../constants/api.ts';
 import { Data } from '../../types';
 import { useSearchQuery, useFetch, useNavigation } from '../../hooks';
 import { setItemToLocalStorage } from '../../utils';
-import { SearchInput } from '../SearchInput';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
-import { ThemeToggle } from '../ThemeToggle';
 import styles from './Layout.module.css';
 
 export const Layout = () => {
@@ -59,14 +57,11 @@ export const Layout = () => {
         className={classNames(styles.main, { [styles.blur]: pathname.includes('character') })}
         onClick={handleNavigate}
       >
-        <Header>
-          <SearchInput
-            searchQuery={searchQuery}
-            handleClick={handleClick}
-            setSearchQuery={setSearchQuery as Dispatch<SetStateAction<string>>}
-          />
-          <ThemeToggle />
-        </Header>
+        <Header
+          handleClick={handleClick}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
         <Main loading={isLoading} error={isError}>
           <CardList results={results} currentPage={currentPage} />
           {totalPages > 1 && (
