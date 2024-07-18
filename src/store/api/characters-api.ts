@@ -1,13 +1,13 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { Data } from '../../types';
 import { baseQuery } from './base-api.ts';
+import { Character, Data } from '../../types';
 
 export const charactersApi = createApi({
-  reducerPath: 'pokemonApi',
+  reducerPath: 'charactersApi',
   baseQuery,
   tagTypes: [],
   endpoints: (builder) => ({
-    getAllCharacters: builder.query<Data, { name?: string; page?: number }>({
+    getAllCharacters: builder.query<Data, { name: string; page?: number }>({
       query: (params) => {
         const queryParams: Record<string, string | undefined> = {};
 
@@ -16,7 +16,7 @@ export const charactersApi = createApi({
         }
 
         if (params.page) {
-          queryParams.page = params.page;
+          queryParams.page = params.page.toString();
         }
 
         return {
@@ -25,7 +25,13 @@ export const charactersApi = createApi({
         };
       },
     }),
+    getSingleCharacter: builder.query<Character, string>({
+      query: (id) => ({
+        url: `/${id}`,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCharactersQuery } = charactersApi;
+export const { useLazyGetAllCharactersQuery, useGetSingleCharacterQuery } =
+  charactersApi;

@@ -6,7 +6,7 @@ export const ThemeToggle = () => {
   const { theme, toggleTheme } = useThemeContext();
 
   return (
-    <button onClick={toggleTheme}>
+    <button onClick={toggleTheme} className={styles.btn}>
       {theme === 'light' ? (
         <div className={classNames(styles.toggle, styles.light)}></div>
       ) : (

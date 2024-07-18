@@ -1,6 +1,6 @@
 import { ReactNode, useLayoutEffect } from 'react';
 import { ThemeContext } from './themeContext';
-import { useLocalStorage } from '../../hooks/useLocalStorage/useLocalStorage.ts';
+import { useLocalStorage } from '../../hooks';
 
 interface ThemeProviderProps {
   children: ReactNode;

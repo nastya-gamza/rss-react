@@ -8,32 +8,34 @@ import { setItemToLocalStorage } from '../../utils';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import styles from './Layout.module.css';
-import { useGetAllCharactersQuery } from '../../store/api/characters-api.ts';
+import { useLazyGetAllCharactersQuery } from '../../store/api/characters-api.ts';
 
 export const Layout = () => {
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [totalPages, setTotalPages] = useState(0);
 
   const {
-    handleNavigate,
-    handleCurrentPage,
     currentPage,
-    setCurrentPage,
     navigate,
     pathname,
+    handleNavigate,
+    handleCurrentPage,
+    setCurrentPage,
   } = useNavigation();
 
-  const { data, isLoading, isError, refetch } = useGetAllCharactersQuery({
-    name: searchQuery,
-    page: currentPage,
-  });
+  const [getApiData, { data, isLoading, isError }] =
+    useLazyGetAllCharactersQuery({ name: searchQuery, page: currentPage });
 
   const handleClick = async () => {
     setItemToLocalStorage('searchQuery', searchQuery);
-    await refetch(searchQuery, 1);
+    await getApiData({ name: searchQuery, page: 1 });
     setCurrentPage(1);
     navigate(`/?page=${1}`);
   };
+
+  useEffect(() => {
+    getApiData({ name: searchQuery, page: currentPage });
+  }, [currentPage]);
 
   useEffect(() => {
     if (data?.info?.pages) {
