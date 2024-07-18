@@ -2,6 +2,7 @@ import { Character } from '../../types';
 import styles from './CardItem.module.css';
 import { useNavigation } from '../../hooks';
 import classNames from 'classnames';
+import { Checkbox } from '../Checkbox/Checkbox.tsx';
 
 interface CardItemProps {
   character: Character;
@@ -31,6 +32,7 @@ export const CardItem = ({ character }: CardItemProps) => {
           {character?.location.name}
         </p>
       </div>
+      <Checkbox />
     </li>
   );
 };

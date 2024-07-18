@@ -57,9 +57,7 @@ export const Layout = () => {
           setSearchQuery={setSearchQuery}
         />
         <Main loading={isLoading} error={isError}>
-          {data?.results && (
-            <CardList results={data?.results} currentPage={currentPage} />
-          )}
+          {data?.results && <CardList results={data?.results} />}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
