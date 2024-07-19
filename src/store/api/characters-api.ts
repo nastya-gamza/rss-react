@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from './base-api.ts';
 import { Character, Data } from '../../types';
+import { setCharacters } from '../slices/characters-slice.ts';
 
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
@@ -23,6 +24,14 @@ export const charactersApi = createApi({
           url: '/',
           params: queryParams,
         };
+      },
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setCharacters(data));
+        } catch (err) {
+          console.log(err);
+        }
       },
     }),
     getSingleCharacter: builder.query<Character, string>({
