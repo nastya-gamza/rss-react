@@ -9,10 +9,13 @@ import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import styles from './Layout.module.css';
 import { useLazyGetAllCharactersQuery } from '../../store/api/characters-api.ts';
+import { uncheckAllCharacters } from '../../store/slices/selected-characters-slice.ts';
+import { useDispatch } from 'react-redux';
 
 export const Layout = () => {
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [totalPages, setTotalPages] = useState(0);
+  const dispatch = useDispatch();
 
   const {
     currentPage,
@@ -23,7 +26,7 @@ export const Layout = () => {
     setCurrentPage,
   } = useNavigation();
 
-  const [getApiData, { data, isLoading, isError }] =
+  const [getApiData, { data, isFetching, isError }] =
     useLazyGetAllCharactersQuery({ name: searchQuery, page: currentPage });
 
   const handleClick = async () => {
@@ -35,6 +38,7 @@ export const Layout = () => {
 
   useEffect(() => {
     getApiData({ name: searchQuery, page: currentPage });
+    dispatch(uncheckAllCharacters());
   }, [currentPage]);
 
   useEffect(() => {
@@ -56,7 +60,7 @@ export const Layout = () => {
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
         />
-        <Main loading={isLoading} error={isError}>
+        <Main loading={isFetching} error={isError}>
           {data?.results && <CardList results={data?.results} />}
           {totalPages > 1 && (
             <Pagination

@@ -1,7 +1,6 @@
 import { FormEventHandler, useEffect, useState } from 'react';
 import styles from './Checkbox.module.css';
 import { useAppSelector } from '../../hooks/useRedux.ts';
-import { selectCharacters } from '../../store/slices/characters-slice.ts';
 
 interface CheckboxProps {
   onChange: FormEventHandler<HTMLLabelElement> | undefined;
@@ -9,17 +8,17 @@ interface CheckboxProps {
 
 export const Checkbox = ({ onChange }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(false);
-  const checkedCharacters = useAppSelector(selectCharacters);
+  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
   };
 
   useEffect(() => {
-    if (checkedCharacters.results.length === 0) {
+    if (checkedCharacters.length === 0) {
       setIsChecked(false);
     }
-  }, [checkedCharacters.results]);
+  }, [checkedCharacters]);
 
   return (
     <label onChange={onChange}>
@@ -31,19 +30,5 @@ export const Checkbox = ({ onChange }: CheckboxProps) => {
         onChange={handleCheckboxChange}
       />
     </label>
-    // <label onChange={onChange}>
-    //   <input
-    //     type='checkbox'
-    //     onChange={() => {
-    //       setIsChecked(!isChecked);
-    //     }}
-    //   />
-    //   <span
-    //     className={classNames(styles.checkbox, {
-    //       [styles.checkboxActive]: isChecked,
-    //     })}
-    //     aria-hidden='true'
-    //   />
-    // </label>
   );
 };
