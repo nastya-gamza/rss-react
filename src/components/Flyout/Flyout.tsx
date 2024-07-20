@@ -4,12 +4,14 @@ import {
   uncheckAllCharacters,
 } from '../../store/slices/characters-slice.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
-import styles from './Flyout.module.css';
 import { PrimaryButton } from '../PrimaryButton';
+import { DownloadCSV } from '../DownloadCSV/DownloadCSV.tsx';
+import styles from './Flyout.module.css';
 
 export const Flyout = () => {
   const checkedCharacters = useAppSelector(selectCharacters);
   const dispatch = useAppDispatch();
+  console.log(checkedCharacters);
 
   const handleUncheck = () => {
     dispatch(uncheckAllCharacters());
@@ -28,7 +30,10 @@ export const Flyout = () => {
       </div>
       <div className={styles.btns}>
         <PrimaryButton onClick={handleUncheck}>Unselect all</PrimaryButton>
-        <PrimaryButton>Download</PrimaryButton>
+        <DownloadCSV
+          data={checkedCharacters?.results}
+          fileName={`${checkedCharacters?.results.length}_characters.csv`}
+        />
       </div>
     </div>
   );
