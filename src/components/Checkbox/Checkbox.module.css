@@ -2,35 +2,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    display: inline-block;
     height: 22px;
     width: 22px;
-    background-color: #fff;
-    border: 2px #ddd solid;
-    border-radius: 8px;
     cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.checkbox::after {
-    content: '';
-    position: absolute;
-    width: 5px;
-    height: 10px;
-    border: solid transparent;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    left: 7px;
-    top: 3px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
-
-.checkboxActive {
-    border-color: cornflowerblue;
-}
-
-.checkboxActive::after {
-    border-color: cornflowerblue;
-    opacity: 1;
 }

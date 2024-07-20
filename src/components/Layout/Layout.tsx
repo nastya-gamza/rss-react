@@ -7,15 +7,13 @@ import { useSearchQuery, useNavigation } from '../../hooks';
 import { setItemToLocalStorage } from '../../utils';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
-import styles from './Layout.module.css';
 import { useLazyGetAllCharactersQuery } from '../../store/api/characters-api.ts';
-import { uncheckAllCharacters } from '../../store/slices/selected-characters-slice.ts';
-import { useDispatch } from 'react-redux';
+import { useAppSelector } from '../../hooks/useRedux.ts';
+import styles from './Layout.module.css';
 
 export const Layout = () => {
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
   const [totalPages, setTotalPages] = useState(0);
-  const dispatch = useDispatch();
 
   const {
     currentPage,
@@ -26,26 +24,28 @@ export const Layout = () => {
     setCurrentPage,
   } = useNavigation();
 
-  const [getApiData, { data, isFetching, isError }] =
-    useLazyGetAllCharactersQuery({ name: searchQuery, page: currentPage });
+  const [getCharactersData, { data: charactersData, isFetching, isError }] =
+    useLazyGetAllCharactersQuery();
+
+  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
+  console.log(checkedCharacters);
 
   const handleClick = async () => {
     setItemToLocalStorage('searchQuery', searchQuery);
-    await getApiData({ name: searchQuery, page: 1 });
+    await getCharactersData({ name: searchQuery, page: 1 });
     setCurrentPage(1);
     navigate(`/?page=${1}`);
   };
 
   useEffect(() => {
-    getApiData({ name: searchQuery, page: currentPage });
-    dispatch(uncheckAllCharacters());
+    getCharactersData({ name: searchQuery, page: currentPage });
   }, [currentPage]);
 
   useEffect(() => {
-    if (data?.info?.pages) {
-      setTotalPages(data.info.pages);
+    if (charactersData?.info?.pages) {
+      setTotalPages(charactersData.info.pages);
     }
-  }, [data?.info?.pages]);
+  }, [charactersData?.info?.pages]);
 
   return (
     <div className={styles.wrapper}>
@@ -61,7 +61,9 @@ export const Layout = () => {
           setSearchQuery={setSearchQuery}
         />
         <Main loading={isFetching} error={isError}>
-          {data?.results && <CardList results={data?.results} />}
+          {charactersData?.results && (
+            <CardList results={charactersData?.results} />
+          )}
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}

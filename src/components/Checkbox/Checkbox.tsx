@@ -1,33 +1,30 @@
-import { FormEventHandler, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
+import { Character } from '../../types';
+import { setCheckedCharacters } from '../../store/slices/selected-characters-slice.ts';
 import styles from './Checkbox.module.css';
-import { useAppSelector } from '../../hooks/useRedux.ts';
 
 interface CheckboxProps {
-  onChange: FormEventHandler<HTMLLabelElement> | undefined;
+  character: Character;
 }
 
-export const Checkbox = ({ onChange }: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+export const Checkbox = ({ character }: CheckboxProps) => {
+  const dispatch = useAppDispatch();
   const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
 
+  const isChecked = checkedCharacters.some(({ id }) => id === character.id);
+
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    dispatch(setCheckedCharacters(character));
   };
 
-  useEffect(() => {
-    if (checkedCharacters.length === 0) {
-      setIsChecked(false);
-    }
-  }, [checkedCharacters]);
-
   return (
-    <label onChange={onChange}>
+    <label>
       <input
-        className={styles.checkbox}
         type='checkbox'
-        id='subscribeNews'
+        id={`checkbox-${character.id}`}
         checked={isChecked}
         onChange={handleCheckboxChange}
+        className={styles.checkbox}
       />
     </label>
   );

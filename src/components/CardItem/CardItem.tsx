@@ -1,10 +1,8 @@
 import { Character } from '../../types';
-import styles from './CardItem.module.css';
 import { useNavigation } from '../../hooks';
 import classNames from 'classnames';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
-import { setCheckedCharacters } from '../../store/slices/selected-characters-slice.ts';
-import { useAppDispatch } from '../../hooks/useRedux.ts';
+import styles from './CardItem.module.css';
 
 interface CardItemProps {
   character: Character;
@@ -12,11 +10,6 @@ interface CardItemProps {
 
 export const CardItem = ({ character }: CardItemProps) => {
   const { pathname } = useNavigation();
-  const dispatch = useAppDispatch();
-
-  const onChange = () => {
-    dispatch(setCheckedCharacters(character));
-  };
 
   return (
     <li
@@ -39,7 +32,7 @@ export const CardItem = ({ character }: CardItemProps) => {
           {character?.location.name}
         </p>
       </div>
-      <Checkbox onChange={onChange} />
+      <Checkbox character={character} />
     </li>
   );
 };
