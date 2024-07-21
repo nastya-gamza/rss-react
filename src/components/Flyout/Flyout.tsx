@@ -1,37 +1,28 @@
 import classNames from 'classnames';
-import { uncheckAllCharacters } from '../../store/slices/selected-characters-slice.ts';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
 import { PrimaryButton } from '../PrimaryButton';
 import { DownloadCSV } from '../DownloadCSV/DownloadCSV.tsx';
 import styles from './Flyout.module.css';
+import { Character } from '../../types';
 
-export const Flyout = () => {
-  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
-  const dispatch = useAppDispatch();
-  const checkedCharactersLength = checkedCharacters?.length;
+interface FlyoutProps {
+  items: Character[];
+  onClick: () => void;
+}
 
-  const handleUncheck = () => {
-    dispatch(uncheckAllCharacters());
-  };
-
-  return (
-    <div
-      className={classNames(styles.flyout, {
-        [styles.show]: checkedCharactersLength > 0,
-      })}
-    >
-      <div className={styles.info}>
-        {checkedCharactersLength === 1
-          ? `${checkedCharactersLength} character is selected`
-          : `${checkedCharactersLength} characters are selected`}
-      </div>
-      <div className={styles.btns}>
-        <PrimaryButton onClick={handleUncheck}>Unselect all</PrimaryButton>
-        <DownloadCSV
-          data={checkedCharacters}
-          fileName={`${checkedCharactersLength}_characters.csv`}
-        />
-      </div>
+export const Flyout = ({ items, onClick }: FlyoutProps) => (
+  <div
+    className={classNames(styles.flyout, {
+      [styles.show]: items.length > 0,
+    })}
+  >
+    <div className={styles.info}>
+      {items.length === 1
+        ? `${items.length} character is selected`
+        : `${items.length} characters are selected`}
     </div>
-  );
-};
+    <div className={styles.btns}>
+      <PrimaryButton onClick={onClick}>Unselect all</PrimaryButton>
+      <DownloadCSV data={items} fileName={`${items.length}_characters.csv`} />
+    </div>
+  </div>
+);

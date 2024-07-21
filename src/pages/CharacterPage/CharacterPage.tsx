@@ -12,7 +12,7 @@ export const CharacterPage = () => {
 
   const {
     data: character,
-    isLoading,
+    isFetching,
     isError,
   } = useGetSingleCharacterQuery(id as string, { skip: !id });
 
@@ -23,10 +23,10 @@ export const CharacterPage = () => {
   return (
     <div data-testid='character-page' className={styles.page}>
       <div className={styles.wrapper}>
-        {isLoading && <Loader />}
+        {isFetching && <Loader />}
         {isError && <Error message='Nothing was found ☹️' />}
       </div>
-      {character && !isLoading && (
+      {character && !isFetching && (
         <CardDetails character={character} handleClose={handleClose} />
       )}
     </div>

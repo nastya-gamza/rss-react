@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import classNames from 'classnames';
 import { Header } from '../Header';
@@ -12,7 +12,6 @@ import styles from './Layout.module.css';
 
 export const Layout = () => {
   const [searchQuery, setSearchQuery] = useSearchQuery('searchQuery');
-  const [totalPages, setTotalPages] = useState(0);
 
   const {
     currentPage,
@@ -37,12 +36,6 @@ export const Layout = () => {
     getCharactersData({ name: searchQuery, page: currentPage });
   }, [currentPage]);
 
-  useEffect(() => {
-    if (charactersData?.info?.pages) {
-      setTotalPages(charactersData.info.pages);
-    }
-  }, [charactersData?.info?.pages]);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.wrapper} onClick={handleNavigate}>
@@ -63,13 +56,10 @@ export const Layout = () => {
                 currentPage={currentPage}
               />
             )}
-            {totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                handleCurrentPage={handleCurrentPage}
-              />
-            )}
+            <Pagination
+              currentPage={currentPage}
+              handleCurrentPage={handleCurrentPage}
+            />
           </Main>
         </div>
       </div>
