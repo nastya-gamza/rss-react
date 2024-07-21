@@ -1,8 +1,7 @@
 .container {
-  min-width: 100%;
   margin: 0;
   padding: 12px 40px;
-  position: sticky;
+  position: fixed;
   top: 16%;
 }
 

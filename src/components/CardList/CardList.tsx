@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 
 interface CardListProps {
   results: Character[];
+  currentPage: number;
 }
 
 export const CardList = ({ results, currentPage }: CardListProps) => (
