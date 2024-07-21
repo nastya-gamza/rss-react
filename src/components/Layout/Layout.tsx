@@ -8,7 +8,6 @@ import { setItemToLocalStorage } from '../../utils';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import { useLazyGetAllCharactersQuery } from '../../store/api/characters-api.ts';
-import { useAppSelector } from '../../hooks/useRedux.ts';
 import styles from './Layout.module.css';
 
 export const Layout = () => {
@@ -26,9 +25,6 @@ export const Layout = () => {
 
   const [getCharactersData, { data: charactersData, isFetching, isError }] =
     useLazyGetAllCharactersQuery();
-
-  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
-  console.log(checkedCharacters);
 
   const handleClick = async () => {
     setItemToLocalStorage('searchQuery', searchQuery);
@@ -49,29 +45,33 @@ export const Layout = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div
-        className={classNames(styles.main, {
-          [styles.blur]: pathname.includes('character'),
-        })}
-        onClick={handleNavigate}
-      >
-        <Header
-          handleClick={handleClick}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
-        <Main loading={isFetching} error={isError}>
-          {charactersData?.results && (
-            <CardList results={charactersData?.results} />
-          )}
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              handleCurrentPage={handleCurrentPage}
-            />
-          )}
-        </Main>
+      <div className={styles.wrapper} onClick={handleNavigate}>
+        <div
+          className={classNames(styles.main, {
+            [styles.blur]: pathname.includes('character'),
+          })}
+        >
+          <Header
+            handleClick={handleClick}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <Main loading={isFetching} error={isError}>
+            {charactersData?.results && (
+              <CardList
+                results={charactersData?.results}
+                currentPage={currentPage}
+              />
+            )}
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handleCurrentPage={handleCurrentPage}
+              />
+            )}
+          </Main>
+        </div>
       </div>
       <div className={styles.outlet}>
         <Outlet />
