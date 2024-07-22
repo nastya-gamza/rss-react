@@ -1,13 +1,13 @@
 import { Component, ErrorInfo, ReactNode } from 'react';
 
-interface ErrorBoundaryProps {
+type ErrorBoundaryProps = {
   fallback?: ReactNode;
   children?: ReactNode;
-}
+};
 
-interface ErrorBoundaryState {
+type ErrorBoundaryState = {
   hasError: boolean;
-}
+};
 
 export class ErrorBoundary extends Component<
   ErrorBoundaryProps,

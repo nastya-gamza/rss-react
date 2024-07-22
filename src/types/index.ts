@@ -1,16 +1,16 @@
-export interface Data {
+export type Data = {
   info: Info;
   results: Character[];
-}
+};
 
-export interface Info {
+export type Info = {
   count: number;
   pages: number;
   next: string | null;
   prev: string | null;
-}
+};
 
-export interface Character {
+export type Character = {
   id: number;
   name: string;
   status: string;
@@ -29,4 +29,4 @@ export interface Character {
   episode: string[];
   url: string;
   created: string;
-}
+};

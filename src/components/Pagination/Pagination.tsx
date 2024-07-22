@@ -2,10 +2,10 @@ import classNames from 'classnames';
 import { usePagination } from '../../hooks';
 import styles from './Pagination.module.css';
 
-interface PaginationProps {
+type PaginationProps = {
   currentPage: number;
   handleCurrentPage: (page: number) => void;
-}
+};
 
 export const Pagination = ({
   currentPage,

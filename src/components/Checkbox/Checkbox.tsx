@@ -1,10 +1,10 @@
 import styles from './Checkbox.module.css';
 
-interface CheckboxProps {
+type CheckboxProps = {
   id: number;
   isChecked: boolean;
   handleCheckboxChange: () => void;
-}
+};
 
 export const Checkbox = ({
   id,

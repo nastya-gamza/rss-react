@@ -4,10 +4,10 @@ import { DownloadCSV } from '../DownloadCSV/DownloadCSV.tsx';
 import styles from './Flyout.module.css';
 import { Character } from '../../types';
 
-interface FlyoutProps {
+type FlyoutProps = {
   items: Character[];
   onClick: () => void;
-}
+};
 
 export const Flyout = ({ items, onClick }: FlyoutProps) => (
   <div

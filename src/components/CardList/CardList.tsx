@@ -10,9 +10,9 @@ import {
 import styles from './CardList.module.css';
 import { currentPageDataSelector } from '../../store/slices/current-page-data-slice.ts';
 
-interface CardListProps {
+type CardListProps = {
   results: Character[];
-}
+};
 
 export const CardList = ({ results }: CardListProps) => {
   const dispatch = useAppDispatch();

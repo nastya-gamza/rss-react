@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { PrimaryButton } from '../PrimaryButton';
 import { Character } from '../../types';
 
-interface DownloadCSVProps {
+type DownloadCSVProps = {
   data: Character[];
   fileName: string;
-}
+};
 
 export const DownloadCSV = ({ data, fileName }: DownloadCSVProps) => {
   const linkRef = useRef<HTMLAnchorElement | null>(null);

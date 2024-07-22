@@ -9,9 +9,9 @@ import {
 } from '../../store/slices/checked-characters-slice.ts';
 import styles from './CardItem.module.css';
 
-interface CardItemProps {
+type CardItemProps = {
   character: Character;
-}
+};
 
 export const CardItem = ({ character }: CardItemProps) => {
   const { pathname } = useNavigation();

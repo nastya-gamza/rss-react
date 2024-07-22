@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent } from 'react';
 import styles from './SearchInput.module.css';
 
-interface SearchInputProps {
+type SearchInputProps = {
   defaultValue: string;
   handleSubmit: (e: FormEvent<HTMLFormElement>) => void;
   handleInputChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 export const SearchInput = ({
   defaultValue,

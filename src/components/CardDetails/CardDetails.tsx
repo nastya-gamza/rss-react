@@ -1,10 +1,10 @@
 import { Character } from '../../types';
 import styles from './CardDetails.module.css';
 
-interface CardDetailsProps {
+type CardDetailsProps = {
   character: Character;
   handleClose: () => void;
-}
+};
 
 export const CardDetails = ({ character, handleClose }: CardDetailsProps) => (
   <div className={styles.container} data-testid='card-details'>

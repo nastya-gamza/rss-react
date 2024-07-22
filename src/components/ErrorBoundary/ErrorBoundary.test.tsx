@@ -2,14 +2,14 @@ import { Component, ReactNode } from 'react';
 import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from './ErrorBoundary.tsx';
 
-interface ErrorBoundaryProps {
+type ErrorBoundaryProps = {
   fallback?: ReactNode;
   children?: ReactNode;
-}
+};
 
-interface ErrorBoundaryState {
+type ErrorBoundaryState = {
   hasError: boolean;
-}
+};
 
 class ErrorThrowingComponent extends Component<
   ErrorBoundaryProps,
