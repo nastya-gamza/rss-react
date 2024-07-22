@@ -3,8 +3,12 @@ import { Character } from '../../types';
 import { Flyout } from '../Flyout';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
-import { uncheckAllCharacters } from '../../store/slices/selected-characters-slice.ts';
+import {
+  checkedCharactersSelector,
+  uncheckAllCharacters,
+} from '../../store/slices/checked-characters-slice.ts';
 import styles from './CardList.module.css';
+import { currentPageDataSelector } from '../../store/slices/current-page-data-slice.ts';
 
 interface CardListProps {
   results: Character[];
@@ -12,8 +16,8 @@ interface CardListProps {
 
 export const CardList = ({ results }: CardListProps) => {
   const dispatch = useAppDispatch();
-  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
-  const currentPage = useAppSelector((state) => state.currentPage.currentPage);
+  const checkedCharacters = useAppSelector(checkedCharactersSelector);
+  const { currentPage } = useAppSelector(currentPageDataSelector);
 
   const handleUncheck = () => {
     dispatch(uncheckAllCharacters());

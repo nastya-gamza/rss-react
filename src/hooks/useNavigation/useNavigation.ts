@@ -15,6 +15,7 @@ export const useNavigation = () => {
   };
 
   return {
+    page,
     handleNavigate,
     navigate,
     pathname,

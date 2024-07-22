@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { charactersApi } from './api/characters-api.ts';
-import selectedCharactersReducer from './slices/selected-characters-slice.ts';
+import checkedCharactersReducer from './slices/checked-characters-slice.ts';
 import currentPageReducer from './slices/current-page-data-slice.ts';
+import selectedCharacterReducer from './slices/selected-character-sice.ts';
 
 export const store = configureStore({
   reducer: {
-    selectedCharacters: selectedCharactersReducer,
-    currentPage: currentPageReducer,
+    selectedCharacter: selectedCharacterReducer,
+    checkedCharacters: checkedCharactersReducer,
+    currentPageData: currentPageReducer,
     [charactersApi.reducerPath]: charactersApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

@@ -5,7 +5,7 @@ import { getItemFromLocalStorage } from '../../utils';
 type CurrentPageDataState = {
   info: Info;
   results: Character[];
-  query: string;
+  searchQuery: string;
   currentPage: number;
 };
 
@@ -17,7 +17,7 @@ const initialState: CurrentPageDataState = {
     prev: null,
   },
   results: [],
-  query: getItemFromLocalStorage('searchQuery') || '',
+  searchQuery: getItemFromLocalStorage('searchQuery') || '',
   currentPage: 1,
 };
 
@@ -33,8 +33,12 @@ const currentPageDataSlice = createSlice({
       state.currentPage = action.payload;
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.query = action.payload;
+      state.searchQuery = action.payload;
     },
+  },
+  selectors: {
+    currentPageInfoSelector: (state) => state.info,
+    currentPageDataSelector: (state) => state,
   },
 });
 
@@ -42,3 +46,6 @@ export const { setCurrentPageData, setCurrentPageNumber, setSearchQuery } =
   currentPageDataSlice.actions;
 
 export default currentPageDataSlice.reducer;
+
+export const { currentPageDataSelector, currentPageInfoSelector } =
+  currentPageDataSlice.selectors;

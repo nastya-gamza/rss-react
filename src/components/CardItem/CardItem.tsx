@@ -3,7 +3,10 @@ import { useNavigation } from '../../hooks';
 import classNames from 'classnames';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
-import { setCheckedCharacters } from '../../store/slices/selected-characters-slice.ts';
+import {
+  checkedCharactersSelector,
+  setCheckedCharacters,
+} from '../../store/slices/checked-characters-slice.ts';
 import styles from './CardItem.module.css';
 
 interface CardItemProps {
@@ -14,7 +17,7 @@ export const CardItem = ({ character }: CardItemProps) => {
   const { pathname } = useNavigation();
   const dispatch = useAppDispatch();
 
-  const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
+  const checkedCharacters = useAppSelector(checkedCharactersSelector);
   const isChecked = checkedCharacters.some(({ id }) => id === character.id);
 
   const handleCheckboxChange = () => {

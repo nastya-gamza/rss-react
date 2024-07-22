@@ -5,6 +5,7 @@ import { ThemeToggle } from '../ThemeToggle';
 import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
 import { setItemToLocalStorage } from '../../utils';
 import {
+  currentPageDataSelector,
   setCurrentPageNumber,
   setSearchQuery,
 } from '../../store/slices/current-page-data-slice.ts';
@@ -15,7 +16,7 @@ export const Header = () => {
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const searchQuery = useAppSelector((state) => state.currentPage.query);
+  const { searchQuery } = useAppSelector(currentPageDataSelector);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     inputRef.current = e.target.value;

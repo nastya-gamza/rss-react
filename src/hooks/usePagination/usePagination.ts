@@ -1,5 +1,6 @@
 import { generatePageArray } from '../../utils/pagination.ts';
 import { useAppSelector } from '../useRedux.ts';
+import { currentPageInfoSelector } from '../../store/slices/current-page-data-slice.ts';
 
 const PAGINATION_PAGE_QUANTITY = 7;
 
@@ -7,7 +8,7 @@ export const usePagination = (
   currentPage: number,
   handleCurrentPage: (page: number) => void,
 ) => {
-  const totalPages = useAppSelector((state) => state.currentPage.info.pages);
+  const { pages: totalPages } = useAppSelector(currentPageInfoSelector);
 
   const getPaginationRange = ({
     totalPages,

@@ -2,6 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from './base-api.ts';
 import { Character, Data } from '../../types';
 import { setCurrentPageData } from '../slices/current-page-data-slice.ts';
+import { setSelectedCharacter } from '../slices/selected-character-sice.ts';
 
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
@@ -38,6 +39,14 @@ export const charactersApi = createApi({
       query: (id) => ({
         url: `/${id}`,
       }),
+      async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setSelectedCharacter(data));
+        } catch (err) {
+          console.log(err);
+        }
+      },
     }),
   }),
 });

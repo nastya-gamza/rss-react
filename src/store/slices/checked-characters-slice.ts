@@ -3,8 +3,8 @@ import { Character } from '../../types';
 
 const initialState: Character[] = [];
 
-const selectedCharactersSlice = createSlice({
-  name: 'selectedCharacters',
+const checkedCharactersSlice = createSlice({
+  name: 'checkedCharacters',
   initialState,
   reducers: {
     setCheckedCharacters: (state, action: PayloadAction<Character>) => {
@@ -22,9 +22,13 @@ const selectedCharactersSlice = createSlice({
       return [];
     },
   },
+  selectors: {
+    checkedCharactersSelector: (state) => state,
+  },
 });
 
 export const { setCheckedCharacters, uncheckAllCharacters } =
-  selectedCharactersSlice.actions;
+  checkedCharactersSlice.actions;
+export const { checkedCharactersSelector } = checkedCharactersSlice.selectors;
 
-export default selectedCharactersSlice.reducer;
+export default checkedCharactersSlice.reducer;
