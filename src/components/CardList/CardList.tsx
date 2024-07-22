@@ -8,12 +8,12 @@ import styles from './CardList.module.css';
 
 interface CardListProps {
   results: Character[];
-  currentPage: number;
 }
 
-export const CardList = ({ results, currentPage }: CardListProps) => {
+export const CardList = ({ results }: CardListProps) => {
   const dispatch = useAppDispatch();
   const checkedCharacters = useAppSelector((state) => state.selectedCharacters);
+  const currentPage = useAppSelector((state) => state.currentPage.currentPage);
 
   const handleUncheck = () => {
     dispatch(uncheckAllCharacters());

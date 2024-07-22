@@ -1,7 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Data } from '../../types';
+import { Character, Data, Info } from '../../types';
+import { getItemFromLocalStorage } from '../../utils';
 
-const initialState: Data = {
+type CurrentPageDataState = {
+  info: Info;
+  results: Character[];
+  query: string;
+  currentPage: number;
+};
+
+const initialState: CurrentPageDataState = {
   info: {
     count: 0,
     pages: 0,
@@ -9,6 +17,8 @@ const initialState: Data = {
     prev: null,
   },
   results: [],
+  query: getItemFromLocalStorage('searchQuery') || '',
+  currentPage: 1,
 };
 
 const currentPageDataSlice = createSlice({
@@ -19,9 +29,16 @@ const currentPageDataSlice = createSlice({
       state.info = action.payload.info;
       state.results = action.payload.results;
     },
+    setCurrentPageNumber: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.query = action.payload;
+    },
   },
 });
 
-export const { setCurrentPageData } = currentPageDataSlice.actions;
+export const { setCurrentPageData, setCurrentPageNumber, setSearchQuery } =
+  currentPageDataSlice.actions;
 
 export default currentPageDataSlice.reducer;

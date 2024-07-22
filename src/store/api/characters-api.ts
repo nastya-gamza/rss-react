@@ -42,5 +42,5 @@ export const charactersApi = createApi({
   }),
 });
 
-export const { useLazyGetAllCharactersQuery, useGetSingleCharacterQuery } =
+export const { useGetAllCharactersQuery, useGetSingleCharacterQuery } =
   charactersApi;
