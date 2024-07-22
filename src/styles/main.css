@@ -10,14 +10,14 @@ body {
   background-color: var(--bg-color);
 }
 
-:root {
+[data-theme='light'] {
   --font-color: #323232;
   --bg-color: #f1f5f9ff;
   --card-color: #fff;
   --header-color: #cbc3e3;
 }
 
-:root[data-theme='dark'] {
+[data-theme='dark'] {
   --font-color: #fff;
   --bg-color: #1a222cff;
   --card-color: #24303fff;

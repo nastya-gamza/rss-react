@@ -2,6 +2,8 @@
   display: flex;
   flex: 1 1 auto;
   pointer-events: auto;
+  color: var(--font-color);
+  background-color: var(--bg-color);
 }
 
 .main {

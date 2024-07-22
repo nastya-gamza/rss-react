@@ -3,13 +3,16 @@ import classNames from 'classnames';
 import { Header } from '../Header';
 import { Main } from '../Main';
 import { useNavigation } from '../../hooks';
+import { ThemeContext } from '../../context/theme/themeContext.ts';
+import { useContext } from 'react';
 import styles from './Layout.module.css';
 
 export const Layout = () => {
   const { pathname, handleNavigate } = useNavigation();
+  const { theme } = useContext(ThemeContext);
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} data-theme={theme}>
       <div className={styles.wrapper} onClick={handleNavigate}>
         <div
           className={classNames(styles.main, {
