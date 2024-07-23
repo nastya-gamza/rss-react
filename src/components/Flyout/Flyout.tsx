@@ -12,7 +12,7 @@ type FlyoutProps = {
 export const Flyout = ({ items, onClick }: FlyoutProps) => (
   <div
     className={classNames(styles.flyout, {
-      [styles.show]: items.length > 0,
+      [styles.visible]: items.length > 0,
     })}
   >
     <div className={styles.info}>

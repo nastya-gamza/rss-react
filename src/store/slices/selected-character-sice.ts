@@ -1,31 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Character } from '../../types';
 
-type CharacterType = {
-  character: Character;
+type SelectedCharacterState = {
+  character: Character | null;
 };
 
-const initialState: CharacterType = {
-  character: {
-    id: 0,
-    name: '',
-    status: '',
-    species: '',
-    type: '',
-    gender: '',
-    origin: {
-      name: '',
-      url: '',
-    },
-    location: {
-      name: '',
-      url: '',
-    },
-    image: '',
-    episode: [],
-    url: '',
-    created: '',
-  },
+const initialState: SelectedCharacterState = {
+  character: null,
 };
 
 const selectedCharacterSlice = createSlice({

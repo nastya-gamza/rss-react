@@ -7,7 +7,6 @@ import { setSelectedCharacter } from '../slices/selected-character-sice.ts';
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
   baseQuery,
-  tagTypes: [],
   endpoints: (builder) => ({
     getAllCharacters: builder.query<Data, { name?: string; page?: number }>({
       query: (params) => {
@@ -31,7 +30,7 @@ export const charactersApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setCurrentPageData(data));
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       },
     }),
@@ -44,7 +43,7 @@ export const charactersApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setSelectedCharacter(data));
         } catch (err) {
-          console.log(err);
+          console.error(err);
         }
       },
     }),

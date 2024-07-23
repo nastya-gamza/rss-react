@@ -9,14 +9,14 @@ const checkedCharactersSlice = createSlice({
   reducers: {
     setCheckedCharacters: (state, action: PayloadAction<Character>) => {
       const { id } = action.payload;
+      const index = state.findIndex((char) => char.id === id);
 
-      const existingCharacter = state.find((char) => char.id === id);
-
-      if (existingCharacter) {
-        return state.filter((char) => char.id !== id);
-      } else {
+      if (index === -1) {
         state.push(action.payload);
+        return;
       }
+
+      state.splice(index, 1);
     },
     uncheckAllCharacters: () => {
       return [];

@@ -35,6 +35,12 @@ h6 {
   font-size: inherit;
 }
 
+img {
+  display: block;
+  height: auto;
+  max-width: 100%;
+}
+
 button {
   font-family: inherit;
   font-size: inherit;
