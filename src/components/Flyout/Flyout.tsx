@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { PrimaryButton } from '../PrimaryButton';
-import { DownloadCSV } from '../DownloadCSV/DownloadCSV.tsx';
-import styles from './Flyout.module.css';
+import { DownloadCSV } from '../DownloadCSV';
 import { Character } from '../../types';
+import styles from './Flyout.module.css';
 
 type FlyoutProps = {
   items: Character[];

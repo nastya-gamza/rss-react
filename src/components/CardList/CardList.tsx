@@ -2,13 +2,13 @@ import { CardItem } from '../CardItem';
 import { Character } from '../../types';
 import { Flyout } from '../Flyout';
 import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
   uncheckAllCharacters,
 } from '../../store/slices/checked-characters-slice.ts';
-import styles from './CardList.module.css';
 import { currentPageDataSelector } from '../../store/slices/current-page-data-slice.ts';
+import styles from './CardList.module.css';
 
 type CardListProps = {
   results: Character[];

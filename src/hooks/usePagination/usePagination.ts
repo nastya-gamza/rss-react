@@ -1,5 +1,5 @@
-import { generatePageArray } from '../../utils/pagination.ts';
-import { useAppSelector } from '../useRedux.ts';
+import { generatePageArray } from '../../utils';
+import { useAppSelector } from '../useRedux';
 import { currentPageInfoSelector } from '../../store/slices/current-page-data-slice.ts';
 
 const PAGINATION_PAGE_QUANTITY = 7;

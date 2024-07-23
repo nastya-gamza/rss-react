@@ -2,8 +2,7 @@ import { ChangeEvent, FormEvent, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchInput } from '../SearchInput';
 import { ThemeToggle } from '../ThemeToggle';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
-import { setItemToLocalStorage } from '../../utils';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   currentPageDataSelector,
   setCurrentPageNumber,
@@ -24,7 +23,7 @@ export const Header = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setItemToLocalStorage('searchQuery', inputRef.current);
+    localStorage.setItem('searchQuery', inputRef.current);
     dispatch(setSearchQuery(inputRef.current));
     dispatch(setCurrentPageNumber(1));
     navigate(`/?page=${1}`);

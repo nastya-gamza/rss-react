@@ -3,7 +3,7 @@ import { Error } from '../Error';
 import { useGetAllCharactersQuery } from '../../store/api/characters-api.ts';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useNavigation } from '../../hooks';
 import {
   currentPageDataSelector,

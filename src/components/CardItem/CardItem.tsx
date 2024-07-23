@@ -1,8 +1,8 @@
+import { useLocation } from 'react-router-dom';
 import { Character } from '../../types';
-import { useNavigation } from '../../hooks';
 import classNames from 'classnames';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
-import { useAppDispatch, useAppSelector } from '../../hooks/useRedux.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
   setCheckedCharacters,
@@ -14,7 +14,7 @@ type CardItemProps = {
 };
 
 export const CardItem = ({ character }: CardItemProps) => {
-  const { pathname } = useNavigation();
+  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
   const checkedCharacters = useAppSelector(checkedCharactersSelector);

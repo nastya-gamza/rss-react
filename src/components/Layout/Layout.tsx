@@ -8,8 +8,8 @@ import { useContext } from 'react';
 import styles from './Layout.module.css';
 
 export const Layout = () => {
-  const { pathname, handleNavigate } = useNavigation();
   const { theme } = useContext(ThemeContext);
+  const { pathname, handleNavigate } = useNavigation();
 
   return (
     <div className={styles.wrapper} data-theme={theme}>

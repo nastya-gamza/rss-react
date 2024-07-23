@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Character, Data, Info } from '../../types';
-import { getItemFromLocalStorage } from '../../utils';
 
 type CurrentPageDataState = {
   info: Info;
@@ -17,7 +16,7 @@ const initialState: CurrentPageDataState = {
     prev: null,
   },
   results: [],
-  searchQuery: getItemFromLocalStorage('searchQuery') || '',
+  searchQuery: localStorage.getItem('searchQuery') || '',
   currentPage: 1,
 };
 

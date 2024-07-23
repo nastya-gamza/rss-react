@@ -1,47 +1,55 @@
-import { useRef } from 'react';
-import { PrimaryButton } from '../PrimaryButton';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Character } from '../../types';
+import styles from '../PrimaryButton/PrimaryButton.module.css';
 
 type DownloadCSVProps = {
   data: Character[];
   fileName: string;
 };
 
-export const DownloadCSV = ({ data, fileName }: DownloadCSVProps) => {
-  const linkRef = useRef<HTMLAnchorElement | null>(null);
+export const DownloadCSV: React.FC<DownloadCSVProps> = ({ data, fileName }) => {
+  const [url, setUrl] = useState<string | null>(null);
 
-  const downloadCSV = () => {
-    const csvString = data
-      .map((item) => [
-        item.id,
-        item.name,
-        item.location.name,
-        item.status,
-        item.species,
-        item.gender,
-        item.url,
-      ])
-      .map((row) => row.join(','))
-      .join('\n');
+  const csvString = useMemo(() => {
+    const header = [
+      'ID',
+      'Name',
+      'Location',
+      'Status',
+      'Species',
+      'Gender',
+      'URL',
+    ];
+    const rows = data.map((item) => [
+      item.id,
+      item.name,
+      item.location.name,
+      item.status,
+      item.species,
+      item.gender,
+      item.url,
+    ]);
 
+    return [header, ...rows].map((row) => row.join(';')).join('\n');
+  }, [data]);
+
+  useEffect(() => {
     const blob = new Blob([csvString], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
+    const newUrl = URL.createObjectURL(blob);
+    setUrl(newUrl);
 
-    if (linkRef.current) {
-      const link = linkRef.current as HTMLAnchorElement;
-      link.href = url;
-      link.download = fileName || 'download.csv';
-      link.click();
-      URL.revokeObjectURL(url);
-    }
-  };
+    return () => {
+      URL.revokeObjectURL(newUrl);
+    };
+  }, [csvString]);
+
+  if (!url) {
+    return null;
+  }
 
   return (
-    <>
-      <PrimaryButton onClick={downloadCSV}>Download</PrimaryButton>
-      <a ref={linkRef} style={{ display: 'none' }}>
-        Export CSV
-      </a>
-    </>
+    <a href={url} download={fileName} className={styles.btn}>
+      Download
+    </a>
   );
 };
