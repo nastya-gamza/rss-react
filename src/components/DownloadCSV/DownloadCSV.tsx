@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Character } from '../../types';
 import styles from '../PrimaryButton/PrimaryButton.module.css';
 
@@ -7,7 +7,7 @@ type DownloadCSVProps = {
   fileName: string;
 };
 
-export const DownloadCSV: React.FC<DownloadCSVProps> = ({ data, fileName }) => {
+export const DownloadCSV = ({ data, fileName }: DownloadCSVProps) => {
   const [url, setUrl] = useState<string | null>(null);
 
   const csvString = useMemo(() => {

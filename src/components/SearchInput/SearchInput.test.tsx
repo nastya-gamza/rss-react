@@ -1,89 +1,53 @@
-import { fireEvent, render, screen } from '@testing-library/react';
-import { SearchInput } from './SearchInput.tsx';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { SearchInput } from './SearchInput';
 
-const handleClick = jest.fn();
-const handleInputChange = jest.fn();
+describe('SearchInput component', () => {
+  const mockHandleSubmit = jest.fn((e) => e.preventDefault());
+  const mockHandleInputChange = jest.fn();
 
-describe('SEARCH_INPUT TEST', () => {
-  beforeEach(() => {
-    window.localStorage.clear();
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('renders search input', () => {
+  test('renders SearchInput component with default value', () => {
     render(
       <SearchInput
-        searchQuery={''}
-        handleClick={handleClick}
-        setSearchQuery={handleInputChange}
+        defaultValue='test'
+        handleSubmit={mockHandleSubmit}
+        handleInputChange={mockHandleInputChange}
       />,
     );
 
-    expect(
-      screen.getByPlaceholderText(/search by name.../i),
-    ).toBeInTheDocument();
+    const inputElement = screen.getByPlaceholderText('Search by name...');
+    expect(inputElement).toBeInTheDocument();
+    expect(inputElement).toHaveValue('test');
   });
 
-  test('updates input value on change', () => {
-    const setSearchQuery = jest.fn();
-    const handleClick = jest.fn();
-    const searchQuery = '';
-
+  test('calls handleInputChange when input value is changed', () => {
     render(
       <SearchInput
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        handleClick={handleClick}
+        defaultValue=''
+        handleSubmit={mockHandleSubmit}
+        handleInputChange={mockHandleInputChange}
       />,
     );
 
-    const inputElement = screen.getByPlaceholderText(/search by name.../i);
-
+    const inputElement = screen.getByPlaceholderText('Search by name...');
     fireEvent.change(inputElement, { target: { value: 'Rick' } });
 
-    expect(setSearchQuery).toHaveBeenCalledWith('Rick');
+    expect(mockHandleInputChange).toHaveBeenCalledTimes(1);
   });
 
-  test('clicking Search button saves the entered value to local storage', () => {
-    const setSearchQuery = jest.fn();
-    const handleClick = jest.fn(() => {
-      localStorage.setItem('searchQuery', 'test');
-    });
-
+  test('renders the search button', () => {
     render(
       <SearchInput
-        searchQuery=''
-        setSearchQuery={setSearchQuery}
-        handleClick={handleClick}
+        defaultValue=''
+        handleSubmit={mockHandleSubmit}
+        handleInputChange={mockHandleInputChange}
       />,
     );
 
-    const inputElement = screen.getByPlaceholderText(/search by name.../i);
     const buttonElement = screen.getByTestId('search-btn');
-
-    fireEvent.change(inputElement, { target: { value: 'test' } });
-
-    fireEvent.click(buttonElement);
-
-    expect(handleClick).toHaveBeenCalled();
-    expect(localStorage.getItem('searchQuery')).toBe('test');
-  });
-
-  test('should retrieve the value from local storage upon mounting', () => {
-    const setSearchQuery = jest.fn();
-    const handleClick = jest.fn();
-    const storedValue = 'stored search';
-    localStorage.setItem('searchQuery', storedValue);
-
-    render(
-      <SearchInput
-        searchQuery={storedValue || ''}
-        setSearchQuery={setSearchQuery}
-        handleClick={handleClick}
-      />,
-    );
-
-    const inputElement: HTMLInputElement =
-      screen.getByPlaceholderText(/search by name.../i);
-    expect(inputElement.value).toBe(storedValue);
+    expect(buttonElement).toBeInTheDocument();
   });
 });

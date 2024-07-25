@@ -1,57 +1,100 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import { Pagination } from './Pagination';
-import { usePagination } from '../../hooks';
 
-jest.mock('../../hooks/usePagination/usePagination.ts');
-
-const mockNavigate = jest.fn();
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: () => mockNavigate,
+jest.mock('../../hooks', () => ({
+  usePagination: (
+    currentPage: number,
+    handleCurrentPage: (page: number) => void,
+  ) => ({
+    arrayOfPagesNumber: [1, 2, 3, 4, 5],
+    totalPages: 5,
+    handlePrevPage: () => handleCurrentPage(currentPage - 1),
+    handleNextPage: () => handleCurrentPage(currentPage + 1),
+  }),
 }));
 
-describe('PAGINATION TEST', () => {
-  const handleCurrentPage = jest.fn();
+describe('Pagination component', () => {
+  const mockHandleCurrentPage = jest.fn();
 
-  beforeEach(() => {
-    (usePagination as jest.Mock).mockReturnValue({
-      arrayOfPagesNumber: [1, 2, 3, 4, 5, 6, 7],
-      handlePrevPage: jest.fn(),
-      handleNextPage: jest.fn(),
-    });
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders pagination buttons correctly', () => {
+  test('renders pagination component', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Pagination
-          currentPage={3}
-          totalPages={10}
-          handleCurrentPage={handleCurrentPage}
-        />
-      </MemoryRouter>,
+      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
     );
 
-    expect(screen.getByText('<')).toBeInTheDocument();
-    expect(screen.getByText('>')).toBeInTheDocument();
-    for (let i = 1; i <= 7; i++) {
-      expect(screen.getByText(i.toString())).toBeInTheDocument();
-    }
+    const paginationButtons = screen.getAllByRole('button');
+    expect(paginationButtons).toHaveLength(7);
+
+    const prevButton = screen.getByText('<');
+    expect(prevButton).toBeInTheDocument();
+
+    const nextButton = screen.getByText('>');
+    expect(nextButton).toBeInTheDocument();
+
+    expect(screen.getByText('1')).toBeInTheDocument();
+    expect(screen.getByText('2')).toBeInTheDocument();
+    expect(screen.getByText('3')).toHaveClass('activeBtn');
+    expect(screen.getByText('4')).toBeInTheDocument();
+    expect(screen.getByText('5')).toBeInTheDocument();
   });
 
-  it('calls handleCurrentPage with correct page number', () => {
+  test('calls handlePrevPage when prev button is clicked', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Pagination
-          currentPage={3}
-          totalPages={10}
-          handleCurrentPage={handleCurrentPage}
-        />
-      </MemoryRouter>,
+      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
     );
 
-    fireEvent.click(screen.getByText('4'));
-    expect(handleCurrentPage).toHaveBeenCalledWith(4);
+    const prevButton = screen.getByText('<');
+    fireEvent.click(prevButton);
+
+    expect(mockHandleCurrentPage).toHaveBeenCalledWith(2);
+  });
+
+  test('calls handleNextPage when next button is clicked', () => {
+    render(
+      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+    );
+
+    const nextButton = screen.getByText('>');
+    fireEvent.click(nextButton);
+
+    expect(mockHandleCurrentPage).toHaveBeenCalledWith(4);
+  });
+
+  test('calls handleCurrentPage when a page button is clicked', () => {
+    render(
+      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+    );
+
+    const pageButton = screen.getByText('2');
+    fireEvent.click(pageButton);
+
+    expect(mockHandleCurrentPage).toHaveBeenCalledWith(2);
+  });
+
+  test('does not render prev button when on first page', () => {
+    render(
+      <Pagination currentPage={1} handleCurrentPage={mockHandleCurrentPage} />,
+    );
+
+    const prevButton = screen.queryByText('<');
+    expect(prevButton).toBeNull();
+
+    const nextButton = screen.getByText('>');
+    expect(nextButton).toBeInTheDocument();
+  });
+
+  test('does not render next button when on last page', () => {
+    render(
+      <Pagination currentPage={5} handleCurrentPage={mockHandleCurrentPage} />,
+    );
+
+    const nextButton = screen.queryByText('>');
+    expect(nextButton).toBeNull();
+
+    const prevButton = screen.getByText('<');
+    expect(prevButton).toBeInTheDocument();
   });
 });

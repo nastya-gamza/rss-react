@@ -1,61 +1,53 @@
-import { render, screen } from '@testing-library/react';
-import axios from 'axios';
-import { CharacterPage } from '../../pages/CharacterPage';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { CardList } from '../CardList/CardList.tsx';
-import { userEvent } from '@testing-library/user-event';
-import { CardDetails } from './CardDetails.tsx';
-import { mockCharacter, mockCharacters } from '../../__mocks__/characters.ts';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { CardDetails } from './CardDetails';
+import { mockCharacter } from '../../__mocks__/characters.ts';
 
-jest.mock('axios');
-const handleClose = jest.fn();
+const mockHandleClose = jest.fn();
 
-describe('CARD_DETAILS TEST', () => {
+describe('CardDetails component', () => {
   beforeEach(() => {
-    (axios.get as jest.Mock).mockReturnValue(mockCharacter);
+    jest.clearAllMocks();
   });
 
-  test('displays loading indicator while fetching data', async () => {
+  test('renders character details correctly', () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route
-            path='/'
-            element={<CardList results={mockCharacters} currentPage={1} />}
-          />
-          <Route path='/character/:id' element={<CharacterPage />} />
-        </Routes>
-      </MemoryRouter>,
+      <CardDetails character={mockCharacter} handleClose={mockHandleClose} />,
     );
 
-    const cardItems = await screen.findAllByTestId('card-item');
-    userEvent.click(cardItems[0]);
+    expect(screen.getByText(mockCharacter.name)).toBeInTheDocument();
 
-    const loader = await screen.findByTestId('loader');
-    expect(loader).toBeInTheDocument();
+    const imageElement = screen.getByRole('img');
+    expect(imageElement).toHaveAttribute('src', mockCharacter.image);
+    expect(imageElement).toHaveAttribute(
+      'alt',
+      `${mockCharacter.name}'s image`,
+    );
+
+    expect(screen.getByText(mockCharacter.species)).toBeInTheDocument();
+    expect(screen.getByText(mockCharacter.status)).toBeInTheDocument();
+    expect(screen.getByText(mockCharacter.gender)).toBeInTheDocument();
+    expect(screen.getByText(mockCharacter.location.name)).toBeInTheDocument();
   });
 
-  test('correctly displays the detailed card data', () => {
-    render(<CardDetails character={mockCharacter} handleClose={handleClose} />);
+  test('calls handleClose when close button is clicked', () => {
+    render(
+      <CardDetails character={mockCharacter} handleClose={mockHandleClose} />,
+    );
 
-    expect(screen.getByText(/Rick Sanchez/i)).toBeInTheDocument();
+    const closeButton = screen.getByTestId('close-btn');
+    fireEvent.click(closeButton);
 
-    const img = screen.getByAltText("Rick Sanchez's image");
-    expect(img).toBeInTheDocument();
+    expect(mockHandleClose).toHaveBeenCalledTimes(1);
+  });
 
-    expect(screen.getByText(/Species:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Human/i)).toBeInTheDocument();
+  test('renders default type as "-" when type is not provided', () => {
+    render(
+      <CardDetails
+        character={{ ...mockCharacter, type: '' }}
+        handleClose={mockHandleClose}
+      />,
+    );
 
-    expect(screen.getByText(/Status:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Alive/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/Gender:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Male/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/Type:/i)).toBeInTheDocument();
-    expect(screen.getByText(/-/)).toBeInTheDocument();
-
-    expect(screen.getByText(/Location:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Citadel of Ricks/i)).toBeInTheDocument();
+    expect(screen.getByText('-')).toBeInTheDocument();
   });
 });
