@@ -9,12 +9,18 @@ import {
   currentPageDataSelector,
   setCurrentPageNumber,
 } from '../../store/slices/current-page-data-slice.ts';
+import { Flyout } from '../Flyout';
+import {
+  checkedCharactersSelector,
+  uncheckAllCharacters,
+} from '../../store/slices/checked-characters-slice.ts';
 import styles from './Main.module.css';
 
 export const Main = () => {
   const dispatch = useAppDispatch();
   const { page, pathname, navigate } = useNavigation();
 
+  const checkedCharacters = useAppSelector(checkedCharactersSelector);
   const { searchQuery } = useAppSelector(currentPageDataSelector);
   const { currentPage: storedCurrentPage } = useAppSelector(
     currentPageDataSelector,
@@ -35,10 +41,14 @@ export const Main = () => {
     }
   };
 
+  const handleUncheck = () => {
+    dispatch(uncheckAllCharacters());
+  };
+
   return (
     <>
       {isFetching && <Loader />}
-      {isError && <Error message={'Nothing was found ☹️'} />}
+      {isError && <Error message={'Nothing was found :(️'} />}
       {!isFetching && !isError && (
         <main className={styles.container}>
           {charactersData?.results && (
@@ -48,6 +58,7 @@ export const Main = () => {
             currentPage={currentPage}
             handleCurrentPage={handleCurrentPage}
           />
+          <Flyout items={checkedCharacters} onClick={handleUncheck} />
         </main>
       )}
     </>

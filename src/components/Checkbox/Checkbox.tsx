@@ -18,6 +18,7 @@ export const Checkbox = ({
       checked={isChecked}
       onChange={handleCheckboxChange}
       className={styles.checkbox}
+      data-testid={`checkbox-${id}`}
     />
   </label>
 );

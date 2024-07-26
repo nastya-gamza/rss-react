@@ -30,7 +30,7 @@ export const charactersApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setCurrentPageData(data));
         } catch (err) {
-          console.error(err);
+          console.log(err);
         }
       },
     }),
@@ -43,7 +43,7 @@ export const charactersApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setSelectedCharacter(data));
         } catch (err) {
-          console.error(err);
+          console.log(err);
         }
       },
     }),

@@ -1,35 +1,37 @@
-import { render, screen } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
-import { CardList } from './CardList';
-import { Main } from '../Main';
-import { Character } from '../../types';
+import { screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import { renderWithProviders } from '../../store/tests/render-with-providers.tsx';
+import { CardList } from './CardList.tsx';
 import { mockCharacters } from '../../__mocks__/characters.ts';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { CharacterPage } from '../../pages/CharacterPage';
 
 describe('CARD_LIST TEST', () => {
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
-
-  test('component renders the specified number of cards', () => {
-    render(
+  test('should show characters list', async () => {
+    renderWithProviders(
       <MemoryRouter>
-        <CardList results={mockCharacters as Character[]} currentPage={1} />
+        <CardList results={mockCharacters} />
       </MemoryRouter>,
     );
 
-    const cards = screen.getAllByTestId('card-item');
-    expect(cards).toHaveLength(mockCharacters.length);
+    expect(await screen.findByText(/Rick Sanchez/i)).toBeInTheDocument();
+    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
   });
 
-  test('an appropriate message is displayed if no cards are present', async () => {
-    render(
-      <MemoryRouter>
-        <Main loading={false} error={true}>
-          <CardList results={[]} currentPage={1} />
-        </Main>
+  test('clicking on a card opens a detailed card component', async () => {
+    renderWithProviders(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route path='/' element={<CardList results={mockCharacters} />} />
+          <Route path='/character/:id' element={<CharacterPage />} />
+        </Routes>
       </MemoryRouter>,
     );
-    const errorMessage = await screen.findByText('Nothing was found ☹️');
-    expect(errorMessage).toBeInTheDocument();
+
+    const cardItems = await screen.findAllByTestId('card-item');
+    userEvent.click(cardItems[0]);
+
+    const characterPage = await screen.findByTestId('character-page');
+    expect(characterPage).toBeInTheDocument();
   });
 });

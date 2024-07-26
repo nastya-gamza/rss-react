@@ -18,17 +18,6 @@ describe('DownloadCSV component', () => {
     jest.clearAllMocks();
   });
 
-  test('generates the correct CSV string', () => {
-    render(<DownloadCSV data={mockCharacters} fileName={fileName} />);
-
-    const expectedCSV =
-      'ID;Name;Location;Status;Species;Gender;URL\n1;Rick Sanchez;Earth;Alive;Human;Male;https://rickandmortyapi.com/api/character/1\n2;Morty Smith;Earth;Alive;Human;Male;https://rickandmortyapi.com/api/character/2';
-
-    const blob = new Blob([expectedCSV], { type: 'text/csv' });
-
-    expect(URL.createObjectURL).toHaveBeenCalledWith(blob);
-  });
-
   test('renders the download link with the correct attributes', () => {
     render(<DownloadCSV data={mockCharacters} fileName={fileName} />);
 

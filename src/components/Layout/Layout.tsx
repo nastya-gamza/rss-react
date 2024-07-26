@@ -12,7 +12,7 @@ export const Layout = () => {
   const { pathname, handleNavigate } = useNavigation();
 
   return (
-    <div className={styles.wrapper} data-theme={theme}>
+    <div className={styles.wrapper} data-theme={theme} data-testid={theme}>
       <div className={styles.wrapper} onClick={handleNavigate}>
         <div
           className={classNames(styles.main, {

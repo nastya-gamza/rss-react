@@ -2,7 +2,7 @@ import { createContext } from 'react';
 
 type Theme = 'dark' | 'light';
 
-type ThemeContextProps = {
+export type ThemeContextProps = {
   theme: Theme;
   toggleTheme: () => void;
 };

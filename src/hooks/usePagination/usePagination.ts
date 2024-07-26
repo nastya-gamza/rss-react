@@ -8,7 +8,9 @@ export const usePagination = (
   currentPage: number,
   handleCurrentPage: (page: number) => void,
 ) => {
-  const { pages: totalPages } = useAppSelector(currentPageInfoSelector);
+  const { pages: totalPages } = useAppSelector(currentPageInfoSelector) || {
+    pages: 0,
+  };
 
   const getPaginationRange = ({
     totalPages,

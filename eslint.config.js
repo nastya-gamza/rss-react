@@ -40,11 +40,15 @@ export default tsEslint.config(
     },
   },
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{js, ts,tsx}'],
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       'react-compiler/react-compiler': 'error',
-      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      '@typescript-eslint/no-var-requires': 0,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
     },
   },
 );
