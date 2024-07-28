@@ -1,0 +1,9 @@
+.page {
+  height: 100%;
+  background-color: var(--bg-color);
+}
+
+.wrapper {
+  min-width: 380px;
+  position: sticky;
+}
