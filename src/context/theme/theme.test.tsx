@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { fireEvent, render, renderHook, screen } from '@testing-library/react';
 import { ThemeContext, ThemeContextProps } from './themeContext.ts';
 import { ThemeProvider } from './themeProvider.tsx';
@@ -19,7 +19,7 @@ describe('ThemeContext', () => {
     localStorage.clear();
   });
 
-  it('should provide default context values', () => {
+  test('should provide default context values', () => {
     render(
       <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {} }}>
         <TestComponent />
@@ -30,7 +30,7 @@ describe('ThemeContext', () => {
     expect(themeElement.textContent).toBe('light');
   });
 
-  it('should toggle theme when toggleTheme is called', () => {
+  test('should toggle theme when toggleTheme is called', () => {
     const toggleThemeMock = jest.fn();
     const mockContextValue: ThemeContextProps = {
       theme: 'light',
@@ -49,7 +49,7 @@ describe('ThemeContext', () => {
     expect(toggleThemeMock).toHaveBeenCalledTimes(1);
   });
 
-  it('should update localStorage when theme is toggled', () => {
+  test('should update localStorage when theme is toggled', () => {
     render(
       <ThemeProvider>
         <TestComponent />
@@ -79,7 +79,7 @@ describe('ThemeContext', () => {
     expect(themeElement.textContent).toBe('dark');
   });
 
-  it('should provide theme context values when used within ThemeProvider', () => {
+  test('should provide theme context values when used within ThemeProvider', () => {
     render(
       <ThemeProvider>
         <TestComponent />
@@ -90,8 +90,8 @@ describe('ThemeContext', () => {
     expect(themeElement.textContent).toBe('light');
   });
 
-  it('should return the context value when used within a ThemeProvider', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+  test('should return the context value when used within a ThemeProvider', () => {
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <ThemeProvider>{children}</ThemeProvider>
     );
 
@@ -101,8 +101,8 @@ describe('ThemeContext', () => {
     expect(result.current).toHaveProperty('toggleTheme');
   });
 
-  it('should return the correct default theme', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+  test('should return the correct default theme', () => {
+    const wrapper = ({ children }: { children: ReactNode }) => (
       <ThemeProvider>{children}</ThemeProvider>
     );
 

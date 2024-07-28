@@ -3,7 +3,7 @@ import { Loader } from '../../components/Loader';
 import { Error } from '../../components/Error';
 import { CardDetails } from '../../components/CardDetails';
 import styles from './CharacterPage.module.css';
-import { useGetSingleCharacterQuery } from '../../store/api/characters-api.ts';
+import { useGetSingleCharacterQuery } from '../../store/api/charactersApi.ts';
 
 export const CharacterPage = () => {
   const navigate = useNavigate();

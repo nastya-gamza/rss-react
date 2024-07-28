@@ -2,11 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { DownloadCSV } from './DownloadCSV';
 import { mockCharacters } from '../../__mocks__/characters.ts';
 
-jest.mock('classnames', () => ({
-  __esModule: true,
-}));
-
-describe('DownloadCSV component', () => {
+describe('DOWNLOAD_CSV TEST', () => {
   const fileName = 'characters.csv';
 
   beforeEach(() => {

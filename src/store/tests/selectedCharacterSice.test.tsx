@@ -1,6 +1,6 @@
 import selectedCharacterReducer, {
   setSelectedCharacter,
-} from '../slices/selected-character-sice.ts';
+} from '../slices/selectedCharacterSice.ts';
 import { mockCharacter } from '../../__mocks__/characters.ts';
 
 const initialState = {

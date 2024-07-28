@@ -1,6 +1,6 @@
 import { Loader } from '../Loader';
 import { Error } from '../Error';
-import { useGetAllCharactersQuery } from '../../store/api/characters-api.ts';
+import { useGetAllCharactersQuery } from '../../store/api/charactersApi.ts';
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -8,12 +8,12 @@ import { useNavigation } from '../../hooks';
 import {
   currentPageDataSelector,
   setCurrentPageNumber,
-} from '../../store/slices/current-page-data-slice.ts';
+} from '../../store/slices/currentPageDataSlice.ts';
 import { Flyout } from '../Flyout';
 import {
   checkedCharactersSelector,
   uncheckAllCharacters,
-} from '../../store/slices/checked-characters-slice.ts';
+} from '../../store/slices/checkedCharactersSlice.ts';
 import styles from './Main.module.css';
 
 export const Main = () => {

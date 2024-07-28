@@ -4,7 +4,7 @@ import currentPageDataReducer, {
   setSearchQuery,
   currentPageDataSelector,
   currentPageInfoSelector,
-} from '../slices/current-page-data-slice.ts';
+} from '../slices/currentPageDataSlice.ts';
 import { Data, Info } from '../../types';
 import { mockCharacters } from '../../__mocks__/characters.ts';
 

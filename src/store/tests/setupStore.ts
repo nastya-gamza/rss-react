@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { charactersApi } from '../api/characters-api.ts';
-import checkedCharactersReducer from '../slices/checked-characters-slice.ts';
-import currentPageReducer from '../slices/current-page-data-slice.ts';
-import selectedCharacterReducer from '../slices/selected-character-sice.ts';
+import { charactersApi } from '../api/charactersApi.ts';
+import checkedCharactersReducer from '../slices/checkedCharactersSlice.ts';
+import currentPageReducer from '../slices/currentPageDataSlice.ts';
+import selectedCharacterReducer from '../slices/selectedCharacterSice.ts';
 
 const rootReducer = combineReducers({
   selectedCharacter: selectedCharacterReducer,

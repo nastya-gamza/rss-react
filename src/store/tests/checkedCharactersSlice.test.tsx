@@ -2,7 +2,7 @@ import checkedCharactersReducer, {
   setCheckedCharacters,
   uncheckAllCharacters,
   checkedCharactersSelector,
-} from '../slices/checked-characters-slice.ts';
+} from '../slices/checkedCharactersSlice.ts';
 import { Character } from '../../types';
 import { mockCharacter } from '../../__mocks__/characters.ts';
 

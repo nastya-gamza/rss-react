@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import { Main } from './Main.tsx';
-import { renderWithProviders } from '../../store/tests/render-with-providers.tsx';
+import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 import { MemoryRouter } from 'react-router-dom';
 import { CardList } from '../CardList/CardList.tsx';
 import { mockCharacters } from '../../__mocks__/characters.ts';

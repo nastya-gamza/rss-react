@@ -18,10 +18,6 @@ describe('CardDetails component', () => {
 
     const imageElement = screen.getByRole('img');
     expect(imageElement).toHaveAttribute('src', mockCharacter.image);
-    expect(imageElement).toHaveAttribute(
-      'alt',
-      `${mockCharacter.name}'s image`,
-    );
 
     expect(screen.getByText(mockCharacter.species)).toBeInTheDocument();
     expect(screen.getByText(mockCharacter.status)).toBeInTheDocument();

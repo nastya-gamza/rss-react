@@ -7,7 +7,7 @@ import {
   currentPageDataSelector,
   setCurrentPageNumber,
   setSearchQuery,
-} from '../../store/slices/current-page-data-slice.ts';
+} from '../../store/slices/currentPageDataSlice.ts';
 import style from './Header.module.css';
 
 export const Header = () => {

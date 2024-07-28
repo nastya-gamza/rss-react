@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
   setCheckedCharacters,
-} from '../../store/slices/checked-characters-slice.ts';
+} from '../../store/slices/checkedCharactersSlice.ts';
 import styles from './CardItem.module.css';
 
 type CardItemProps = {

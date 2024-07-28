@@ -4,8 +4,8 @@ import { CardItem } from './CardItem';
 import { MemoryRouter } from 'react-router-dom';
 import { Character } from '../../types';
 import { mockCharacter } from '../../__mocks__/characters.ts';
-import { renderWithProviders } from '../../store/tests/render-with-providers.tsx';
-import { setCheckedCharacters } from '../../store/slices/checked-characters-slice.ts';
+import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
+import { setCheckedCharacters } from '../../store/slices/checkedCharactersSlice.ts';
 
 describe('CARD_ITEM TEST', () => {
   test('renders the relevant card data', () => {

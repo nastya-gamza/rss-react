@@ -8,16 +8,6 @@ export default {
   testEnvironmentOptions: {
     customExportConditions: [''],
   },
-  testPathIgnorePatterns: [
-    'src/App.tsx',
-    'src/main.tsx',
-    'src/router/index.tsx',
-  ],
-  coveragePathIgnorePatterns: [
-    'src/App.tsx',
-    'src/main.tsx',
-    'src/router/index.tsx',
-  ],
   transform: {
     '^.+\\.(ts|tsx)$': 'babel-jest',
   },

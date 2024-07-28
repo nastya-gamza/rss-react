@@ -1,6 +1,6 @@
 import { generatePageArray } from '../../utils';
 import { useAppSelector } from '../useRedux';
-import { currentPageInfoSelector } from '../../store/slices/current-page-data-slice.ts';
+import { currentPageInfoSelector } from '../../store/slices/currentPageDataSlice.ts';
 
 const PAGINATION_PAGE_QUANTITY = 7;
 

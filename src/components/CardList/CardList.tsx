@@ -2,7 +2,7 @@ import { CardItem } from '../CardItem';
 import { Character } from '../../types';
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
-import { currentPageDataSelector } from '../../store/slices/current-page-data-slice.ts';
+import { currentPageDataSelector } from '../../store/slices/currentPageDataSlice.ts';
 import styles from './CardList.module.css';
 
 type CardListProps = {

@@ -6,13 +6,13 @@ describe('useLocalStorage', () => {
     localStorage.clear();
   });
 
-  it('should return the initial value if there is no item in localStorage', () => {
+  test('should return the initial value if there is no item in localStorage', () => {
     const { result } = renderHook(() => useLocalStorage('key', 'initial'));
 
     expect(result.current[0]).toBe('initial');
   });
 
-  it('should return the stored value if there is an item in localStorage', () => {
+  test('should return the stored value if there is an item in localStorage', () => {
     localStorage.setItem('key', JSON.stringify('storedValue'));
 
     const { result } = renderHook(() => useLocalStorage('key', 'initial'));
@@ -20,7 +20,7 @@ describe('useLocalStorage', () => {
     expect(result.current[0]).toBe('storedValue');
   });
 
-  it('should update localStorage when the state changes', () => {
+  test('should update localStorage when the state changes', () => {
     const { result } = renderHook(() => useLocalStorage('key', 'initial'));
 
     act(() => {

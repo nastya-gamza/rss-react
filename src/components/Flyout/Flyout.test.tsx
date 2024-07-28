@@ -1,8 +1,8 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Flyout } from './Flyout';
 import { mockCharacters } from '../../__mocks__/characters.ts';
 import { Character } from '../../types';
+import { ReactNode } from 'react';
 
 jest.mock('../PrimaryButton', () => ({
   PrimaryButton: ({
@@ -10,7 +10,7 @@ jest.mock('../PrimaryButton', () => ({
     children,
   }: {
     onClick: () => void;
-    children: React.ReactNode;
+    children: ReactNode;
   }) => <button onClick={onClick}>{children}</button>,
 }));
 
@@ -20,7 +20,7 @@ jest.mock('../DownloadCSV', () => ({
   ),
 }));
 
-describe('Flyout component', () => {
+describe('FLYOUT TEST', () => {
   const mockOnClick = jest.fn();
 
   afterEach(() => {

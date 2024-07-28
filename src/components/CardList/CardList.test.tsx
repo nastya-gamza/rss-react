@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { renderWithProviders } from '../../store/tests/render-with-providers.tsx';
+import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 import { CardList } from './CardList.tsx';
 import { mockCharacters } from '../../__mocks__/characters.ts';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';

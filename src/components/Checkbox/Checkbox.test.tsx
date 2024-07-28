@@ -1,10 +1,16 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Checkbox } from './Checkbox';
 
-describe('Checkbox component', () => {
+describe('CHECKBOX TEST', () => {
+  const handleCheckboxChange = jest.fn();
+
   test('renders checkbox correctly', () => {
     render(
-      <Checkbox id={1} isChecked={false} handleCheckboxChange={jest.fn()} />,
+      <Checkbox
+        id={1}
+        isChecked={false}
+        handleCheckboxChange={handleCheckboxChange}
+      />,
     );
 
     const checkbox = screen.getByRole('checkbox');
@@ -14,7 +20,11 @@ describe('Checkbox component', () => {
 
   test('checkbox is checked when isChecked is true', () => {
     render(
-      <Checkbox id={1} isChecked={true} handleCheckboxChange={jest.fn()} />,
+      <Checkbox
+        id={1}
+        isChecked={true}
+        handleCheckboxChange={handleCheckboxChange}
+      />,
     );
 
     const checkbox = screen.getByRole('checkbox');
@@ -22,7 +32,6 @@ describe('Checkbox component', () => {
   });
 
   test('calls handleCheckboxChange on checkbox change', () => {
-    const handleCheckboxChange = jest.fn();
     render(
       <Checkbox
         id={1}

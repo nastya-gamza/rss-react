@@ -1,8 +1,8 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from './base-api.ts';
+import { baseQuery } from './baseApi.ts';
 import { Character, Data } from '../../types';
-import { setCurrentPageData } from '../slices/current-page-data-slice.ts';
-import { setSelectedCharacter } from '../slices/selected-character-sice.ts';
+import { setCurrentPageData } from '../slices/currentPageDataSlice.ts';
+import { setSelectedCharacter } from '../slices/selectedCharacterSice.ts';
 
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
