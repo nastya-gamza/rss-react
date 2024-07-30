@@ -1,5 +1,4 @@
 import { ChangeEvent, FormEvent, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { SearchInput } from '../SearchInput';
 import { ThemeToggle } from '../ThemeToggle';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -9,10 +8,11 @@ import {
   setSearchQuery,
 } from '../../store/slices/currentPageDataSlice.ts';
 import style from './Header.module.css';
+import { useRouter } from 'next/router';
 
 export const Header = () => {
   const inputRef = useRef('');
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
   const dispatch = useAppDispatch();
   const { searchQuery } = useAppSelector(currentPageDataSelector);
@@ -21,12 +21,12 @@ export const Header = () => {
     inputRef.current = e.target.value;
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.setItem('searchQuery', inputRef.current);
     dispatch(setSearchQuery(inputRef.current));
     dispatch(setCurrentPageNumber(1));
-    navigate(`/?page=${1}`);
+    await push(`/?page=${1}`);
   };
 
   return (

@@ -11,7 +11,8 @@ type CurrentPageDataState = {
 const initialState: CurrentPageDataState = {
   info: null,
   results: [],
-  searchQuery: localStorage.getItem('searchQuery') || '',
+  searchQuery: '',
+  // searchQuery: localStorage.getItem('searchQuery') || '',
   currentPage: 1,
 };
 

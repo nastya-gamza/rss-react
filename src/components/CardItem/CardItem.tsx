@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { Character } from '../../types';
 import classNames from 'classnames';
 import { Checkbox } from '../Checkbox/Checkbox.tsx';
@@ -8,13 +7,14 @@ import {
   setCheckedCharacters,
 } from '../../store/slices/checkedCharactersSlice.ts';
 import styles from './CardItem.module.css';
+import { useRouter } from 'next/router';
 
 type CardItemProps = {
   character: Character;
 };
 
 export const CardItem = ({ character }: CardItemProps) => {
-  const { pathname } = useLocation();
+  const { pathname } = useRouter();
   const dispatch = useAppDispatch();
 
   const checkedCharacters = useAppSelector(checkedCharactersSelector);
