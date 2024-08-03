@@ -6,18 +6,18 @@ import {
   checkedCharactersSelector,
   uncheckAllCharacters,
 } from '../src/store/slices/checkedCharactersSlice.ts';
-import {
-  charactersApi,
-  getRunningQueriesThunk,
-  useGetAllCharactersQuery,
-} from '../src/store/api/charactersApi.ts';
-import { Error } from '../src/components/Error';
 import { CardList } from '../src/components/CardList/CardList.tsx';
 import { Pagination } from '../src/components/Pagination';
-import { wrapper } from '../src/store/store.ts';
 import styles from '../src/components/Main/Main.module.css';
+import { GetServerSideProps } from 'next';
+import { BASE_URL } from '../src/constants/api.ts';
+import { Data } from '../src/types';
 
-const Main = () => {
+type MainProps = {
+  pageData: Data;
+};
+
+const Main = ({ pageData }: MainProps) => {
   const dispatch = useAppDispatch();
   const { query, pathname, push } = useRouter();
 
@@ -26,12 +26,7 @@ const Main = () => {
   const currentPage = query.page ? Number(query.page) : 1;
   const name = typeof query.name === 'string' ? query.name : '';
 
-  const { data, isError } = useGetAllCharactersQuery({
-    name: query.name as string,
-    page: currentPage,
-  });
-
-  const totalPages = data ? data.info?.pages : 1;
+  const totalPages = pageData ? pageData.info?.pages : 1;
 
   const handleCurrentPage = (page: number) => {
     if (pathname === '/') {
@@ -43,45 +38,46 @@ const Main = () => {
     dispatch(uncheckAllCharacters());
   };
 
-  if (isError) {
-    return <Error message={'An error occurred. Please try again later.'} />;
-  }
-
   return (
     <>
-      {/*{isError && <Error message={'Nothing was found :(️'} />}*/}
       <main className={styles.container}>
-        {data && <CardList results={data.results} />}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handleCurrentPage={handleCurrentPage}
-        />
+        {pageData && <CardList results={pageData?.results} />}
+        {pageData?.results && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handleCurrentPage={handleCurrentPage}
+          />
+        )}
         <Flyout items={checkedCharacters} onClick={handleUncheck} />
       </main>
     </>
   );
 };
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    console.log(context.res.statusMessage);
-    const { page, name } = context.query;
-    const currentPage = page ? Number(page) : 1;
-    const searchName = typeof name === 'string' ? name : '';
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { page, name } = context.query;
+  const currentPage = page ? Number(page) : 1;
+  const searchName = typeof name === 'string' ? name : '';
+  // const id = Number(character);
+  // const res = await fetch(`${BASE_URL}/${id}`);
+  // const data: Character = await res.json();
 
-    await store.dispatch(
-      charactersApi.endpoints?.getAllCharacters.initiate({
-        name: searchName,
-        page: currentPage,
-      }),
-    );
+  // const name = '';
+  const getPageData = await fetch(
+    `${BASE_URL}/?name=${searchName}&page=${currentPage}`,
+  );
+  const pageData = await getPageData.json();
 
-    await Promise.all(store.dispatch(getRunningQueriesThunk()));
-
+  if (!pageData) {
     return {
-      props: {},
+      notFound: true,
     };
-  },
-);
+  }
+
+  return {
+    props: { pageData },
+  };
+};
+
 export default Main;
