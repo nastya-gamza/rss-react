@@ -1,19 +1,24 @@
-import type { AppProps } from 'next/app';
-import '../src/styles/main.css';
-import { ThemeProvider } from '../src/context/theme/themeProvider.tsx';
-import { store } from '../src/store/store.ts';
 import { Provider } from 'react-redux';
+import type { AppProps } from 'next/app';
+import { ThemeProvider } from '../src/context/theme/themeProvider.tsx';
+import { wrapper } from '../src/store/store.ts';
 import { Layout } from '../src/components/Layout';
+import '../src/styles/main.css';
+import { ErrorBoundary } from '../src/components/ErrorBoundary';
 
 const App = ({ Component, pageProps }: AppProps) => {
+  const { store } = wrapper.useWrappedStore(pageProps);
+
   return (
-    <Provider store={store}>
-      <ThemeProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ThemeProvider>
-    </Provider>
+    <ErrorBoundary>
+      <Provider store={store}>
+        <ThemeProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </ThemeProvider>
+      </Provider>
+    </ErrorBoundary>
   );
 };
 

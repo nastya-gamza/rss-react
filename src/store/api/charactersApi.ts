@@ -3,10 +3,16 @@ import { baseQuery } from './baseApi.ts';
 import { Character, Data } from '../../types';
 import { setCurrentPageData } from '../slices/currentPageDataSlice.ts';
 import { setSelectedCharacter } from '../slices/selectedCharacterSice.ts';
+import { HYDRATE } from 'next-redux-wrapper';
 
 export const charactersApi = createApi({
   reducerPath: 'charactersApi',
   baseQuery,
+  extractRehydrationInfo(action: unknown, { reducerPath }) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath];
+    }
+  },
   endpoints: (builder) => ({
     getAllCharacters: builder.query<Data, { name?: string; page?: number }>({
       query: (params) => {
@@ -50,5 +56,8 @@ export const charactersApi = createApi({
   }),
 });
 
-export const { useGetAllCharactersQuery, useGetSingleCharacterQuery } =
-  charactersApi;
+export const {
+  useGetAllCharactersQuery,
+  useGetSingleCharacterQuery,
+  util: { getRunningQueriesThunk },
+} = charactersApi;

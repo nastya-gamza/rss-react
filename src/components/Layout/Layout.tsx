@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import { Header } from '../Header';
-import { Main } from '../Main';
 import { ThemeContext } from '../../context/theme/themeContext.ts';
 import { ReactNode, useContext } from 'react';
 import styles from './Layout.module.css';
@@ -10,11 +9,12 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const { theme } = useContext(ThemeContext);
   const { pathname, push, query } = useRouter();
 
-  const page = query.page ? Number(query.page) : null;
+  const page = query.page ? Number(query.page) : 1;
+  const name = typeof query.name === 'string' ? query.name : '';
 
-  const handleNavigate = async () => {
+  const handleNavigate = () => {
     if (pathname !== '/') {
-      await push(`/?page=${page}`);
+      push(`?page=${page}&name=${name}`);
     }
   };
 
@@ -27,10 +27,9 @@ export const Layout = ({ children }: { children: ReactNode }) => {
           })}
         >
           <Header />
-          <Main />
+          <div>{children}</div>
         </div>
       </div>
-      <div className={styles.outlet}>{children}</div>
     </div>
   );
 };

@@ -1,22 +1,20 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { CardItem } from '../CardItem';
 import { Character } from '../../types';
+import styles from './CardList.module.css';
 import { useAppSelector } from '../../hooks';
 import { currentPageDataSelector } from '../../store/slices/currentPageDataSlice.ts';
-import styles from './CardList.module.css';
-import { useRouter } from 'next/router';
 
 type CardListProps = {
   results: Character[];
 };
 
 export const CardList = ({ results }: CardListProps) => {
-  const { currentPage: storedCurrentPage } = useAppSelector(
-    currentPageDataSelector,
-  );
-  const { query } = useRouter();
-  const page = query.page ? Number(query.page) : null;
-  const currentPage = page ?? storedCurrentPage;
+  const { page } = useRouter().query;
+  const currentPage = page ? Number(page) : 1;
+  const res = useAppSelector(currentPageDataSelector);
+  console.log(res);
 
   return (
     <ul className={styles.list}>

@@ -1,11 +1,11 @@
 import { Error } from '../../components/Error';
-import { useNavigate } from 'react-router-dom';
 import styles from './ErrorPage.module.css';
+import { useRouter } from 'next/router';
 
 export const ErrorPage = () => {
-  const navigate = useNavigate();
+  const { push } = useRouter();
 
-  const handleNavigate = () => navigate('/');
+  const handleNavigate = () => push('/');
 
   return (
     <div className={styles.error}>

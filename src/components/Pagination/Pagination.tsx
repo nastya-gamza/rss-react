@@ -4,15 +4,20 @@ import styles from './Pagination.module.css';
 
 type PaginationProps = {
   currentPage: number;
+  totalPages: number;
   handleCurrentPage: (page: number) => void;
 };
 
 export const Pagination = ({
   currentPage,
+  totalPages,
   handleCurrentPage,
 }: PaginationProps) => {
-  const { arrayOfPagesNumber, totalPages, handlePrevPage, handleNextPage } =
-    usePagination(currentPage, handleCurrentPage);
+  const { arrayOfPagesNumber, handlePrevPage, handleNextPage } = usePagination(
+    currentPage,
+    totalPages,
+    handleCurrentPage,
+  );
 
   return (
     <div className={styles.pagination}>

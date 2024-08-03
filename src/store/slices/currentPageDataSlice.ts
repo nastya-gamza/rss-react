@@ -1,18 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { HYDRATE } from 'next-redux-wrapper';
 import { Character, Data, Info } from '../../types';
 
 type CurrentPageDataState = {
   info: Info | null;
   results: Character[] | [];
-  searchQuery: string;
   currentPage: number;
 };
 
 const initialState: CurrentPageDataState = {
   info: null,
   results: [],
-  searchQuery: '',
-  // searchQuery: localStorage.getItem('searchQuery') || '',
   currentPage: 1,
 };
 
@@ -27,9 +25,17 @@ const currentPageDataSlice = createSlice({
     setCurrentPageNumber: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    setSearchQuery: (state, action: PayloadAction<string>) => {
-      state.searchQuery = action.payload;
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(HYDRATE, (state, action: unknown) => {
+      if (!action.payload.currentPageData.results.length) {
+        return state;
+      }
+      return {
+        ...state,
+        ...action.payload.currentPageData,
+      };
+    });
   },
   selectors: {
     currentPageInfoSelector: (state) => state.info,
@@ -37,7 +43,7 @@ const currentPageDataSlice = createSlice({
   },
 });
 
-export const { setCurrentPageData, setCurrentPageNumber, setSearchQuery } =
+export const { setCurrentPageData, setCurrentPageNumber } =
   currentPageDataSlice.actions;
 
 export default currentPageDataSlice.reducer;

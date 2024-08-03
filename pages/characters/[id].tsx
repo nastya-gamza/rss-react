@@ -9,7 +9,6 @@ const CharacterPage = () => {
   const { query, push } = useRouter();
   const { id } = query;
   const search = query.page;
-  console.log(search);
 
   const {
     data: character,
@@ -17,8 +16,8 @@ const CharacterPage = () => {
     isError,
   } = useGetSingleCharacterQuery(id as string, { skip: !id });
 
-  const handleClose = async () => {
-    await push(`/?page=${search}`);
+  const handleClose = () => {
+    push(`/?page=${search}`);
   };
 
   return (
