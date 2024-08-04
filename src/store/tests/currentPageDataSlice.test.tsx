@@ -1,7 +1,6 @@
 import currentPageDataReducer, {
   setCurrentPageData,
   setCurrentPageNumber,
-  setSearchQuery,
   currentPageDataSelector,
   currentPageInfoSelector,
 } from '../slices/currentPageDataSlice.ts';
@@ -47,13 +46,6 @@ describe('currentPageData slice', () => {
     const result = currentPageDataReducer(initialState, action);
 
     expect(result.currentPage).toEqual(2);
-  });
-
-  test('should handle setSearchQuery', () => {
-    const action = { type: setSearchQuery.type, payload: 'test query' };
-    const result = currentPageDataReducer(initialState, action);
-
-    expect(result.searchQuery).toEqual('test query');
   });
 
   test('currentPageDataSelector should return the entire state', () => {

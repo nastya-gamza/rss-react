@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '../src/context/theme/themeProvider.tsx';
 import { wrapper } from '../src/store/store.ts';
 import { Layout } from '../src/components/Layout';
-import '../src/styles/main.css';
+import '../src/styles/global.css';
 import { ErrorBoundary } from '../src/components/ErrorBoundary';
 
 const App = ({ Component, pageProps }: AppProps) => {

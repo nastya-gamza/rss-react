@@ -22,7 +22,11 @@ describe('Pagination component', () => {
 
   test('renders pagination component', () => {
     render(
-      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={3}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const paginationButtons = screen.getAllByRole('button');
@@ -43,7 +47,11 @@ describe('Pagination component', () => {
 
   test('calls handlePrevPage when prev button is clicked', () => {
     render(
-      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={3}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const prevButton = screen.getByText('<');
@@ -54,7 +62,11 @@ describe('Pagination component', () => {
 
   test('calls handleNextPage when next button is clicked', () => {
     render(
-      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={3}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const nextButton = screen.getByText('>');
@@ -65,7 +77,11 @@ describe('Pagination component', () => {
 
   test('calls handleCurrentPage when a page button is clicked', () => {
     render(
-      <Pagination currentPage={3} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={3}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const pageButton = screen.getByText('2');
@@ -76,7 +92,11 @@ describe('Pagination component', () => {
 
   test('does not render prev button when on first page', () => {
     render(
-      <Pagination currentPage={1} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={1}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const prevButton = screen.queryByText('<');
@@ -88,7 +108,11 @@ describe('Pagination component', () => {
 
   test('does not render next button when on last page', () => {
     render(
-      <Pagination currentPage={5} handleCurrentPage={mockHandleCurrentPage} />,
+      <Pagination
+        currentPage={5}
+        totalPages={42}
+        handleCurrentPage={mockHandleCurrentPage}
+      />,
     );
 
     const nextButton = screen.queryByText('>');

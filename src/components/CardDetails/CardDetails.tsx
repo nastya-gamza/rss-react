@@ -18,7 +18,11 @@ export const CardDetails = ({ character, handleClose }: CardDetailsProps) => (
         x
       </button>
     </header>
-    <img src={character?.image} alt={`${character.name}'s image`} />
+    <img
+      src={character?.image}
+      draggable={false}
+      alt={`${character.name}'s image`}
+    />
     <div className={styles.info}>
       <p>
         <b>Species: </b> {character?.species}

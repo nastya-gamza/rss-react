@@ -4,7 +4,6 @@ import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 import { CardList } from './CardList.tsx';
 import { mockCharacters } from '../../__mocks__/characters.ts';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
-import { CharacterPage } from '../../pages/CharacterPage';
 
 describe('CARD_LIST TEST', () => {
   test('should show characters list', async () => {
@@ -23,7 +22,6 @@ describe('CARD_LIST TEST', () => {
       <MemoryRouter initialEntries={['/']}>
         <Routes>
           <Route path='/' element={<CardList results={mockCharacters} />} />
-          <Route path='/character/:id' element={<CharacterPage />} />
         </Routes>
       </MemoryRouter>,
     );

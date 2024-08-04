@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { CardItem } from '../CardItem';
 import { Error } from '../Error';
@@ -10,18 +9,22 @@ type CardListProps = {
 };
 
 export const CardList = ({ results }: CardListProps) => {
-  const { page } = useRouter().query;
-  const currentPage = page ? Number(page) : 1;
+  const { query, push } = useRouter();
+  const characterName = query.name ?? '';
+  const currentPage = query.page ? Number(query.page) : 1;
+
+  const handleNavigate = (id: number) => {
+    if (!query.character) {
+      push(`?page=${currentPage}&name=${characterName}&character=${id}`);
+    }
+  };
 
   return results ? (
     <ul className={styles.list}>
       {results.map((character) => (
-        <Link
-          href={`/characters/${character.id}/?page=${currentPage}`}
-          key={character.id}
-        >
+        <li onClick={() => handleNavigate(character.id)} key={character.id}>
           <CardItem character={character} />
-        </Link>
+        </li>
       ))}
     </ul>
   ) : (

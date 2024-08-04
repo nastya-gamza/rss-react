@@ -1,8 +1,8 @@
-import { Error } from '../../components/Error';
-import styles from './ErrorPage.module.css';
 import { useRouter } from 'next/router';
+import { Error } from '../src/components/Error';
+import styles from './ErrorPage.module.css';
 
-export const ErrorPage = () => {
+const ErrorPage = () => {
   const { push } = useRouter();
 
   const handleNavigate = () => push('/');
@@ -17,3 +17,5 @@ export const ErrorPage = () => {
     </div>
   );
 };
+
+export default ErrorPage;

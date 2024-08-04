@@ -25,22 +25,26 @@ export const CardItem = ({ character }: CardItemProps) => {
   };
 
   return (
-    <li
+    <div
       className={classNames(styles.card, {
         [styles.noHover]: pathname.includes('character'),
       })}
       data-testid='card-item'
     >
       <div className={styles.img}>
-        <img src={character?.image} alt={`${character.name}'s image`} />
+        <img
+          src={character?.image}
+          draggable={false}
+          alt={`${character.name}'s image`}
+        />
       </div>
       <div className={styles.info}>
-        <h3>{character?.name}</h3>
-        <p>
+        <h3 className={styles.name}>{character?.name}</h3>
+        <p className={styles.description}>
           <b>Species: </b>
           {character?.species}
         </p>
-        <p>
+        <p className={styles.description}>
           <b>Location: </b>
           {character?.location.name}
         </p>
@@ -50,6 +54,6 @@ export const CardItem = ({ character }: CardItemProps) => {
         isChecked={isChecked}
         handleCheckboxChange={handleCheckboxChange}
       />
-    </li>
+    </div>
   );
 };
