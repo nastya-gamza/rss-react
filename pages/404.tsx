@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Error } from '../src/components/Error';
-import styles from './ErrorPage.module.css';
+import styles from '../src/styles/ErrorPage.module.css';
 
 const ErrorPage = () => {
   const { push } = useRouter();
