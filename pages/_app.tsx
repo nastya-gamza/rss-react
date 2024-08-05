@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { Loader } from '../src/components/Loader';
 import '../src/styles/global.css';
+import Head from 'next/head';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const router = useRouter();
@@ -34,15 +35,22 @@ const App = ({ Component, pageProps }: AppProps) => {
   }, [router]);
 
   return (
-    <ErrorBoundary>
-      <Provider store={store}>
-        <ThemeProvider>
-          <Layout>
-            {isLoading ? <Loader /> : <Component {...pageProps} />}
-          </Layout>
-        </ThemeProvider>
-      </Provider>
-    </ErrorBoundary>
+    <>
+      <Head>
+        <meta charSet='UTF-8' />
+        <meta content='width=device-width, initial-scale=1' name='viewport' />
+        <title>Rick & Morty</title>
+      </Head>
+      <ErrorBoundary>
+        <Provider store={store}>
+          <ThemeProvider>
+            <Layout>
+              {isLoading ? <Loader /> : <Component {...pageProps} />}
+            </Layout>
+          </ThemeProvider>
+        </Provider>
+      </ErrorBoundary>
+    </>
   );
 };
 
