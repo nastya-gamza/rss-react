@@ -1,7 +1,7 @@
-import { Provider } from 'react-redux';
 import type { AppProps } from 'next/app';
+import { Provider } from 'react-redux';
+import { store } from '../src/store/store.ts';
 import { ThemeProvider } from '../src/context/theme/themeProvider.tsx';
-import { wrapper } from '../src/store/store.ts';
 import { Layout } from '../src/components/Layout';
 import { ErrorBoundary } from '../src/components/ErrorBoundary';
 import { useRouter } from 'next/router';
@@ -10,8 +10,6 @@ import { Loader } from '../src/components/Loader';
 import '../src/styles/global.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
-  const { store } = wrapper.useWrappedStore(pageProps);
-
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 

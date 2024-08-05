@@ -5,14 +5,14 @@ import styles from '../src/styles/ErrorPage.module.css';
 const ErrorPage = () => {
   const { push } = useRouter();
 
-  const handleNavigate = () => push('/');
+  const handleNavigateHome = () => push('/');
 
   return (
     <div className={styles.error}>
       <Error
         message={'404 | Page not found'}
         btnText={'Back home'}
-        handleRefresh={handleNavigate}
+        handleRefresh={handleNavigateHome}
       />
     </div>
   );

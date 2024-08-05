@@ -1,17 +1,11 @@
-import { createWrapper } from 'next-redux-wrapper';
 import { configureStore } from '@reduxjs/toolkit';
 import checkedCharactersReducer from './slices/checkedCharactersSlice.ts';
-import currentPageReducer from './slices/currentPageDataSlice.ts';
 
-const makeStore = () =>
-  configureStore({
-    reducer: {
-      checkedCharacters: checkedCharactersReducer,
-      currentPageData: currentPageReducer,
-    },
-  });
+export const store = configureStore({
+  reducer: {
+    checkedCharacters: checkedCharactersReducer,
+  },
+});
 
-export type RootState = ReturnType<ReturnType<typeof makeStore>['getState']>;
-export type AppDispatch = ReturnType<typeof makeStore>['dispatch'];
-
-export const wrapper = createWrapper(makeStore);
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
