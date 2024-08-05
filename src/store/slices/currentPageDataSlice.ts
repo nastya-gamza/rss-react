@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { HYDRATE } from 'next-redux-wrapper';
 import { Character, Data, Info } from '../../types';
 
 type CurrentPageDataState = {
@@ -25,17 +24,6 @@ const currentPageDataSlice = createSlice({
     setCurrentPageNumber: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(HYDRATE, (state, action: unknown) => {
-      if (!action.payload.currentPageData.results.length) {
-        return state;
-      }
-      return {
-        ...state,
-        ...action.payload.currentPageData,
-      };
-    });
   },
   selectors: {
     currentPageInfoSelector: (state) => state.info,

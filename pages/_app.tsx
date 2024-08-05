@@ -3,18 +3,44 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider } from '../src/context/theme/themeProvider.tsx';
 import { wrapper } from '../src/store/store.ts';
 import { Layout } from '../src/components/Layout';
-import '../src/styles/global.css';
 import { ErrorBoundary } from '../src/components/ErrorBoundary';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { Loader } from '../src/components/Loader';
+import '../src/styles/global.css';
 
 const App = ({ Component, pageProps }: AppProps) => {
   const { store } = wrapper.useWrappedStore(pageProps);
+
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const startRoute = () => {
+      setIsLoading(true);
+    };
+
+    const endRoute = () => {
+      setIsLoading(false);
+    };
+
+    router.events.on('routeChangeStart', startRoute);
+    router.events.on('routeChangeComplete', endRoute);
+    router.events.on('routeChangeError', endRoute);
+
+    return () => {
+      router.events.off('routeChangeStart', startRoute);
+      router.events.off('routeChangeComplete', endRoute);
+      router.events.off('routeChangeError', endRoute);
+    };
+  }, [router]);
 
   return (
     <ErrorBoundary>
       <Provider store={store}>
         <ThemeProvider>
           <Layout>
-            <Component {...pageProps} />
+            {isLoading ? <Loader /> : <Component {...pageProps} />}
           </Layout>
         </ThemeProvider>
       </Provider>
