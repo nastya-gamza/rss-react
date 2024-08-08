@@ -6,3 +6,12 @@
 .row {
     display: flex;
 }
+
+.details {
+    position: relative;
+    top: 0;
+    right: 0;
+    border-left: 1px solid rgb(226, 232, 240);
+    background-color: var(--bg-color);
+    min-width: 380px;
+}
