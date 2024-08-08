@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useMemo, useState } from 'react';
 import { Character } from '../../types';
 import styles from '../PrimaryButton/PrimaryButton.module.css';

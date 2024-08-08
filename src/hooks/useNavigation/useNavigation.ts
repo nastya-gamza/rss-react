@@ -1,9 +1,15 @@
-import { useRouter } from 'next/router';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export const useNavigation = () => {
-  const { query, pathname, push } = useRouter();
-  const currentPage = query.page ? Number(query.page) : 1;
-  const name = typeof query.name === 'string' ? query.name : '';
+  const { push } = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const searchName = searchParams.get('name');
+  const page = searchParams.get('page');
+  const character = searchParams.get('character');
+
+  const currentPage = page ? Number(page) : 1;
+  const name = typeof searchName === 'string' ? searchName : '';
 
   const handleCurrentPage = (page: number) => {
     if (pathname === '/') {
@@ -12,23 +18,24 @@ export const useNavigation = () => {
   };
 
   const handleNavigate = () => {
-    if (query.character) {
+    if (character) {
       push(`?page=${currentPage}&name=${name}`);
     }
   };
 
   const handleNavigateToCharacter = (id: number) => {
-    if (!query.character) {
+    if (!character) {
       push(`?page=${currentPage}&name=${name}&character=${id}`);
     }
   };
 
   return {
-    query,
-    pathname,
-    push,
-    currentPage,
+    page,
     name,
+    pathname,
+    character,
+    currentPage,
+    push,
     handleNavigate,
     handleCurrentPage,
     handleNavigateToCharacter,

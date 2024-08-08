@@ -1,12 +1,16 @@
-import { useRouter } from 'next/router';
+'use client';
+
 import { ChangeEvent, FormEvent, useRef } from 'react';
 import { SearchInput } from '../SearchInput';
 import { ThemeToggle } from '../ThemeToggle';
 import style from './Header.module.css';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export const Header = () => {
   const inputRef = useRef('');
-  const { push, pathname, query } = useRouter();
+  const { push } = useRouter();
+  const searchParams = useSearchParams();
+  const searchName = searchParams.get('name');
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     inputRef.current = e.target.value;
@@ -15,17 +19,14 @@ export const Header = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     localStorage.setItem('searchQuery', inputRef.current);
-    push({
-      pathname: pathname,
-      query: { page: 1, name: inputRef.current },
-    });
+    push(`/?page=1&name=${inputRef.current}`);
   };
 
   return (
     <header className={style.header}>
       <div className={style.container}>
         <SearchInput
-          defaultValue={query.name as string}
+          defaultValue={searchName ?? ''}
           handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
         />

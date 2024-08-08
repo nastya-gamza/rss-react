@@ -7,14 +7,14 @@ import {
   setCheckedCharacters,
 } from '../../store/slices/checkedCharactersSlice.ts';
 import styles from './CardItem.module.css';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 type CardItemProps = {
   character: Character;
 };
 
 export const CardItem = ({ character }: CardItemProps) => {
-  const { pathname } = useRouter();
+  const pathname = usePathname();
   const dispatch = useAppDispatch();
 
   const checkedCharacters = useAppSelector(checkedCharactersSelector);

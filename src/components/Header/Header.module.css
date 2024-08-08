@@ -7,10 +7,6 @@
   height: 100px;
   background-color: var(--header-color);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-  /*h1 {*/
-  /*  font-size: 18px;*/
-  /*}*/
 }
 
 .container {

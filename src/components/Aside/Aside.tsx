@@ -1,3 +1,5 @@
+'use client';
+
 import { CardDetails } from '../CardDetails';
 import { Character } from '../../types';
 import { useNavigation } from '../../hooks';

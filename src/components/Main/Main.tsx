@@ -1,3 +1,5 @@
+'use client';
+
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
 import { useAppDispatch, useAppSelector, useNavigation } from '../../hooks';

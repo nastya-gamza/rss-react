@@ -35,7 +35,6 @@
     ]
   },
   "include": [
-    "pages",
     "src",
     "./setup-tests.ts",
     "./dist/types/**/*.ts",

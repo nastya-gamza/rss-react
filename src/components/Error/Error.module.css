@@ -10,10 +10,27 @@
   justify-content: center;
   text-align: center;
   background-color: var(--bg-color);
+  color: #fff;
 }
 
 .message {
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 16px;
+  color: var(--font-color);
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  color: #fff;
+  background-color: cornflowerblue;
+  border-radius: 8px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #4e78c2;
 }
