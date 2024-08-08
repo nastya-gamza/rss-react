@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
-import '../src/styles/global.css';
 import { Header } from '../src/components/Header';
 import { StoreProvider } from '../src/store/StoreProvider';
+import { ThemeProvider } from '../src/context/theme/themeProvider';
+import '../src/styles/global.css';
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata: Metadata = {
@@ -22,12 +23,14 @@ export default function RootLayout({
 }>) {
   return (
     <StoreProvider>
-      <html lang='en'>
-        <body data-theme='light'>
-          <Header />
-          {children}
-        </body>
-      </html>
+      <ThemeProvider>
+        <html lang='en'>
+          <body>
+            <Header />
+            {children}
+          </body>
+        </html>
+      </ThemeProvider>
     </StoreProvider>
   );
 }

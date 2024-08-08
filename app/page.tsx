@@ -5,7 +5,6 @@ import { fetchData } from '../src/api';
 import { BASE_URL } from '../src/constants/api.ts';
 import { Character, Data } from '../src/types';
 import styles from '../src/styles/main.module.css';
-import { Suspense } from 'react';
 
 const Home = async ({
   searchParams,
@@ -32,14 +31,12 @@ const Home = async ({
   }
 
   return (
-    <Suspense>
-      <main className={styles.container}>
-        <div className={styles.row}>
-          {pageData && <Main pageData={pageData} />}
-          {characterData && <Aside characterData={characterData} />}
-        </div>
-      </main>
-    </Suspense>
+    <main className={styles.container}>
+      <div className={styles.row}>
+        {pageData && <Main pageData={pageData} />}
+        {characterData && <Aside characterData={characterData} />}
+      </div>
+    </main>
   );
 };
 
