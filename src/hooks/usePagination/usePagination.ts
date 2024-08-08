@@ -1,12 +1,10 @@
 import { generatePageArray } from '../../utils';
+import { useNavigation } from '../useNavigation';
 
 const PAGINATION_PAGE_QUANTITY = 7;
 
-export const usePagination = (
-  currentPage: number,
-  totalPages: number,
-  handleCurrentPage: (page: number) => void,
-) => {
+export const usePagination = (totalPages: number) => {
+  const { currentPage, handleCurrentPage } = useNavigation();
   const getPaginationRange = ({
     totalPages,
     currentPage,
@@ -48,5 +46,12 @@ export const usePagination = (
 
   const handleNextPage = () => handleCurrentPage(currentPage + 1);
 
-  return { arrayOfPagesNumber, totalPages, handlePrevPage, handleNextPage };
+  return {
+    arrayOfPagesNumber,
+    totalPages,
+    handlePrevPage,
+    handleNextPage,
+    handleCurrentPage,
+    currentPage,
+  };
 };

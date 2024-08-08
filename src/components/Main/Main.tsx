@@ -1,29 +1,38 @@
-'use client';
-
 import { CardList } from '../CardList/CardList.tsx';
 import { Pagination } from '../Pagination';
-import { useNavigation } from '../../hooks';
 import { Data } from '../../types';
 import { Flyout } from '../Flyout';
+import { fetchData } from '../../api';
+import { BASE_URL } from '../../constants/api.ts';
 import styles from './Main.module.css';
 
 type MainProps = {
-  pageData: Data;
+  searchParams: {
+    page?: string;
+    name?: string;
+    character?: string;
+  };
 };
 
-export const Main = ({ pageData }: MainProps) => {
-  const { currentPage, handleNavigate, handleCurrentPage } = useNavigation();
+export const Main = async ({ searchParams }: MainProps) => {
+  const { page, name } = searchParams;
+
+  const currentPage = page ? Number(page) : 1;
+  const searchName = typeof name === 'string' ? name : '';
+
+  const pageData = await fetchData<Data>(
+    `${BASE_URL}/?name=${searchName}&page=${currentPage}`,
+  );
+
   const totalPages = pageData ? pageData.info?.pages : 1;
 
   return (
-    <section className={styles.main} onClick={handleNavigate}>
-      <CardList results={pageData?.results} />
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handleCurrentPage={handleCurrentPage}
-      />
-      <Flyout />
-    </section>
+    pageData && (
+      <section className={styles.main}>
+        <CardList results={pageData?.results} />
+        <Pagination totalPages={totalPages} />
+        <Flyout />
+      </section>
+    )
   );
 };

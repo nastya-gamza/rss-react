@@ -1,3 +1,5 @@
+'use client';
+
 import { useNavigation } from '../../hooks';
 import { CardItem } from '../CardItem';
 import { Error } from '../Error';
@@ -9,10 +11,10 @@ type CardListProps = {
 };
 
 export const CardList = ({ results }: CardListProps) => {
-  const { handleNavigateToCharacter } = useNavigation();
+  const { handleNavigate, handleNavigateToCharacter } = useNavigation();
 
   return results ? (
-    <ul className={styles.list}>
+    <ul className={styles.list} onClick={handleNavigate}>
       {results.map((character) => (
         <li
           onClick={() => handleNavigateToCharacter(character.id)}

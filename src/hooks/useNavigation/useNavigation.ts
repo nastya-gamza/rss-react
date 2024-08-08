@@ -1,3 +1,5 @@
+'use client';
+
 import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 export const useNavigation = () => {
@@ -30,12 +32,7 @@ export const useNavigation = () => {
   };
 
   return {
-    page,
-    name,
-    pathname,
-    character,
     currentPage,
-    push,
     handleNavigate,
     handleCurrentPage,
     handleNavigateToCharacter,
