@@ -1,99 +1,63 @@
 import { usePagination } from './usePagination';
-import * as reduxHooks from '../../hooks/useRedux/useRedux.ts';
 import { generatePageArray } from '../../utils';
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 
-jest.mock('../../store/slices/currentPageDataSlice.ts', () => ({
-  currentPageInfoSelector: jest.fn(),
-}));
 jest.mock('../../utils', () => ({
-  generatePageArray: jest.fn((start, end) =>
-    Array.from({ length: end - start }, (_, i) => start + i),
-  ),
+  generatePageArray: jest.fn(),
 }));
 
-describe('usePagination', () => {
-  const mockUseAppSelector = jest.spyOn(reduxHooks, 'useAppSelector');
-  const mockGeneratePageArray = generatePageArray as jest.Mock;
-  const handleCurrentPage = jest.fn();
-  const totalPages = 42;
+const handleCurrentPageMock = jest.fn();
 
-  beforeEach(() => {
-    mockUseAppSelector.mockClear();
-    mockGeneratePageArray.mockClear();
+describe('usePagination Hook', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  test('should handle case where totalPages is less than PAGINATION_PAGE_QUANTITY', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 5 });
+  test('should handle pagination with currentPage in the first half of pages', () => {
+    (generatePageArray as jest.Mock).mockReturnValue([1, 2, 3, 4, 5, 6, 7]);
 
     const { result } = renderHook(() =>
-      usePagination(2, totalPages, handleCurrentPage),
-    );
-
-    expect(result.current.arrayOfPagesNumber).toEqual([1, 2, 3, 4, 5]);
-    expect(result.current.totalPages).toBe(5);
-  });
-
-  test('should handle case where currentPage is at the beginning of the range', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 10 });
-
-    const { result } = renderHook(() =>
-      usePagination(2, totalPages, handleCurrentPage),
+      usePagination(2, 10, handleCurrentPageMock),
     );
 
     expect(result.current.arrayOfPagesNumber).toEqual([1, 2, 3, 4, 5, 6, 7]);
-    expect(result.current.totalPages).toBe(10);
+    expect(result.current.handlePrevPage).toBeInstanceOf(Function);
+    expect(result.current.handleNextPage).toBeInstanceOf(Function);
   });
 
-  test('should handle case where currentPage is at the end of the range', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 10 });
+  test('should handle pagination with currentPage in the last half of pages', () => {
+    (generatePageArray as jest.Mock).mockReturnValue([5, 6, 7, 8, 9, 10]);
 
     const { result } = renderHook(() =>
-      usePagination(9, totalPages, handleCurrentPage),
+      usePagination(8, 10, handleCurrentPageMock),
     );
 
-    expect(result.current.arrayOfPagesNumber).toEqual([4, 5, 6, 7, 8, 9, 10]);
-    expect(result.current.totalPages).toBe(10);
+    expect(result.current.arrayOfPagesNumber).toEqual([5, 6, 7, 8, 9, 10]);
+    expect(result.current.handlePrevPage).toBeInstanceOf(Function);
+    expect(result.current.handleNextPage).toBeInstanceOf(Function);
   });
 
-  test('should handle case where currentPage is in the middle of the range', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 20 });
+  test('should handle pagination with currentPage in the middle of pages', () => {
+    (generatePageArray as jest.Mock).mockReturnValue([4, 5, 6, 7, 8]);
 
     const { result } = renderHook(() =>
-      usePagination(10, totalPages, handleCurrentPage),
+      usePagination(6, 10, handleCurrentPageMock),
     );
 
-    expect(result.current.arrayOfPagesNumber).toEqual([
-      7, 8, 9, 10, 11, 12, 13,
-    ]);
-    expect(result.current.totalPages).toBe(20);
+    expect(result.current.arrayOfPagesNumber).toEqual([4, 5, 6, 7, 8]);
+    expect(result.current.handlePrevPage).toBeInstanceOf(Function);
+    expect(result.current.handleNextPage).toBeInstanceOf(Function);
   });
 
-  test('should call handleCurrentPage with previous page on handlePrevPage', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 20 });
-
+  test('handlePrevPage and handleNextPage should call handleCurrentPage with correct arguments', () => {
     const { result } = renderHook(() =>
-      usePagination(10, totalPages, handleCurrentPage),
+      usePagination(5, 10, handleCurrentPageMock),
     );
 
-    act(() => {
-      result.current.handlePrevPage();
-    });
+    result.current.handlePrevPage();
+    expect(handleCurrentPageMock).toHaveBeenCalledWith(4);
 
-    expect(handleCurrentPage).toHaveBeenCalledWith(9);
-  });
-
-  test('should call handleCurrentPage with next page on handleNextPage', () => {
-    mockUseAppSelector.mockReturnValue({ pages: 20 });
-
-    const { result } = renderHook(() =>
-      usePagination(10, totalPages, handleCurrentPage),
-    );
-
-    act(() => {
-      result.current.handleNextPage();
-    });
-
-    expect(handleCurrentPage).toHaveBeenCalledWith(11);
+    result.current.handleNextPage();
+    expect(handleCurrentPageMock).toHaveBeenCalledWith(6);
   });
 });

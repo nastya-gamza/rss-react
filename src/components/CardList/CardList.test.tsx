@@ -1,35 +1,35 @@
-import { screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
-import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
-import { CardList } from './CardList.tsx';
+import { screen, fireEvent } from '@testing-library/react';
+import { CardList } from './CardList';
+import mockRouter from 'next-router-mock';
 import { mockCharacters } from '../../__mocks__/characters.ts';
-import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 
-describe('CARD_LIST TEST', () => {
-  test('should show characters list', async () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <CardList results={mockCharacters} />
-      </MemoryRouter>,
-    );
+jest.mock('next/router', () => require('next-router-mock'));
 
-    expect(await screen.findByText(/Rick Sanchez/i)).toBeInTheDocument();
-    expect(screen.queryByTestId('loader')).not.toBeInTheDocument();
+describe('CardList', () => {
+  beforeEach(() => {
+    mockRouter.setCurrentUrl('/?page=1&name=Rick');
   });
 
-  test('clicking on a card opens a detailed card component', async () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/']}>
-        <Routes>
-          <Route path='/' element={<CardList results={mockCharacters} />} />
-        </Routes>
-      </MemoryRouter>,
-    );
+  test('renders a list of characters', () => {
+    renderWithProviders(<CardList results={mockCharacters} />);
 
-    const cardItems = await screen.findAllByTestId('card-item');
-    userEvent.click(cardItems[0]);
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems).toHaveLength(mockCharacters.length);
 
-    const characterPage = await screen.findByTestId('character-page');
-    expect(characterPage).toBeInTheDocument();
+    const firstCharacter = screen.getByText('Rick Sanchez');
+    const secondCharacter = screen.getByText('Morty Smith');
+
+    expect(firstCharacter).toBeInTheDocument();
+    expect(secondCharacter).toBeInTheDocument();
+  });
+
+  test('navigates to character details on click', () => {
+    renderWithProviders(<CardList results={mockCharacters} />);
+
+    const firstCharacterItem = screen.getByText('Rick Sanchez');
+    fireEvent.click(firstCharacterItem);
+
+    expect(mockRouter.asPath).toBe('/?page=1&name=Rick&character=1');
   });
 });

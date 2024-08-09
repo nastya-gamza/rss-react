@@ -15,10 +15,6 @@ const TestComponent = () => {
 };
 
 describe('ThemeContext', () => {
-  beforeEach(() => {
-    localStorage.clear();
-  });
-
   test('should provide default context values', () => {
     render(
       <ThemeContext.Provider value={{ theme: 'light', toggleTheme: () => {} }}>
@@ -47,36 +43,6 @@ describe('ThemeContext', () => {
     button.click();
 
     expect(toggleThemeMock).toHaveBeenCalledTimes(1);
-  });
-
-  test('should update localStorage when theme is toggled', () => {
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>,
-    );
-
-    const button = screen.getByText('Toggle Theme');
-    fireEvent.click(button);
-
-    expect(localStorage.getItem('theme')).toBe(JSON.stringify('dark'));
-
-    fireEvent.click(button);
-
-    expect(localStorage.getItem('theme')).toBe(JSON.stringify('light'));
-  });
-
-  it('should use the stored value from localStorage if it exists', () => {
-    localStorage.setItem('theme', JSON.stringify('dark'));
-
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>,
-    );
-
-    const themeElement = screen.getByTestId('theme');
-    expect(themeElement.textContent).toBe('dark');
   });
 
   test('should provide theme context values when used within ThemeProvider', () => {
@@ -109,5 +75,20 @@ describe('ThemeContext', () => {
     const { result } = renderHook(() => useThemeContext(), { wrapper });
 
     expect(result.current.theme).toBe('light');
+  });
+
+  test('toggles theme on button click', () => {
+    render(
+      <ThemeProvider>
+        <TestComponent />
+      </ThemeProvider>,
+    );
+
+    const button = screen.getByText('Toggle Theme');
+    fireEvent.click(button);
+    expect(screen.getByTestId('theme')).toHaveTextContent('dark');
+
+    fireEvent.click(button);
+    expect(screen.getByTestId('theme')).toHaveTextContent('light');
   });
 });

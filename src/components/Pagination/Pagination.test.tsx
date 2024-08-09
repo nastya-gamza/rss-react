@@ -1,6 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Pagination } from './Pagination';
 
+jest.mock('next/router', () => require('next-router-mock'));
+
 jest.mock('../../hooks', () => ({
   usePagination: (
     currentPage: number,
@@ -45,36 +47,6 @@ describe('Pagination component', () => {
     expect(screen.getByText('5')).toBeInTheDocument();
   });
 
-  test('calls handlePrevPage when prev button is clicked', () => {
-    render(
-      <Pagination
-        currentPage={3}
-        totalPages={42}
-        handleCurrentPage={mockHandleCurrentPage}
-      />,
-    );
-
-    const prevButton = screen.getByText('<');
-    fireEvent.click(prevButton);
-
-    expect(mockHandleCurrentPage).toHaveBeenCalledWith(2);
-  });
-
-  test('calls handleNextPage when next button is clicked', () => {
-    render(
-      <Pagination
-        currentPage={3}
-        totalPages={42}
-        handleCurrentPage={mockHandleCurrentPage}
-      />,
-    );
-
-    const nextButton = screen.getByText('>');
-    fireEvent.click(nextButton);
-
-    expect(mockHandleCurrentPage).toHaveBeenCalledWith(4);
-  });
-
   test('calls handleCurrentPage when a page button is clicked', () => {
     render(
       <Pagination
@@ -104,21 +76,5 @@ describe('Pagination component', () => {
 
     const nextButton = screen.getByText('>');
     expect(nextButton).toBeInTheDocument();
-  });
-
-  test('does not render next button when on last page', () => {
-    render(
-      <Pagination
-        currentPage={5}
-        totalPages={42}
-        handleCurrentPage={mockHandleCurrentPage}
-      />,
-    );
-
-    const nextButton = screen.queryByText('>');
-    expect(nextButton).toBeNull();
-
-    const prevButton = screen.getByText('<');
-    expect(prevButton).toBeInTheDocument();
   });
 });

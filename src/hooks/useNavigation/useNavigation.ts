@@ -24,11 +24,7 @@ export const useNavigation = () => {
   };
 
   return {
-    query,
-    pathname,
-    push,
     currentPage,
-    name,
     handleNavigate,
     handleCurrentPage,
     handleNavigateToCharacter,
