@@ -1,13 +1,17 @@
-import { ReactNode } from 'react';
+import { ReactNode, useLayoutEffect, useState } from 'react';
 import { ThemeContext } from './themeContext';
-import { useLocalStorage } from '../../hooks';
 
 type ThemeProviderProps = {
   children: ReactNode;
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useLocalStorage<'light' | 'dark'>('theme', 'light');
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
+  useLayoutEffect(() => {
+    const root = window.document.documentElement;
+    root.setAttribute('data-theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
