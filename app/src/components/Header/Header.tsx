@@ -1,42 +1,33 @@
-import { FormEvent } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useRef } from 'react';
+import { useNavigate } from '@remix-run/react';
 import { SearchInput } from '../SearchInput';
 import { ThemeToggle } from '../ThemeToggle';
-// import { useAppDispatch, useAppSelector } from '../../hooks';
-// import {
-//   currentPageDataSelector,
-//   setCurrentPageNumber,
-//   setSearchQuery,
-// } from '../../store/slices/currentPageDataSlice.ts';
+import { useLocation } from 'react-router-dom';
 import style from './Header.module.css';
 
 export const Header = () => {
-  // const inputRef = useRef('');
-  // const navigate = useNavigate();
-  //
-  // const dispatch = useAppDispatch();
-  // const { searchQuery } = useAppSelector(currentPageDataSelector);
+  const inputRef = useRef('');
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  // inputRef.current = e.target.value;
-  // };
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get('name');
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    inputRef.current = e.target.value;
+  };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // localStorage.setItem('searchQuery', inputRef.current);
-    // dispatch(setSearchQuery(inputRef.current));
-    // dispatch(setCurrentPageNumber(1));
-    // navigate(`/?page=${1}`);
+    navigate(`/?page=${1}&name=${inputRef.current}`);
   };
 
   return (
     <header className={style.header}>
       <div className={style.container}>
         <SearchInput
-          // defaultValue={searchQuery}
-          defaultValue={''}
-          // handleInputChange={handleInputChange}
-          handleInputChange={() => {}}
+          defaultValue={searchQuery ?? ''}
+          handleInputChange={handleInputChange}
           handleSubmit={handleSubmit}
         />
         <ThemeToggle />

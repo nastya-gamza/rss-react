@@ -1,8 +1,7 @@
+import { Link } from '@remix-run/react';
+import { useSearchParams } from '@remix-run/react';
 import { CardItem } from '../CardItem';
 import { Character } from '../../types';
-import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
-import { currentPageDataSelector } from '../../store/slices/currentPageDataSlice.ts';
 import styles from './CardList.module.css';
 
 type CardListProps = {
@@ -10,7 +9,8 @@ type CardListProps = {
 };
 
 export const CardList = ({ results }: CardListProps) => {
-  const { currentPage } = useAppSelector(currentPageDataSelector);
+  const [searchParams] = useSearchParams();
+  const currentPage = searchParams.get('page');
 
   return (
     <ul className={styles.list}>

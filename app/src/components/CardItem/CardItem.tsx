@@ -1,12 +1,12 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '@remix-run/react';
 import { Character } from '../../types';
 import classNames from 'classnames';
-import { Checkbox } from '../Checkbox/Checkbox.tsx';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
   setCheckedCharacters,
-} from '../../store/slices/checkedCharactersSlice.ts';
+} from '~/src/store/slices/checkedCharactersSlice';
+import { Checkbox } from '~/src/components/Checkbox/Checkbox';
 import styles from './CardItem.module.css';
 
 type CardItemProps = {
