@@ -1,57 +1,55 @@
 /* eslint-disable react-refresh/only-export-components */
 import { LoaderFunction } from '@remix-run/node';
-import { useLoaderData, useLocation, useNavigate } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { BASE_URL } from '~/src/constants/api';
+import { Character, Data } from '~/src/types';
+import { Aside } from '~/src/components/Aside';
+import { fetchData } from '~/src/api';
+import { Main } from '~/src/components/Main';
 import styles from '~/src/styles/Main.module.css';
-import { CardList } from '~/src/components/CardList/CardList';
-import { Pagination } from '~/src/components/Pagination';
-import { Flyout } from '~/src/components/Flyout';
-import { Data } from '~/src/types';
 
 type LoaderData = {
-  charactersData: Data;
-  page: number;
+  pageData: Data;
+  currentPage: number;
   character: string;
+  characterData: Character;
 };
 
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const searchQuery = new URLSearchParams(url.search);
 
-  const page = searchQuery.get('page') || 1;
+  const currentPage = searchQuery.get('page') || 1;
   const character = searchQuery.get('character') || '';
-  const name = searchQuery.get('name') || '';
+  const searchName = searchQuery.get('name') || '';
 
-  const response = await fetch(`${BASE_URL}/?page=${page}&name=${name}`);
-  const charactersData = await response.json();
+  let characterData: Character | null = null;
 
-  return { charactersData, page: Number(page), character };
+  const pageData = await fetchData<Data>(
+    `${BASE_URL}/?name=${searchName}&page=${currentPage}`,
+  );
+
+  if (character) {
+    characterData = await fetchData<Character>(`${BASE_URL}/${character}`);
+  }
+
+  return {
+    pageData,
+    currentPage: Number(currentPage),
+    character,
+    characterData,
+  };
 };
 
 export default function Index() {
-  const { charactersData, page, character } = useLoaderData<LoaderData>();
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
-
-  const handleCurrentPage = (page: number) => {
-    if (pathname === '/') {
-      navigate(`?page=${page}&name=${character}`);
-    }
-  };
+  const { pageData, character, characterData } = useLoaderData<LoaderData>();
 
   return (
     <main className={styles.container}>
-      {charactersData?.results && (
-        <CardList results={charactersData?.results} />
-      )}
-      {charactersData?.info && (
-        <Pagination
-          currentPage={page}
-          totalPages={charactersData.info?.pages}
-          handleCurrentPage={handleCurrentPage}
-        />
-      )}
-      <Flyout />
+      <div className={styles.row}>
+        {pageData && <Main pageData={pageData} />}
+        {character && <Aside characterData={characterData} />}
+      </div>
     </main>
   );
 }
