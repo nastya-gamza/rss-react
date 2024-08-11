@@ -1,19 +1,25 @@
 import * as reduxHooks from '../../hooks/useRedux/useRedux.ts';
 import { fireEvent, screen } from '@testing-library/react';
 import { CardItem } from './CardItem';
-import { MemoryRouter } from 'react-router-dom';
 import { Character } from '../../types';
 import { mockCharacter } from '../../__mocks__/characters.ts';
 import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 import { setCheckedCharacters } from '../../store/slices/checkedCharactersSlice.ts';
+import { usePathname } from 'next/navigation';
 
-describe('CARD_ITEM TEST', () => {
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
+
+describe('CardItem', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   test('renders the relevant card data', () => {
-    renderWithProviders(
-      <MemoryRouter>
-        <CardItem character={mockCharacter as Character} />
-      </MemoryRouter>,
-    );
+    (usePathname as jest.Mock).mockReturnValue('/');
+
+    renderWithProviders(<CardItem character={mockCharacter as Character} />);
 
     expect(screen.getByText(/Rick Sanchez/i)).toBeInTheDocument();
 
@@ -28,31 +34,26 @@ describe('CARD_ITEM TEST', () => {
   });
 
   test('checkbox checked state based on redux store', () => {
-    const initialState = [mockCharacter];
-    renderWithProviders(
-      <MemoryRouter>
-        <CardItem character={mockCharacter} />
-      </MemoryRouter>,
-      {
-        preloadedState: {
-          checkedCharacters: initialState,
-        },
-      },
-    );
+    jest.spyOn(reduxHooks, 'useAppSelector').mockReturnValue([mockCharacter]);
+
+    renderWithProviders(<CardItem character={mockCharacter} />);
 
     expect(screen.getByTestId('checkbox-1')).toBeChecked();
   });
 
-  test('dispatches action on checkbox change', () => {
-    const mockedDispatch = jest.spyOn(reduxHooks, 'useAppDispatch');
-    const dispatch = jest.fn();
-    mockedDispatch.mockReturnValue(dispatch);
+  test('checkbox unchecked state based on redux store', () => {
+    jest.spyOn(reduxHooks, 'useAppSelector').mockReturnValue([]);
 
-    renderWithProviders(
-      <MemoryRouter>
-        <CardItem character={mockCharacter} />
-      </MemoryRouter>,
-    );
+    renderWithProviders(<CardItem character={mockCharacter} />);
+
+    expect(screen.getByTestId('checkbox-1')).not.toBeChecked();
+  });
+
+  test('dispatches action on checkbox change', () => {
+    const dispatch = jest.fn();
+    jest.spyOn(reduxHooks, 'useAppDispatch').mockReturnValue(dispatch);
+
+    renderWithProviders(<CardItem character={mockCharacter} />);
 
     fireEvent.click(screen.getByTestId('checkbox-1'));
 
@@ -60,11 +61,9 @@ describe('CARD_ITEM TEST', () => {
   });
 
   test('handles location path correctly', () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/character/1']}>
-        <CardItem character={mockCharacter} />
-      </MemoryRouter>,
-    );
+    (usePathname as jest.Mock).mockReturnValue('/character/1');
+
+    renderWithProviders(<CardItem character={mockCharacter} />);
 
     expect(screen.getByTestId('card-item')).toHaveClass('noHover');
   });
