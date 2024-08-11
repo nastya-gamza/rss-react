@@ -1,6 +1,6 @@
 import { CardDetails } from '../CardDetails';
 import { Character } from '../../types';
-import { useNavigate, useSearchParams } from '@remix-run/react';
+import { useSearchParams } from '@remix-run/react';
 import styles from './Aside.module.css';
 
 type AsideProps = {
@@ -8,15 +8,15 @@ type AsideProps = {
 };
 
 export const Aside = ({ characterData }: AsideProps) => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get('page');
-  const name = searchParams.get('name');
-  const character = searchParams.get('character');
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const currentPage = searchParams.get('page') || '1';
+  const name = searchParams.get('name') || '';
+  const character = searchParams.get('character') || '';
 
   const handleNavigate = () => {
     if (character) {
-      navigate(`?page=${currentPage}&name=${name}`);
+      setSearchParams({ page: currentPage || '1', name: name || '' });
     }
   };
 

@@ -1,11 +1,12 @@
 /* eslint-disable react-refresh/only-export-components */
 import { LoaderFunction } from '@remix-run/node';
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData, useNavigation } from '@remix-run/react';
 import { BASE_URL } from '~/src/constants/api';
 import { Character, Data } from '~/src/types';
 import { Aside } from '~/src/components/Aside';
 import { fetchData } from '~/src/api';
 import { Main } from '~/src/components/Main';
+import { Loader } from '~/src/components/Loader';
 import styles from '~/src/styles/Main.module.css';
 
 type LoaderData = {
@@ -42,7 +43,12 @@ export const loader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Index() {
+  const navigation = useNavigation();
   const { pageData, character, characterData } = useLoaderData<LoaderData>();
+
+  if (navigation.state === 'loading') {
+    return <Loader />;
+  }
 
   return (
     <main className={styles.container}>

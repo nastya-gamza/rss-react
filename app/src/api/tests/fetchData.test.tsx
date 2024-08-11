@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../../constants/api.ts';
-import { fetchData } from '../index.ts';
-import { server } from '../../__mocks__/msw/server.ts';
+import { BASE_URL } from '../../constants/api';
+import { fetchData } from '../index';
+import { server } from '../../__mocks__/msw/server';
 import { Character } from '../../types';
 
 describe('fetchData', () => {

@@ -4,8 +4,10 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useRouteError,
 } from '@remix-run/react';
 import { Header } from '~/src/components/Header';
+import { Error } from '~/src/components/Error';
 import { Provider } from 'react-redux';
 import { store } from '~/src/store/store';
 import { ThemeProvider } from '~/src/context/theme/themeProvider';
@@ -39,4 +41,11 @@ export default function App() {
       </ThemeProvider>
     </Provider>
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  console.error(error);
+
+  return <Error message={'Something went wrong...'} btnText={'Try again'} />;
 }

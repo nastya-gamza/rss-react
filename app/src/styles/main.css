@@ -33,7 +33,6 @@ body {
 
 .error {
   height: 100dvh;
-  /*background-image: url('../../public/img/bg.jpg');*/
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

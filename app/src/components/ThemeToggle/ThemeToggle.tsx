@@ -1,5 +1,5 @@
-import { useThemeContext } from '../../context/theme/useThemeContext.ts';
 import classNames from 'classnames';
+import { useThemeContext } from '~/src/context/theme/useThemeContext';
 import styles from './ThemeToggle.module.css';
 
 export const ThemeToggle = () => {

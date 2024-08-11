@@ -1,7 +1,7 @@
 .flyout {
   position: fixed;
   bottom: -600px;
-  right: 35px;
+  left: 35px;
   z-index: 5;
   background-color: var(--card-color);
   padding: 15px;
