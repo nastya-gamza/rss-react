@@ -1,6 +1,6 @@
 import { Character } from '../../types';
 import classNames from 'classnames';
-import { Checkbox } from '../Checkbox/Checkbox.tsx';
+import { Checkbox } from '../Checkbox';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,

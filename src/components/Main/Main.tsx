@@ -1,4 +1,4 @@
-import { CardList } from '../CardList/CardList.tsx';
+import { CardList } from '../CardList';
 import { Pagination } from '../Pagination';
 import { useNavigation } from '../../hooks';
 import { Data } from '../../types';
