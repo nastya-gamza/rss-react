@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useRef } from 'react';
 import { SearchInput } from '../SearchInput';
 import { ThemeToggle } from '../ThemeToggle';
 import style from './Header.module.css';
-import { useNavigation } from '~/src/hooks';
+import { useNavigation } from '../../hooks';
 
 export const Header = () => {
   const inputRef = useRef('');

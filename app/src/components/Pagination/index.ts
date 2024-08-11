@@ -1,1 +1,1 @@
-export { Pagination } from './Pagination.tsx';
+export { Pagination } from './Pagination';

@@ -1,1 +1,1 @@
-export { generatePageArray } from './pagination.ts';
+export { generatePageArray } from './pagination';

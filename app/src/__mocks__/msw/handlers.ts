@@ -1,6 +1,6 @@
 import { http, HttpResponse, delay } from 'msw';
-import { BASE_URL } from '../../constants/api.ts';
-import { mockCharacter, mockCharacters } from '../characters.ts';
+import { BASE_URL } from '../../constants/api';
+import { mockCharacter, mockCharacters } from '../characters';
 
 export const handlers = [
   http.get(BASE_URL, async () => {

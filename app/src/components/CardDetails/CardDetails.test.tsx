@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { CardDetails } from './CardDetails';
-import { mockCharacter } from '../../__mocks__/characters.ts';
+import { mockCharacter } from '../../__mocks__/characters';
 
 const mockHandleClose = jest.fn();
 

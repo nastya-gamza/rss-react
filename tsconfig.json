@@ -22,9 +22,6 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
-    "paths": {
-      "~/*": ["./app/*"]
-    },
     "moduleDetection": "force",
     "noEmit": true,
     "noUnusedLocals": true,

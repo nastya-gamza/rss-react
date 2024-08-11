@@ -1,1 +1,1 @@
-export { useNavigation } from './useNavigation.ts';
+export { useNavigation } from './useNavigation';

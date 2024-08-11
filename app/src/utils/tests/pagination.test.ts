@@ -1,4 +1,4 @@
-import { generatePageArray } from '../pagination.ts';
+import { generatePageArray } from '../pagination';
 
 describe('generatePageArray', () => {
   test('generates array from 1 to 5', () => {

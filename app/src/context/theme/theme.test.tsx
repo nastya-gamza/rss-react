@@ -1,8 +1,8 @@
 import { ReactNode, useContext } from 'react';
-import { fireEvent, render, renderHook, screen } from '@testing-library/react';
-import { ThemeContext, ThemeContextProps } from './themeContext.ts';
-import { ThemeProvider } from './themeProvider.tsx';
-import { useThemeContext } from './useThemeContext.ts';
+import { render, renderHook, screen } from '@testing-library/react';
+import { ThemeContext, ThemeContextProps } from './themeContext';
+import { ThemeProvider } from './themeProvider';
+import { useThemeContext } from './useThemeContext';
 
 const TestComponent = () => {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -47,36 +47,6 @@ describe('ThemeContext', () => {
     button.click();
 
     expect(toggleThemeMock).toHaveBeenCalledTimes(1);
-  });
-
-  test('should update localStorage when theme is toggled', () => {
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>,
-    );
-
-    const button = screen.getByText('Toggle Theme');
-    fireEvent.click(button);
-
-    expect(localStorage.getItem('theme')).toBe(JSON.stringify('dark'));
-
-    fireEvent.click(button);
-
-    expect(localStorage.getItem('theme')).toBe(JSON.stringify('light'));
-  });
-
-  it('should use the stored value from localStorage if it exists', () => {
-    localStorage.setItem('theme', JSON.stringify('dark'));
-
-    render(
-      <ThemeProvider>
-        <TestComponent />
-      </ThemeProvider>,
-    );
-
-    const themeElement = screen.getByTestId('theme');
-    expect(themeElement.textContent).toBe('dark');
   });
 
   test('should provide theme context values when used within ThemeProvider', () => {

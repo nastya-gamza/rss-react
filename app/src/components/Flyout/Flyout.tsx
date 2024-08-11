@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import { PrimaryButton } from '../PrimaryButton';
 import { DownloadCSV } from '../DownloadCSV';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
   uncheckAllCharacters,
-} from '~/src/store/slices/checkedCharactersSlice';
-import { useAppDispatch, useAppSelector } from '~/src/hooks';
+} from '../../store/slices/checkedCharactersSlice';
 import styles from './Flyout.module.css';
 
 export const Flyout = () => {

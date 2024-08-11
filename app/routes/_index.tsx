@@ -1,13 +1,14 @@
 /* eslint-disable react-refresh/only-export-components */
 import { LoaderFunction } from '@remix-run/node';
 import { useLoaderData, useNavigation } from '@remix-run/react';
-import { BASE_URL } from '~/src/constants/api';
-import { Character, Data } from '~/src/types';
-import { Aside } from '~/src/components/Aside';
-import { fetchData } from '~/src/api';
-import { Main } from '~/src/components/Main';
-import { Loader } from '~/src/components/Loader';
-import styles from '~/src/styles/Main.module.css';
+import { Data } from '../src/types';
+import { Character } from '../src/types';
+import { fetchData } from '../src/api';
+import { BASE_URL } from '../src/constants/api';
+import { Loader } from '../src/components/Loader';
+import { Main } from '../src/components/Main';
+import { Aside } from '../src/components/Aside';
+import styles from '../src/styles/Main.module.css';
 
 type LoaderData = {
   pageData: Data;

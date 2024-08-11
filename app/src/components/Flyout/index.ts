@@ -1,1 +1,1 @@
-export { Flyout } from './Flyout.tsx';
+export { Flyout } from './Flyout';

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { server } from './src/__mocks__/msw/server.ts';
+import { server } from './app/src/__mocks__/msw/server';
 
 beforeAll(() => server.listen());
 

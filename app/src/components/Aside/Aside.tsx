@@ -1,6 +1,6 @@
 import { CardDetails } from '../CardDetails';
 import { Character } from '../../types';
-import { useNavigation } from '~/src/hooks';
+import { useNavigation } from '../../hooks';
 import styles from './Aside.module.css';
 
 type AsideProps = {

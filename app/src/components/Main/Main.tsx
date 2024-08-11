@@ -1,8 +1,8 @@
-import { useNavigation } from '~/src/hooks';
 import { Pagination } from '../Pagination';
 import { Data } from '../../types';
 import { Flyout } from '../Flyout';
-import { CardList } from '~/src/components/CardList/CardList';
+import { useNavigation } from '../../hooks';
+import { CardList } from '../CardList';
 import styles from './Main.module.css';
 
 type MainProps = {

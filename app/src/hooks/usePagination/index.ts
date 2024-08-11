@@ -1,1 +1,1 @@
-export { usePagination } from './usePagination.ts';
+export { usePagination } from './usePagination';

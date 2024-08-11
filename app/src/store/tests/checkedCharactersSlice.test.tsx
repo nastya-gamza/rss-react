@@ -1,10 +1,11 @@
-import checkedCharactersReducer, {
+import checkedCharactersReducer from '../slices/checkedCharactersSlice';
+import { Character } from '../../types';
+import {
+  checkedCharactersSelector,
   setCheckedCharacters,
   uncheckAllCharacters,
-  checkedCharactersSelector,
-} from '../slices/checkedCharactersSlice.ts';
-import { Character } from '../../types';
-import { mockCharacter } from '../../__mocks__/characters.ts';
+} from '../slices/checkedCharactersSlice';
+import { mockCharacter } from '../../__mocks__/characters';
 
 const initialState: Character[] = [];
 

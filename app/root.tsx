@@ -6,12 +6,12 @@ import {
   ScrollRestoration,
   useRouteError,
 } from '@remix-run/react';
-import { Header } from '~/src/components/Header';
-import { Error } from '~/src/components/Error';
-import { Provider } from 'react-redux';
-import { store } from '~/src/store/store';
-import { ThemeProvider } from '~/src/context/theme/themeProvider';
 import './src/styles/main.css';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
+import { ThemeProvider } from './src/context/theme/themeProvider';
+import { Header } from './src/components/Header';
+import { Error } from './src/components/Error';
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

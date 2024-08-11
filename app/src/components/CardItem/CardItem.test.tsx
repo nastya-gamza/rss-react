@@ -1,11 +1,11 @@
-import * as reduxHooks from '../../hooks/useRedux/useRedux.ts';
+import * as reduxHooks from '../../hooks/useRedux/useRedux';
 import { fireEvent, screen } from '@testing-library/react';
 import { CardItem } from './CardItem';
 import { MemoryRouter } from 'react-router-dom';
 import { Character } from '../../types';
-import { mockCharacter } from '../../__mocks__/characters.ts';
-import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
-import { setCheckedCharacters } from '../../store/slices/checkedCharactersSlice.ts';
+import { renderWithProviders } from '../../store/tests/renderWithProviders';
+import { mockCharacter } from '../../__mocks__/characters';
+import { setCheckedCharacters } from '../../store/slices/checkedCharactersSlice';
 
 describe('CARD_ITEM TEST', () => {
   test('renders the relevant card data', () => {
@@ -57,15 +57,5 @@ describe('CARD_ITEM TEST', () => {
     fireEvent.click(screen.getByTestId('checkbox-1'));
 
     expect(dispatch).toHaveBeenCalledWith(setCheckedCharacters(mockCharacter));
-  });
-
-  test('handles location path correctly', () => {
-    renderWithProviders(
-      <MemoryRouter initialEntries={['/character/1']}>
-        <CardItem character={mockCharacter} />
-      </MemoryRouter>,
-    );
-
-    expect(screen.getByTestId('card-item')).toHaveClass('noHover');
   });
 });

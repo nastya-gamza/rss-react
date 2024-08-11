@@ -1,11 +1,11 @@
 import { Character } from '../../types';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import styles from './CardItem.module.css';
 import {
   checkedCharactersSelector,
   setCheckedCharacters,
-} from '~/src/store/slices/checkedCharactersSlice';
-import { Checkbox } from '~/src/components/Checkbox/Checkbox';
-import styles from './CardItem.module.css';
+} from '../../store/slices/checkedCharactersSlice';
+import { Checkbox } from '../Checkbox';
 
 type CardItemProps = {
   character: Character;

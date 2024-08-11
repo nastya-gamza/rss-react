@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Aside } from './Aside';
 import { useNavigation } from '../../hooks';
-import { mockCharacter } from '../../__mocks__/characters.ts';
+import { mockCharacter } from '../../__mocks__/characters';
 
 jest.mock('../../hooks', () => ({
   useNavigation: jest.fn(),

@@ -1,8 +1,15 @@
+import { ReactNode } from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Flyout } from './Flyout';
-import { mockCharacters } from '../../__mocks__/characters.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { mockCharacters } from '../../__mocks__/characters';
+import { uncheckAllCharacters } from '../../store/slices/checkedCharactersSlice';
 import { Character } from '../../types';
-import { ReactNode } from 'react';
+
+jest.mock('../../hooks', () => ({
+  useAppDispatch: jest.fn(),
+  useAppSelector: jest.fn(),
+}));
 
 jest.mock('../PrimaryButton', () => ({
   PrimaryButton: ({
@@ -20,27 +27,31 @@ jest.mock('../DownloadCSV', () => ({
   ),
 }));
 
-describe('FLYOUT TEST', () => {
-  const mockOnClick = jest.fn();
+describe('Flyout Component', () => {
+  const mockDispatch = jest.fn();
+
+  beforeEach(() => {
+    (useAppDispatch as jest.Mock).mockReturnValue(mockDispatch);
+  });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test('renders correctly when no items are present', () => {
-    render(<Flyout items={[]} onClick={mockOnClick} />);
+  test('renders correctly when no items are selected', () => {
+    (useAppSelector as jest.Mock).mockReturnValue([]);
 
-    const flyoutElement = screen.getByRole('button', { name: 'Unselect all' })
+    render(<Flyout />);
+
+    const flyoutElement = screen.getByText(/characters are selected/i)
       .parentElement?.parentElement;
     expect(flyoutElement).not.toHaveClass('visible');
   });
 
-  test('renders correctly when items are present', () => {
-    render(<Flyout items={mockCharacters} onClick={mockOnClick} />);
+  test('renders correctly when multiple items are selected', () => {
+    (useAppSelector as jest.Mock).mockReturnValue(mockCharacters);
 
-    const flyoutElement = screen.getByRole('button', { name: 'Unselect all' })
-      .parentElement?.parentElement;
-    expect(flyoutElement).toHaveClass('visible');
+    render(<Flyout />);
 
     const infoText = screen.getByText('2 characters are selected');
     expect(infoText).toBeInTheDocument();
@@ -49,19 +60,23 @@ describe('FLYOUT TEST', () => {
     expect(downloadButton).toBeInTheDocument();
   });
 
-  test('displays correct text when one item is present', () => {
-    render(<Flyout items={[mockCharacters[0]]} onClick={mockOnClick} />);
+  test('renders correctly when one item is selected', () => {
+    (useAppSelector as jest.Mock).mockReturnValue([mockCharacters[0]]);
+
+    render(<Flyout />);
 
     const infoText = screen.getByText('1 character is selected');
     expect(infoText).toBeInTheDocument();
   });
 
-  test('calls onClick when "Unselect all" is clicked', () => {
-    render(<Flyout items={mockCharacters} onClick={mockOnClick} />);
+  test('calls uncheckAllCharacters when "Unselect all" is clicked', () => {
+    (useAppSelector as jest.Mock).mockReturnValue(mockCharacters);
+
+    render(<Flyout />);
 
     const unselectButton = screen.getByRole('button', { name: 'Unselect all' });
     fireEvent.click(unselectButton);
 
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
+    expect(mockDispatch).toHaveBeenCalledWith(uncheckAllCharacters());
   });
 });

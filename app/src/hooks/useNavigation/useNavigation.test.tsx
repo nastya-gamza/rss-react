@@ -1,64 +1,70 @@
-import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useNavigation } from './useNavigation';
+import { useLocation, useSearchParams } from '@remix-run/react';
 import { act, renderHook } from '@testing-library/react';
 
-jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
+jest.mock('@remix-run/react', () => ({
   useLocation: jest.fn(),
   useSearchParams: jest.fn(),
 }));
 
-describe('useNavigation', () => {
-  const mockNavigate = jest.fn();
-  const mockUseLocation = { pathname: '/test' };
-  const mockSearchParams = new URLSearchParams('?page=2');
+describe('useNavigation Hook', () => {
+  const useLocationMock = useLocation as jest.Mock;
+  const useSearchParamsMock = useSearchParams as jest.Mock;
 
   beforeEach(() => {
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
-    (useLocation as jest.Mock).mockReturnValue(mockUseLocation);
-    (useSearchParams as jest.Mock).mockReturnValue([mockSearchParams]);
+    useLocationMock.mockReset();
+    useSearchParamsMock.mockReset();
   });
 
-  afterEach(() => {
-    jest.clearAllMocks();
-  });
+  it('should return default values when no search parameters are set', () => {
+    useLocationMock.mockReturnValue({ pathname: '/' });
+    useSearchParamsMock.mockReturnValue([new URLSearchParams(), jest.fn()]);
 
-  test('should return the correct page and pathname', () => {
     const { result } = renderHook(() => useNavigation());
 
-    expect(result.current.page).toBe(2);
-    expect(result.current.pathname).toBe('/test');
+    expect(result.current.name).toBe('');
+    expect(result.current.currentPage).toBe('1');
+    expect(result.current.searchParams.toString()).toBe('');
   });
 
-  test('handleNavigate should navigate to the correct URL', () => {
+  it('should return correct values when search parameters are set', () => {
+    const searchParams = new URLSearchParams({ page: '2', name: 'Rick' });
+    useLocationMock.mockReturnValue({ pathname: '/' });
+    useSearchParamsMock.mockReturnValue([searchParams, jest.fn()]);
+
+    const { result } = renderHook(() => useNavigation());
+
+    expect(result.current.name).toBe('Rick');
+    expect(result.current.currentPage).toBe('2');
+  });
+
+  it('should call setSearchParams with correct parameters in handleCurrentPage', () => {
+    const setSearchParams = jest.fn();
+    const searchParams = new URLSearchParams({ page: '1', name: 'Rick' });
+    useLocationMock.mockReturnValue({ pathname: '/' });
+    useSearchParamsMock.mockReturnValue([searchParams, setSearchParams]);
+
     const { result } = renderHook(() => useNavigation());
 
     act(() => {
-      result.current.handleNavigate();
+      result.current.handleCurrentPage(3);
     });
 
-    expect(mockNavigate).toHaveBeenCalledWith('/?page=2');
+    expect(setSearchParams).toHaveBeenCalledWith({ page: '3', name: 'Rick' });
   });
 
-  test('handleNavigate should not navigate if pathname is "/"', () => {
-    (useLocation as jest.Mock).mockReturnValue({ pathname: '/' });
+  it('should not call setSearchParams in handleCurrentPage if pathname is not "/"', () => {
+    const setSearchParams = jest.fn();
+    const searchParams = new URLSearchParams({ page: '1', name: 'Rick' });
+    useLocationMock.mockReturnValue({ pathname: '/other' });
+    useSearchParamsMock.mockReturnValue([searchParams, setSearchParams]);
 
     const { result } = renderHook(() => useNavigation());
 
     act(() => {
-      result.current.handleNavigate();
+      result.current.handleCurrentPage(3);
     });
 
-    expect(mockNavigate).not.toHaveBeenCalled();
-  });
-
-  test('should handle page as null if no page param exists', () => {
-    const mockEmptySearchParams = new URLSearchParams('');
-
-    (useSearchParams as jest.Mock).mockReturnValue([mockEmptySearchParams]);
-
-    const { result } = renderHook(() => useNavigation());
-
-    expect(result.current.page).toBeNull();
+    expect(setSearchParams).not.toHaveBeenCalled();
   });
 });

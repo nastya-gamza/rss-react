@@ -1,1 +1,1 @@
-export { DownloadCSV } from './DownloadCSV.tsx';
+export { DownloadCSV } from './DownloadCSV';
