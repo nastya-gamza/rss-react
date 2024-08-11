@@ -1,6 +1,4 @@
-import { useLocation } from '@remix-run/react';
 import { Character } from '../../types';
-import classNames from 'classnames';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   checkedCharactersSelector,
@@ -14,7 +12,6 @@ type CardItemProps = {
 };
 
 export const CardItem = ({ character }: CardItemProps) => {
-  const { pathname } = useLocation();
   const dispatch = useAppDispatch();
 
   const checkedCharacters = useAppSelector(checkedCharactersSelector);
@@ -25,12 +22,7 @@ export const CardItem = ({ character }: CardItemProps) => {
   };
 
   return (
-    <li
-      className={classNames(styles.card, {
-        [styles.noHover]: pathname.includes('character'),
-      })}
-      data-testid='card-item'
-    >
+    <li className={styles.card} data-testid='card-item'>
       <div className={styles.img}>
         <img src={character?.image} alt={`${character.name}'s image`} />
       </div>

@@ -1,23 +1,31 @@
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from '@remix-run/react';
 
 export const useNavigation = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [searchParams] = useSearchParams();
-  const pageString = searchParams.get('page');
-  const page = pageString ? parseInt(pageString) : null;
+  const currentPage = searchParams.get('page') || '1';
+  const name = searchParams.get('name') || '';
+  const character = searchParams.get('character') || '';
 
   const handleNavigate = () => {
-    if (pathname !== '/') {
-      navigate(`/?page=${page}`);
+    if (character) {
+      setSearchParams({ page: currentPage, name });
+    }
+  };
+
+  const handleCurrentPage = (currentPage: number) => {
+    if (pathname === '/') {
+      setSearchParams({ page: String(currentPage), name });
     }
   };
 
   return {
-    page,
+    name,
+    currentPage,
+    searchParams,
+    setSearchParams,
     handleNavigate,
-    navigate,
-    pathname,
+    handleCurrentPage,
   };
 };

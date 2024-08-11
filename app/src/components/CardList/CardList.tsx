@@ -1,18 +1,16 @@
 import { Link } from '@remix-run/react';
-import { useSearchParams } from '@remix-run/react';
 import { CardItem } from '../CardItem';
 import { Error } from '../Error';
 import { Character } from '../../types';
 import styles from './CardList.module.css';
+import { useNavigation } from '~/src/hooks';
 
 type CardListProps = {
   results: Character[];
 };
 
 export const CardList = ({ results }: CardListProps) => {
-  const [searchParams] = useSearchParams();
-  const currentPage = searchParams.get('page') || 1;
-  const name = searchParams.get('name') || '';
+  const { currentPage, name } = useNavigation();
 
   return results ? (
     <ul className={styles.list}>

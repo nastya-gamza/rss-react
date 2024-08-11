@@ -1,4 +1,4 @@
-import { useLocation, useSearchParams } from '@remix-run/react';
+import { useNavigation } from '~/src/hooks';
 import { Pagination } from '../Pagination';
 import { Data } from '../../types';
 import { Flyout } from '../Flyout';
@@ -10,26 +10,9 @@ type MainProps = {
 };
 
 export const Main = ({ pageData }: MainProps) => {
-  const { pathname } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const currentPage = searchParams.get('page') || '1';
-  const name = searchParams.get('name') || '';
-  const character = searchParams.get('character') || '';
+  const { currentPage, handleNavigate, handleCurrentPage } = useNavigation();
 
   const totalPages = pageData ? pageData.info?.pages : 1;
-
-  const handleNavigate = () => {
-    if (character) {
-      setSearchParams({ page: currentPage, name });
-    }
-  };
-
-  const handleCurrentPage = (currentPage: number) => {
-    if (pathname === '/') {
-      setSearchParams({ page: String(currentPage), name });
-    }
-  };
 
   return (
     <section className={styles.main} onClick={handleNavigate}>
