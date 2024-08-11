@@ -1,0 +1,32 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 32px;
+}
+
+.paginationBtn {
+  min-width: 34px;
+  padding: 6px;
+  border: 1px solid #c5c3c3;
+  border-radius: 6px;
+}
+
+.activeBtn,
+.paginationBtn:hover {
+  color: #fff;
+  background-color: #6495edff;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.activeBtn:hover {
+  color: #fff;
+  background-color: #5883d0;
+}
+
+.arrowBtn {
+  padding: 6px;
+  font-size: 24px;
+}

@@ -1,0 +1,12 @@
+.container {
+    width: 100%;
+    margin: 100px auto 0;
+}
+
+.row {
+    display: flex;
+}
+
+.main {
+    flex: 1 1 auto;
+}

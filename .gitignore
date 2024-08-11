@@ -1,3 +1,10 @@
+node_modules
+
+/.cache
+/build
+.env
+
+
 # Logs
 logs
 *.log
@@ -7,7 +14,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
 *.local
@@ -21,4 +27,4 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
+!/public/build/
