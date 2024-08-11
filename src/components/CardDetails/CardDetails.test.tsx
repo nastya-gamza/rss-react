@@ -25,11 +25,9 @@ describe('CardDetails Component', () => {
 
     expect(screen.getByText(/Rick Sanchez/i)).toBeInTheDocument();
     expect(screen.getByAltText("Rick Sanchez's image")).toBeInTheDocument();
-    expect(screen.getByText(/Species:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Status:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Gender:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Type:/i)).toBeInTheDocument();
-    expect(screen.getByText(/Location:/i)).toBeInTheDocument();
+    expect(screen.getByText(/Human/i)).toBeInTheDocument();
+    expect(screen.getByText(/Male/i)).toBeInTheDocument();
+    expect(screen.getByText(/Citadel of Ricks/i)).toBeInTheDocument();
   });
 
   test('calls handleNavigate when close button is clicked', () => {

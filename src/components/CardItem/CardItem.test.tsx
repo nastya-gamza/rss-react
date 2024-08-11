@@ -1,7 +1,6 @@
 import * as reduxHooks from '../../hooks/useRedux/useRedux.ts';
 import { fireEvent, screen } from '@testing-library/react';
 import { CardItem } from './CardItem';
-import { Character } from '../../types';
 import { mockCharacter } from '../../__mocks__/characters.ts';
 import { renderWithProviders } from '../../store/tests/renderWithProviders.tsx';
 import { setCheckedCharacters } from '../../store/slices/checkedCharactersSlice.ts';
@@ -19,7 +18,7 @@ describe('CardItem', () => {
   test('renders the relevant card data', () => {
     (usePathname as jest.Mock).mockReturnValue('/');
 
-    renderWithProviders(<CardItem character={mockCharacter as Character} />);
+    renderWithProviders(<CardItem character={mockCharacter} />);
 
     expect(screen.getByText(/Rick Sanchez/i)).toBeInTheDocument();
 

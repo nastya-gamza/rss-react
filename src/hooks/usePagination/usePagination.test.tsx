@@ -37,7 +37,7 @@ describe('usePagination hook', () => {
     const { result } = renderHook(() => usePagination(5));
 
     expect(result.current.arrayOfPagesNumber).toEqual([1, 2, 3, 4, 5]);
-    expect(generatePageArray).toHaveBeenCalledWith(1, 6); // 6 because end is exclusive
+    expect(generatePageArray).toHaveBeenCalledWith(1, 6);
   });
 
   test('returns correct pagination array when on first page and total pages are more than PAGINATION_PAGE_QUANTITY', () => {

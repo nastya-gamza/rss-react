@@ -29,7 +29,7 @@ describe('Pagination component', () => {
     render(<Pagination totalPages={5} />);
 
     const paginationButtons = screen.getAllByRole('button');
-    expect(paginationButtons).toHaveLength(7); // 5 page buttons + 2 arrow buttons
+    expect(paginationButtons).toHaveLength(7);
 
     const prevButton = screen.getByText('<');
     expect(prevButton).toBeInTheDocument();
