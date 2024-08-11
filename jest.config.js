@@ -1,7 +1,7 @@
 export default {
   testEnvironment: 'jsdom',
   collectCoverage: true,
-  collectCoverageFrom: ['src/**/*.{ts,tsx}', 'pages/**/*.{ts,tsx}'],
+  collectCoverageFrom: ['src/**/*.{ts,tsx}', 'app/**/*.{ts,tsx}'],
   coverageDirectory: 'coverage',
   setupFilesAfterEnv: ['<rootDir>/setup-tests.ts'],
   setupFiles: ['./jest.polyfills.js'],
