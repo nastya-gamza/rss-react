@@ -25,5 +25,5 @@
     "noFallthroughCasesInSwitch": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src", "./setup-tests.ts"]
+  "include": ["src"]
 }

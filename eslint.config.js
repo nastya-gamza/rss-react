@@ -5,7 +5,6 @@ import eslintReact from 'eslint-plugin-react';
 import eslintPluginReactCompiler from 'eslint-plugin-react-compiler';
 import eslintReactRefresh from 'eslint-plugin-react-refresh';
 import prettierPlugin from 'eslint-plugin-prettier';
-import eslintPluginJest from 'eslint-plugin-jest';
 import tsParser from '@typescript-eslint/parser';
 
 export default tsEslint.config(
@@ -16,7 +15,6 @@ export default tsEslint.config(
       'react-refresh': eslintReactRefresh,
       'react-compiler': eslintPluginReactCompiler,
       prettier: prettierPlugin,
-      jest: eslintPluginJest,
       parser: tsParser,
     },
   },
