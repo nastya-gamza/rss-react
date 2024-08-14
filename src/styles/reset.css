@@ -41,6 +41,10 @@ img {
   max-width: 100%;
 }
 
+label {
+  display: block;
+}
+
 button {
   font-family: inherit;
   font-size: inherit;
