@@ -1,18 +1,8 @@
 import * as yup from 'yup';
+import { Form } from '../types';
 
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
-
-type Form = {
-  name: string;
-  age: number | null;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  gender: 'option1' | 'option2' | null;
-  acceptTerms: boolean;
-  file: File | undefined;
-};
 
 export const formSchema: yup.Schema<Form> = yup.object({
   name: yup

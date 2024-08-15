@@ -1,7 +1,14 @@
 import { FormEvent, useRef, useState } from 'react';
+import classNames from 'classnames';
 import { formSchema } from '../../schemas/formValidationSchema.ts';
 import { ValidationError } from 'yup';
 import { PasswordStrengthBar } from '../../components/passwordStrengthBar/passwordStrengthBar.tsx';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  setSubmittedData,
+  submittedDataSelector,
+} from '../../store/slices/submittedData.ts';
+import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
 
 type ErrorsState = {
   name: string | null;
@@ -27,52 +34,83 @@ export const UncontrolledFormPage = () => {
 
   const [errors, setErrors] = useState<ErrorsState | null>(null);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const dispatch = useAppDispatch();
+  const data = useAppSelector(submittedDataSelector);
+  console.log('DATA - ', data);
 
-    const selectedGender = maleRef.current?.checked
+  const getSelectedGender = (): string => {
+    return maleRef.current?.checked
       ? 'option1'
       : femaleRef.current?.checked
         ? 'option2'
         : '';
+  };
 
-    const formData = {
+  const getFormData = () => {
+    return {
       name: nameRef.current?.value || '',
       email: emailRef.current?.value || '',
       age: ageRef.current?.value ? Number(ageRef.current.value) : null,
       password: passwordRef.current?.value || '',
       confirmPassword: confirmPasswordRef.current?.value || '',
-      gender: selectedGender || null,
+      gender: getSelectedGender() || null,
       acceptTerms: checkboxRef.current?.checked || false,
       file: fileRef.current?.files ? fileRef.current.files[0] : null,
     };
+  };
 
-    console.log(formData);
+  const handleFileUpload = async (file: File | null) => {
+    if (file) {
+      try {
+        return await convertFileToBase64(file);
+      } catch (error) {
+        console.error('Error converting file:', error);
+      }
+    }
+    return null;
+  };
+
+  const handleValidationErrors = (validationErrors: ValidationError) => {
+    const formattedErrors: ErrorsState = {
+      name: null,
+      age: null,
+      email: null,
+      password: null,
+      confirmPassword: null,
+      gender: null,
+      acceptTerms: null,
+      file: null,
+    };
+
+    validationErrors.inner.forEach((error) => {
+      if (error.path) {
+        formattedErrors[error.path as keyof ErrorsState] = error.message;
+      }
+    });
+
+    setErrors(formattedErrors);
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = getFormData();
 
     try {
       await formSchema.validate(formData, { abortEarly: false });
       setErrors(null);
-      console.log(formData);
+
+      const base64File = await handleFileUpload(formData.file);
+      if (base64File) {
+        dispatch(
+          setSubmittedData({
+            ...formData,
+            file: base64File,
+          }),
+        );
+      }
     } catch (validationErrors) {
       if (validationErrors instanceof ValidationError) {
-        const formattedErrors: ErrorsState = {
-          name: null,
-          age: null,
-          email: null,
-          password: null,
-          confirmPassword: null,
-          gender: null,
-          acceptTerms: null,
-          file: null,
-        };
-
-        validationErrors.inner.forEach((error) => {
-          if (error.path) {
-            formattedErrors[error.path as keyof ErrorsState] = error.message;
-          }
-        });
-
-        setErrors(formattedErrors);
+        handleValidationErrors(validationErrors);
       } else {
         console.error('An unexpected error occurred', validationErrors);
       }
@@ -88,7 +126,7 @@ export const UncontrolledFormPage = () => {
               ref={nameRef}
               type='text'
               placeholder='Name'
-              className='input-field'
+              className={classNames('input-field', { invalid: errors?.name })}
             />
           </label>
           <p className='error'>{errors?.name}</p>
@@ -99,7 +137,7 @@ export const UncontrolledFormPage = () => {
               ref={ageRef}
               type='number'
               placeholder='Age'
-              className='input-field'
+              className={classNames('input-field', { invalid: errors?.age })}
             />
           </label>
           <p className='error'>{errors?.age}</p>
@@ -110,7 +148,7 @@ export const UncontrolledFormPage = () => {
               ref={emailRef}
               type='email'
               placeholder='Email'
-              className='input-field'
+              className={classNames('input-field', { invalid: errors?.email })}
             />
           </label>
           <p className='error'>{errors?.email}</p>
@@ -121,7 +159,9 @@ export const UncontrolledFormPage = () => {
               ref={passwordRef}
               type='password'
               placeholder='Password'
-              className='input-field'
+              className={classNames('input-field', {
+                invalid: errors?.password,
+              })}
             />
           </label>
           <PasswordStrengthBar password={passwordRef.current?.value || ''} />
@@ -133,7 +173,9 @@ export const UncontrolledFormPage = () => {
               ref={confirmPasswordRef}
               type='password'
               placeholder='Confirm password'
-              className='input-field'
+              className={classNames('input-field', {
+                invalid: errors?.confirmPassword,
+              })}
             />
           </label>
           <p className='error'>{errors?.confirmPassword}</p>
