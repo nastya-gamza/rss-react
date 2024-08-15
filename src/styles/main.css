@@ -40,6 +40,10 @@ body {
   gap: 30px;
 }
 
+.field {
+  position: relative;
+}
+
 .input-field {
   position: relative;
   width: 100%;
@@ -56,6 +60,7 @@ body {
 
 .error {
   position: absolute;
+  bottom: -20px;
   font-size: 12px;
   color: #d93025;
 }

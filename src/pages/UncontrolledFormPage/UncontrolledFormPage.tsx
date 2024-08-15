@@ -1,6 +1,7 @@
 import { FormEvent, useRef, useState } from 'react';
 import { formSchema } from '../../schemas/formValidationSchema.ts';
 import { ValidationError } from 'yup';
+import { PasswordStrengthBar } from '../../components/passwordStrengthBar/passwordStrengthBar.tsx';
 
 type ErrorsState = {
   name: string | null;
@@ -81,62 +82,63 @@ export const UncontrolledFormPage = () => {
   return (
     <div className='container'>
       <form className='form' onSubmit={handleSubmit} noValidate>
-        <div>
+        <div className='field'>
           <label>
             <input
               ref={nameRef}
               type='text'
               placeholder='Name'
-              className='input-field invalid'
+              className='input-field'
             />
           </label>
           <p className='error'>{errors?.name}</p>
         </div>
-        <div>
+        <div className='field'>
           <label>
             <input
               ref={ageRef}
               type='number'
               placeholder='Age'
-              className='input-field invalid'
+              className='input-field'
             />
           </label>
           <p className='error'>{errors?.age}</p>
         </div>
-        <div>
+        <div className='field'>
           <label>
             <input
               ref={emailRef}
               type='email'
               placeholder='Email'
-              className='input-field invalid'
+              className='input-field'
             />
           </label>
           <p className='error'>{errors?.email}</p>
         </div>
-        <div>
+        <div className='field'>
           <label>
             <input
               ref={passwordRef}
               type='password'
               placeholder='Password'
-              className='input-field invalid'
+              className='input-field'
             />
           </label>
+          <PasswordStrengthBar password={passwordRef.current?.value || ''} />
           <p className='error'>{errors?.password}</p>
         </div>
-        <div>
+        <div className='field'>
           <label>
             <input
               ref={confirmPasswordRef}
               type='password'
               placeholder='Confirm password'
-              className='input-field invalid'
+              className='input-field'
             />
           </label>
           <p className='error'>{errors?.confirmPassword}</p>
         </div>
-        <div>
+        <div className='field'>
           <div className='gender'>
             <label className='gender-input'>
               <input
@@ -160,14 +162,14 @@ export const UncontrolledFormPage = () => {
           </div>
           <p className='error'>{errors?.gender}</p>
         </div>
-        <div>
+        <div className='field'>
           <label className='terms-input'>
             <input ref={checkboxRef} type='checkbox' />
             Accept T&C
           </label>
           <p className='error'>{errors?.acceptTerms}</p>
         </div>
-        <div>
+        <div className='field'>
           <label className='terms-input'>
             <input
               type='file'
