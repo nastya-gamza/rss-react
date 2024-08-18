@@ -1,10 +1,9 @@
 import * as yup from 'yup';
-import { FormWithFile } from '../types';
 
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
 
-export const formSchema: yup.Schema<FormWithFile> = yup.object({
+export const formSchema = yup.object({
   name: yup
     .string()
     .required('Name is required')
@@ -45,7 +44,7 @@ export const formSchema: yup.Schema<FormWithFile> = yup.object({
   gender: yup
     .string()
     .required('Gender is required')
-    .oneOf(['option1', 'option2'], 'Please select a gender')
+    .oneOf(['female', 'male'], 'Please select a gender')
     .defined(),
   acceptTerms: yup
     .boolean()
@@ -54,14 +53,19 @@ export const formSchema: yup.Schema<FormWithFile> = yup.object({
   file: yup
     .mixed<File>()
     .required('A file is required')
-    .test('fileSize', 'File size too large. Max size - 2GB', (file) => {
-      return file && file.size <= FILE_SIZE;
+    .transform((value) => {
+      return value instanceof FileList ? value[0] : value;
     })
     .test(
       'fileFormat',
       'Unsupported file format. Only .jpeg and .png are permitted',
-      (file) => {
-        return file && SUPPORTED_FORMATS.includes(file.type);
-      },
+      (file) => file && SUPPORTED_FORMATS.includes(file.type),
+    )
+    .test(
+      'fileSize',
+      'File size too large. Max size - 2GB',
+      (file) => file && file.size <= FILE_SIZE,
     ),
 });
+
+export type FormValidationSchema = yup.InferType<typeof formSchema>;

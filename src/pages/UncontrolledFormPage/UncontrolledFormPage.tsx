@@ -91,11 +91,11 @@ export const UncontrolledFormPage = () => {
 
       const base64File = await handleFileUpload(data.file);
       if (base64File) {
-        console.log(base64File);
         dispatch(
           setSubmittedData({
             ...data,
             file: base64File,
+            date: new Date(),
           }),
         );
       }
@@ -179,13 +179,13 @@ export const UncontrolledFormPage = () => {
               <input
                 type='radio'
                 name='gender'
-                value='option1'
+                value='male'
                 style={{ position: 'relative' }}
               />
               Male
             </label>
             <label className='gender-input'>
-              <input type='radio' name='gender' value='option2' />
+              <input type='radio' name='gender' value='female' />
               Female
             </label>
           </div>

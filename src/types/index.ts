@@ -1,4 +1,4 @@
-export type BaseForm = {
+export type Form = {
   name: string;
   age: number | null;
   email: string;
@@ -6,12 +6,5 @@ export type BaseForm = {
   confirmPassword: string;
   gender: string | null;
   acceptTerms: boolean;
-};
-
-export type FormWithFile = BaseForm & {
-  file: File;
-};
-
-export type FormWithBase64File = BaseForm & {
   file: string | ArrayBuffer | null;
 };

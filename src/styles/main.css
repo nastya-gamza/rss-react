@@ -19,16 +19,17 @@ body {
 
 #root {
   min-height: 100vh;
+  width: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
 .container {
+  margin: 35px auto 0;
   width: 420px;
   max-width: 100%;
   padding: 25px;
-  margin-top: 35px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow:  0 10px 20px rgba(0, 0, 0, 0.15);
@@ -79,6 +80,11 @@ body {
 
 .button:hover {
   background-color: #0e4bf1;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  background-color: #89898c;
 }
 
 .gender {

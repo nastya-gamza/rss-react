@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { FormWithBase64File } from '../../types';
+import { Form } from '../../types';
+
+export type FormState = Form & { date: Date };
 
 type SubmittedDataState = {
-  allSubmittedForms: FormWithBase64File[];
+  allSubmittedForms: FormState[];
 };
 
 const initialState: SubmittedDataState = {
@@ -13,7 +15,7 @@ const submittedDataSlice = createSlice({
   name: 'submittedData',
   initialState,
   reducers: {
-    setSubmittedData: (state, action: PayloadAction<FormWithBase64File>) => {
+    setSubmittedData: (state, action: PayloadAction<FormState>) => {
       state.allSubmittedForms.push(action.payload);
     },
   },
