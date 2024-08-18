@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Form } from '../../types';
 
-export type FormState = Form & { date: Date };
+export type FormState = Form & { date: number };
 
 type SubmittedDataState = {
   allSubmittedForms: FormState[];

@@ -1,11 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import classNames from 'classnames';
 import { useAppDispatch } from '../../store/hooks';
 import {
   formSchema,
   FormValidationSchema,
 } from '../../schemas/formValidationSchema.ts';
-import classNames from 'classnames';
 import { PasswordStrengthBar } from '../../components/PasswordStrengthBar/PasswordStrengthBar.tsx';
 import { useNavigate } from 'react-router-dom';
 import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
@@ -47,7 +47,7 @@ export const ReactHookFormPage = () => {
           setSubmittedData({
             ...data,
             file: base64File,
-            date: new Date(),
+            date: Date.now(),
           }),
         );
         reset();

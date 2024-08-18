@@ -4,6 +4,7 @@ export type Form = {
   email: string;
   password: string;
   confirmPassword: string;
+  country: string;
   gender: string | null;
   acceptTerms: boolean;
   file: string | ArrayBuffer | null;

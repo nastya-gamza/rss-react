@@ -19,13 +19,18 @@ type ErrorsState = {
   gender: string | null;
   acceptTerms: string | null;
   file: string | null;
-  autocomplete: string | null;
+  country: string | null;
+};
+
+type AutocompleteHandle = {
+  getValue: () => string;
 };
 
 export const UncontrolledFormPage = () => {
   const [errors, setErrors] = useState<ErrorsState | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const autocompleteRef = useRef<AutocompleteHandle>(null);
 
   const dispatch = useAppDispatch();
   const countries = useAppSelector(countriesSelector);
@@ -53,7 +58,7 @@ export const UncontrolledFormPage = () => {
       gender: null,
       acceptTerms: null,
       file: null,
-      autocomplete: null,
+      country: null,
     };
 
     validationErrors.inner.forEach((error) => {
@@ -81,6 +86,7 @@ export const UncontrolledFormPage = () => {
       gender: formData.get('gender')?.toString() || null,
       acceptTerms: formData.get('acceptTerms') === 'on',
       file: formData.get('file') as File | null,
+      country: autocompleteRef.current?.getValue() || '',
     };
 
     try {
@@ -93,7 +99,7 @@ export const UncontrolledFormPage = () => {
           setSubmittedData({
             ...data,
             file: base64File,
-            date: new Date(),
+            date: Date.now(),
           }),
         );
       }
@@ -171,9 +177,9 @@ export const UncontrolledFormPage = () => {
           </label>
           <p className='error'>{errors?.confirmPassword}</p>
         </div>
-        <div>
-          <Autocomplete options={countries} />
-          <p className='error'>{errors?.autocomplete}</p>
+        <div className='field'>
+          <Autocomplete ref={autocompleteRef} options={countries} />
+          <p className='error'>{errors?.country}</p>
         </div>
         <div className='field'>
           <div className='gender'>

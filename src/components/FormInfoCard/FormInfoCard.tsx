@@ -18,9 +18,10 @@ export const FormInfoCard = ({ cardInfo }: FormInfoCardProps) => (
     </div>
     <div className={styles.info}>
       <p>Name: {cardInfo.name}</p>
-      <p> Age: {cardInfo.age}</p>
+      <p>Age: {cardInfo.age}</p>
       <p>Email: {cardInfo.email}</p>
       <p>Password: {cardInfo.password}</p>
+      <p>Country: {cardInfo.country}</p>
       <p>Gender: {cardInfo.gender}</p>
       <p>Accept Terms: {cardInfo.acceptTerms ? '✓' : '-'}</p>
     </div>

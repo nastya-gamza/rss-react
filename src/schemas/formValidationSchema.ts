@@ -1,9 +1,8 @@
 import * as yup from 'yup';
+import { COUNTRIES } from '../constants/countries.ts';
 
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
-
-const options = ['Apple', 'Banana', 'Orange', 'Grapes', 'Pineapple'];
 
 export const formSchema = yup.object({
   name: yup
@@ -68,10 +67,10 @@ export const formSchema = yup.object({
       'File size too large. Max size - 2GB',
       (file) => file && file.size <= FILE_SIZE,
     ),
-  autocomplete: yup
+  country: yup
     .string()
     .required('Country is a required')
-    .oneOf(options, 'Invalid option selected'),
+    .oneOf(COUNTRIES, 'Invalid country selected'),
 });
 
 export type FormValidationSchema = yup.InferType<typeof formSchema>;
