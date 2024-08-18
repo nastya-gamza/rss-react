@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { calculatePasswordStrength } from '../../utils/calculatePasswordStrength.ts';
-import styles from './passwordStrengthBar.module.css';
+import styles from './PasswordStrengthBar.module.css';
 
 type PasswordStrengthBar = {
   password: string;

@@ -1,10 +1,10 @@
 import * as yup from 'yup';
-import { Form } from '../types';
+import { FormWithFile } from '../types';
 
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
 
-export const formSchema: yup.Schema<Form> = yup.object({
+export const formSchema: yup.Schema<FormWithFile> = yup.object({
   name: yup
     .string()
     .required('Name is required')
@@ -29,9 +29,14 @@ export const formSchema: yup.Schema<Form> = yup.object({
     ),
   password: yup
     .string()
-    .required('Password is required')
-    .min(6, 'Password must be at least 6 characters long')
-    .defined(),
+    .required()
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .matches(/\d/, 'Password must contain at least one number')
+    .matches(
+      /[@$!%*?&#]/,
+      'Password must contain at least one special character',
+    ),
   confirmPassword: yup
     .string()
     .required('Confirm password is required')

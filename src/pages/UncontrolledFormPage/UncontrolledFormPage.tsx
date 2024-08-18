@@ -2,13 +2,14 @@ import { FormEvent, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { formSchema } from '../../schemas/formValidationSchema.ts';
 import { ValidationError } from 'yup';
-import { PasswordStrengthBar } from '../../components/passwordStrengthBar/passwordStrengthBar.tsx';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   setSubmittedData,
   submittedDataSelector,
 } from '../../store/slices/submittedData.ts';
+import { PasswordStrengthBar } from '../../components/PasswordStrengthBar/PasswordStrengthBar.tsx';
 import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
+import { useNavigate } from 'react-router-dom';
 
 type ErrorsState = {
   name: string | null;
@@ -19,6 +20,7 @@ type ErrorsState = {
   gender: string | null;
   acceptTerms: string | null;
   file: string | null;
+  autocomplete: string | null;
 };
 
 export const UncontrolledFormPage = () => {
@@ -37,6 +39,8 @@ export const UncontrolledFormPage = () => {
   const dispatch = useAppDispatch();
   const data = useAppSelector(submittedDataSelector);
   console.log('DATA - ', data);
+
+  const navigate = useNavigate();
 
   const getSelectedGender = (): string => {
     return maleRef.current?.checked
@@ -80,6 +84,7 @@ export const UncontrolledFormPage = () => {
       gender: null,
       acceptTerms: null,
       file: null,
+      autocomplete: null,
     };
 
     validationErrors.inner.forEach((error) => {
@@ -101,6 +106,7 @@ export const UncontrolledFormPage = () => {
 
       const base64File = await handleFileUpload(formData.file);
       if (base64File) {
+        console.log(base64File);
         dispatch(
           setSubmittedData({
             ...formData,
@@ -108,6 +114,7 @@ export const UncontrolledFormPage = () => {
           }),
         );
       }
+      navigate('/');
     } catch (validationErrors) {
       if (validationErrors instanceof ValidationError) {
         handleValidationErrors(validationErrors);
