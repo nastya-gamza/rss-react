@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import classNames from 'classnames';
 
 type AutocompleteProps = {
   options: string[];
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
+  error: string | undefined;
 };
 
 export const ControlledAutocomplete = ({
@@ -12,16 +14,19 @@ export const ControlledAutocomplete = ({
   value,
   onChange,
   onBlur,
+  error,
 }: AutocompleteProps) => {
   const [filteredOptions, setFilteredOptions] = useState(options);
   const [isOpen, setIsOpen] = useState(false);
   const [activeOptionIndex, setActiveOptionIndex] = useState(-1);
+  const listRef = useRef<HTMLUListElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const newValue = e.target.value;
     onChange(e);
+
     const newFilteredOptions = options.filter((option) =>
-      option.toLowerCase().includes(value.toLowerCase()),
+      option.toLowerCase().includes(newValue.toLowerCase()),
     );
     setFilteredOptions(newFilteredOptions);
     setIsOpen(true);
@@ -60,6 +65,13 @@ export const ControlledAutocomplete = ({
     setIsOpen(false);
   };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (!listRef.current?.contains(e.relatedTarget as Node)) {
+      setIsOpen(false);
+    }
+    onBlur();
+  };
+
   return (
     <div className='autocomplete'>
       <input
@@ -68,12 +80,12 @@ export const ControlledAutocomplete = ({
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onFocus={() => setIsOpen(true)}
-        onBlur={onBlur}
-        className='input-field'
+        onBlur={handleBlur}
+        className={classNames('input-field', { invalid: error })}
         placeholder='Choose your country'
       />
       {isOpen && (
-        <ul className='options-list'>
+        <ul ref={listRef} className='options-list'>
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
               <li
@@ -90,6 +102,7 @@ export const ControlledAutocomplete = ({
           )}
         </ul>
       )}
+      {error && <p className='error'>{error}</p>}{' '}
     </div>
   );
 };

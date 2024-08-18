@@ -139,6 +139,7 @@ export const ReactHookFormPage = () => {
               value={field.value || ''}
               onChange={field.onChange}
               onBlur={field.onBlur}
+              error={errors.country?.message}
             />
           )}
         />

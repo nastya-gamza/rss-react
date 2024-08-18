@@ -4,13 +4,15 @@ import React, {
   useImperativeHandle,
   forwardRef,
 } from 'react';
+import classNames from 'classnames';
 
 type AutocompleteProps = {
   options: string[];
+  error: string | null | undefined;
 };
 
 export const UncontrolledAutocomplete = forwardRef(
-  ({ options }: AutocompleteProps, ref) => {
+  ({ options, error }: AutocompleteProps, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [filteredOptions, setFilteredOptions] = useState(options);
     const [isOpen, setIsOpen] = useState(false);
@@ -86,7 +88,7 @@ export const UncontrolledAutocomplete = forwardRef(
           onKeyDown={handleKeyDown}
           onFocus={() => setIsOpen(true)}
           onBlur={handleBlur}
-          className='input-field'
+          className={classNames('input-field', { invalid: error })}
           placeholder='Choose your country'
         />
         {isOpen && (
@@ -107,6 +109,7 @@ export const UncontrolledAutocomplete = forwardRef(
             )}
           </ul>
         )}
+        <p className='error'>{error && error}</p>
       </div>
     );
   },

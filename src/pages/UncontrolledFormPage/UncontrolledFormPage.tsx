@@ -178,8 +178,11 @@ export const UncontrolledFormPage = () => {
           <p className='error'>{errors?.confirmPassword}</p>
         </div>
         <div className='field'>
-          <UncontrolledAutocomplete ref={autocompleteRef} options={countries} />
-          <p className='error'>{errors?.country}</p>
+          <UncontrolledAutocomplete
+            ref={autocompleteRef}
+            options={countries}
+            error={errors?.country}
+          />
         </div>
         <div className='field'>
           <div className='gender'>
