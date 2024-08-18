@@ -24,44 +24,15 @@ type ErrorsState = {
 };
 
 export const UncontrolledFormPage = () => {
-  const nameRef = useRef<HTMLInputElement>(null);
-  const emailRef = useRef<HTMLInputElement>(null);
-  const ageRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
-  const confirmPasswordRef = useRef<HTMLInputElement>(null);
-  const maleRef = useRef<HTMLInputElement>(null);
-  const femaleRef = useRef<HTMLInputElement>(null);
-  const checkboxRef = useRef<HTMLInputElement>(null);
-  const fileRef = useRef<HTMLInputElement>(null);
-
   const [errors, setErrors] = useState<ErrorsState | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
   const data = useAppSelector(submittedDataSelector);
   console.log('DATA - ', data);
 
   const navigate = useNavigate();
-
-  const getSelectedGender = (): string => {
-    return maleRef.current?.checked
-      ? 'option1'
-      : femaleRef.current?.checked
-        ? 'option2'
-        : '';
-  };
-
-  const getFormData = () => {
-    return {
-      name: nameRef.current?.value || '',
-      email: emailRef.current?.value || '',
-      age: ageRef.current?.value ? Number(ageRef.current.value) : null,
-      password: passwordRef.current?.value || '',
-      confirmPassword: confirmPasswordRef.current?.value || '',
-      gender: getSelectedGender() || null,
-      acceptTerms: checkboxRef.current?.checked || false,
-      file: fileRef.current?.files ? fileRef.current.files[0] : null,
-    };
-  };
 
   const handleFileUpload = async (file: File | null) => {
     if (file) {
@@ -98,18 +69,32 @@ export const UncontrolledFormPage = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = getFormData();
+
+    const formElement = formRef.current;
+    if (!formElement) return;
+    const formData = new FormData(formElement);
+
+    const data = {
+      name: formData.get('name')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+      age: formData.get('age') ? Number(formData.get('age')) : null,
+      password: formData.get('password')?.toString() || '',
+      confirmPassword: formData.get('confirmPassword')?.toString() || '',
+      gender: formData.get('gender')?.toString() || null,
+      acceptTerms: formData.get('acceptTerms') === 'on',
+      file: formData.get('file') as File | null,
+    };
 
     try {
-      await formSchema.validate(formData, { abortEarly: false });
+      await formSchema.validate(data, { abortEarly: false });
       setErrors(null);
 
-      const base64File = await handleFileUpload(formData.file);
+      const base64File = await handleFileUpload(data.file);
       if (base64File) {
         console.log(base64File);
         dispatch(
           setSubmittedData({
-            ...formData,
+            ...data,
             file: base64File,
           }),
         );
@@ -126,12 +111,12 @@ export const UncontrolledFormPage = () => {
 
   return (
     <div className='container'>
-      <form className='form' onSubmit={handleSubmit} noValidate>
+      <form className='form' onSubmit={handleSubmit} ref={formRef} noValidate>
         <div className='field'>
           <label>
             <input
-              ref={nameRef}
               type='text'
+              name='name'
               placeholder='Name'
               className={classNames('input-field', { invalid: errors?.name })}
             />
@@ -141,8 +126,8 @@ export const UncontrolledFormPage = () => {
         <div className='field'>
           <label>
             <input
-              ref={ageRef}
               type='number'
+              name='age'
               placeholder='Age'
               className={classNames('input-field', { invalid: errors?.age })}
             />
@@ -152,8 +137,8 @@ export const UncontrolledFormPage = () => {
         <div className='field'>
           <label>
             <input
-              ref={emailRef}
               type='email'
+              name='email'
               placeholder='Email'
               className={classNames('input-field', { invalid: errors?.email })}
             />
@@ -163,8 +148,9 @@ export const UncontrolledFormPage = () => {
         <div className='field'>
           <label>
             <input
-              ref={passwordRef}
               type='password'
+              name='password'
+              ref={passwordRef}
               placeholder='Password'
               className={classNames('input-field', {
                 invalid: errors?.password,
@@ -177,8 +163,8 @@ export const UncontrolledFormPage = () => {
         <div className='field'>
           <label>
             <input
-              ref={confirmPasswordRef}
               type='password'
+              name='confirmPassword'
               placeholder='Confirm password'
               className={classNames('input-field', {
                 invalid: errors?.confirmPassword,
@@ -194,18 +180,12 @@ export const UncontrolledFormPage = () => {
                 type='radio'
                 name='gender'
                 value='option1'
-                ref={maleRef}
                 style={{ position: 'relative' }}
               />
               Male
             </label>
             <label className='gender-input'>
-              <input
-                type='radio'
-                name='gender'
-                value='option2'
-                ref={femaleRef}
-              />
+              <input type='radio' name='gender' value='option2' />
               Female
             </label>
           </div>
@@ -213,19 +193,14 @@ export const UncontrolledFormPage = () => {
         </div>
         <div className='field'>
           <label className='terms-input'>
-            <input ref={checkboxRef} type='checkbox' />
+            <input type='checkbox' name='acceptTerms' />
             Accept T&C
           </label>
           <p className='error'>{errors?.acceptTerms}</p>
         </div>
         <div className='field'>
           <label className='terms-input'>
-            <input
-              type='file'
-              ref={fileRef}
-              id='imageUpload'
-              accept='image/*'
-            />
+            <input type='file' name='file' id='imageUpload' accept='image/*' />
           </label>
           <p className='error'>{errors?.file}</p>
         </div>
