@@ -3,13 +3,12 @@ import classNames from 'classnames';
 import { formSchema } from '../../schemas/formValidationSchema.ts';
 import { ValidationError } from 'yup';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  setSubmittedData,
-  submittedDataSelector,
-} from '../../store/slices/submittedData.ts';
+import { setSubmittedData } from '../../store/slices/submittedData.ts';
 import { PasswordStrengthBar } from '../../components/PasswordStrengthBar/PasswordStrengthBar.tsx';
 import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
 import { useNavigate } from 'react-router-dom';
+import { Autocomplete } from '../../components/Autocomplete/Autocomplete.tsx';
+import { countriesSelector } from '../../store/slices/countries.ts';
 
 type ErrorsState = {
   name: string | null;
@@ -29,8 +28,7 @@ export const UncontrolledFormPage = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
 
   const dispatch = useAppDispatch();
-  const data = useAppSelector(submittedDataSelector);
-  console.log('DATA - ', data);
+  const countries = useAppSelector(countriesSelector);
 
   const navigate = useNavigate();
 
@@ -172,6 +170,10 @@ export const UncontrolledFormPage = () => {
             />
           </label>
           <p className='error'>{errors?.confirmPassword}</p>
+        </div>
+        <div>
+          <Autocomplete options={countries} />
+          <p className='error'>{errors?.autocomplete}</p>
         </div>
         <div className='field'>
           <div className='gender'>

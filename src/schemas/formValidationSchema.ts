@@ -3,6 +3,8 @@ import * as yup from 'yup';
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
 
+const options = ['Apple', 'Banana', 'Orange', 'Grapes', 'Pineapple'];
+
 export const formSchema = yup.object({
   name: yup
     .string()
@@ -66,6 +68,10 @@ export const formSchema = yup.object({
       'File size too large. Max size - 2GB',
       (file) => file && file.size <= FILE_SIZE,
     ),
+  autocomplete: yup
+    .string()
+    .required('Country is a required')
+    .oneOf(options, 'Invalid option selected'),
 });
 
 export type FormValidationSchema = yup.InferType<typeof formSchema>;
