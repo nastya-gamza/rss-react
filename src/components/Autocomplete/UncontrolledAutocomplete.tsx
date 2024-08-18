@@ -9,7 +9,7 @@ type AutocompleteProps = {
   options: string[];
 };
 
-export const Autocomplete = forwardRef(
+export const UncontrolledAutocomplete = forwardRef(
   ({ options }: AutocompleteProps, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [filteredOptions, setFilteredOptions] = useState(options);

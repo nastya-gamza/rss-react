@@ -1,6 +1,6 @@
 .list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    grid-template-columns: repeat(auto-fill, minmax(100px, 220px));
     align-items: stretch;
     justify-content: center;
     margin-top: 24px;
@@ -10,4 +10,10 @@
 .highlightedItem {
     border-radius: 10px;
     border: 2px solid blue;
+}
+
+.info {
+    width: 100%;
+    margin-top: 100px;
+    text-align: center;
 }

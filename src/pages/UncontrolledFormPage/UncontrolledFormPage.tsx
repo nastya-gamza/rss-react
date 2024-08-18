@@ -7,7 +7,7 @@ import { setSubmittedData } from '../../store/slices/submittedData.ts';
 import { PasswordStrengthBar } from '../../components/PasswordStrengthBar/PasswordStrengthBar.tsx';
 import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
 import { useNavigate } from 'react-router-dom';
-import { Autocomplete } from '../../components/Autocomplete/Autocomplete.tsx';
+import { UncontrolledAutocomplete } from '../../components/Autocomplete/UncontrolledAutocomplete.tsx';
 import { countriesSelector } from '../../store/slices/countries.ts';
 
 type ErrorsState = {
@@ -178,7 +178,7 @@ export const UncontrolledFormPage = () => {
           <p className='error'>{errors?.confirmPassword}</p>
         </div>
         <div className='field'>
-          <Autocomplete ref={autocompleteRef} options={countries} />
+          <UncontrolledAutocomplete ref={autocompleteRef} options={countries} />
           <p className='error'>{errors?.country}</p>
         </div>
         <div className='field'>

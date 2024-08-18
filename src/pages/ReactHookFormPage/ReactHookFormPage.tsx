@@ -1,7 +1,7 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   formSchema,
   FormValidationSchema,
@@ -10,12 +10,15 @@ import { PasswordStrengthBar } from '../../components/PasswordStrengthBar/Passwo
 import { useNavigate } from 'react-router-dom';
 import { convertFileToBase64 } from '../../utils/convertFileToBase64.ts';
 import { setSubmittedData } from '../../store/slices/submittedData.ts';
+import { ControlledAutocomplete } from '../../components/Autocomplete/ControlledAutocomplete.tsx';
+import { countriesSelector } from '../../store/slices/countries.ts';
 
 export const ReactHookFormPage = () => {
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors, isValid },
     reset,
   } = useForm<FormValidationSchema>({
@@ -25,6 +28,7 @@ export const ReactHookFormPage = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const countries = useAppSelector(countriesSelector);
 
   const passwordValue = watch('password');
 
@@ -125,6 +129,19 @@ export const ReactHookFormPage = () => {
           </label>
           <p className='error'>{errors.confirmPassword?.message}</p>
         </div>
+        <Controller
+          name='country'
+          control={control}
+          defaultValue=''
+          render={({ field }) => (
+            <ControlledAutocomplete
+              options={countries}
+              value={field.value || ''}
+              onChange={field.onChange}
+              onBlur={field.onBlur}
+            />
+          )}
+        />
         <div className='field'>
           <div className='gender'>
             <label className='gender-input'>

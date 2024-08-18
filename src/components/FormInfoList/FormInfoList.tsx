@@ -9,7 +9,7 @@ export const FormInfoList = () => {
 
   const sortedFormData = sortByDate(formData);
 
-  return (
+  return sortedFormData.length > 0 ? (
     <ul className={styles.list}>
       {sortedFormData.map((item, index) => (
         <li key={index} className={index === 0 ? styles.highlightedItem : ''}>
@@ -17,5 +17,7 @@ export const FormInfoList = () => {
         </li>
       ))}
     </ul>
+  ) : (
+    <div className={styles.info}>Form data wasn't submitted</div>
   );
 };
