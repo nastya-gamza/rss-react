@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 import { COUNTRIES } from '../constants/countries.ts';
+import { emailRegExp } from '../utils/emailRegExp.ts';
 
 const FILE_SIZE = 2 * 1024 * 1024;
 const SUPPORTED_FORMATS = ['image/jpeg', 'image/png'];
@@ -8,11 +9,15 @@ export const formSchema = yup.object({
   name: yup
     .string()
     .required('Name is required')
-    .test(
-      'is-uppercase',
-      'The first letter must be uppercase',
-      (value) => value.charAt(0) === value.charAt(0).toUpperCase(),
-    ),
+    .test('is-uppercase', 'The first letter must be uppercase', (value) => {
+      if (!value || value.length === 0) {
+        return false;
+      }
+      const firstChar = value.charAt(0);
+      return (
+        /^[A-Za-z]$/.test(firstChar) && firstChar === firstChar.toUpperCase()
+      );
+    }),
   age: yup
     .number()
     .transform((value) => (Number.isNaN(value) ? null : value))
@@ -23,10 +28,7 @@ export const formSchema = yup.object({
   email: yup
     .string()
     .required('Email is required')
-    .matches(
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      'Invalid email format',
-    ),
+    .matches(emailRegExp, 'Invalid email format'),
   password: yup
     .string()
     .required()

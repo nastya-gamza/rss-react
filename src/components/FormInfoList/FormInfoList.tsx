@@ -1,4 +1,4 @@
-import { FormInfoCard } from '../FormInfoCard/FormInfoCard.tsx';
+import { FormInfoCard } from '../FormInfoCard';
 import { useAppSelector } from '../../store/hooks';
 import { submittedDataSelector } from '../../store/slices/submittedData.ts';
 import styles from './FormInfoList.module.css';
